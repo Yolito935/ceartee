@@ -1,0 +1,54 @@
+{
+  "productName": "CEARTEE",
+  "version": "1.0.0",
+  "identifier": "com.ceartee",
+  "build": {
+    "frontendDist": "../src"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "CEARTEE",
+        "width": 1024,
+        "height": 768,
+        "resizable": true,
+        "center": true,
+        "devtools": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ],
+    "resources": [
+      "../src/assets/**/*",
+      "../src/img_logos/**/*",
+      "../src/*.js",
+      "../src/*.css",
+      "../src/*.html",
+      "../src/jszip.min.js",
+      "../src/jclic.min.js"
+    ]
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRFM0M0OTJCMDZCMjJENDYKUldSR0xiSUdLMGs4VHJVc21RM0pQcGlTZzYxSVRLUFphc2FTbTNNbTE5aGVaRmJab1RBRkVZZUEK",
+      "endpoints": [
+         "https://raw.githubusercontent.com/Yolito935/ceartee/main/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
+      }
+    }
+  }
+}
