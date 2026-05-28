@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceartee - Bienvenido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Categorias2.css">
+
+<link rel="stylesheet" href="transiciones.css">
+<script src="transiciones.js"></script>
+
+
+
+
+
+
+</head>
+<script>
+  function playGame(nombre, rutaZip) {
+    const url = 'vista.html?actividad=' + encodeURIComponent(rutaZip) + '&nombre=' + encodeURIComponent(nombre);
+    console.log('Navegando a:', url);
+    window.location.href = url;
+  }
+</script>
+
+
+
+
+</html>
+
+<body>
+
+<!-- ========== FONDO ANIMADO ========== -->
+  <div class="bg-animation">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+    
+    <!-- ========== CONTENEDOR PRINCIPAL ========== -->
+  <div class="main-container">
+    
+    <!-- Header -->
+     
+    <header class="header">
+      <button class="btn-back" onclick="goback()" >
+        <span class="btn-icon">←</span>
+        <span class="btn-text">Volver</span>
+        
+      </button>
+
+      <script src="Categorias2.js"></script>
+       
+      
+      <div class="header-title">
+        
+        <h1>CATEGORÍAS PRIMARIA</h1>
+      </div>
+      
+      <button class="btn-settings" onclick="window.location.href='../Configuracion.html'">
+        <span>⚙️</span>
+      </button>
+    </header>
+
+
+    <!-- Subtítulo -->
+    <p class="page-subtitle">¡Elige una categoría y comienza a aprender jugando!</p>
+
+    <!-- Grid de Categorías -->
+    <div class="categories-grid">
+      
+       <!-- Lenguajes -->
+        
+      <div class="category-card" onclick="window.location.href='Lenguajes2.html'"  data-category="puzzles"  onclick="selectCategory('puzzles')">
+        <div clas="card-glow" ></div>
+        <div class="card-icon" ><img src="../img_logos/Lenguajes.png" style="width: 60px;"></div>
+        <h2 class="card-title">Lenguajes</h2>
+        <div class="card-info">
+          <span class="game-count">14 juegos</span>
+          <div class="difficulty">
+            <span class="star active">★</span>
+            <span class="star active">★</span>
+            <span class="star">★</span>
+          </div>
+          
+          
+
+        </div>
+        <div class="card-btn">
+          <span>▶ EXPLORAR</span>
+        </div>
+      </div>
+
+      <!-- Saberes y pensamiento -->
+      <div class="category-card" onclick="window.location.href='Saberes.html'" data-category="letras" onclick="selectCategory('letras')">
+        <div class="card-glow"></div>
+        <div class="card-icon"><img src="../img_logos/Saberes.png" style="width: 100px;"></div>
+        <h2 class="card-title">Saberes y pensamiento cientifico</h2>
+        <div class="card-info">
+          <span class="game-count">37 juegos</span>
+          <div class="difficulty">
+            <span class="star active">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+        </div>
+        <div class="card-btn">
+          <span>▶ EXPLORAR</span>
+        </div>
+      </div>
+
+      <!-- Etica,naturelza y sociedades -->
+      <div class="category-card" data-category="numeros" onclick="window.location.href='Etica2.html'" onclick="selectCategory('numeros')">
+        <div class="card-glow"></div>
+        <div class="card-icon" ><img src="../img_logos/Etica.png" style="width: 100px;"></div>
+        <h2 class="card-title">Ética,naturaleza y sociedades</h2>
+        <div class="card-info">
+          <span class="game-count">10 juegos</span>
+          <div class="difficulty">
+            <span class="star active">★</span>
+            <span class="star active">★</span>
+            <span class="star">★</span>
+          </div>
+        </div>
+        <div class="card-btn">
+          <span>▶ EXPLORAR</span>
+        </div>
+      </div>
+
+      <!-- De lo humano a comunitario -->
+      <div class="category-card" onclick="window.location.href='Humano.html'" data-category="geografia" onclick="selectCategory('geografia')">
+        <div class="card-glow"></div>
+        <div class="card-icon"><img src="../img_logos/Humano.png" style="width: 100px;"></div>
+        <h2 class="card-title">De lo humano a comunitario</h2>
+        <div class="card-info">
+          <span class="game-count">2 juegos</span>
+          <div class="difficulty">
+            <span class="star active">★</span>
+            <span class="star active">★</span>
+            <span class="star active">★</span>
+          </div>
+        </div>
+        <div class="card-btn">
+          <span>▶ EXPLORAR</span>
+        </div>
+      </div>
+
+      
+
+    <!-- Footer con estadísticas -->
+    <footer class="footer-stats">
+      <div class="stat-item">
+        <span class="stat-icon">🎮</span>
+        <span class="stat-value">63</span>
+        <span class="stat-label">Juegos</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-icon">📂</span>
+        <span class="stat-value">8</span>
+        <span class="stat-label">Categorías</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-icon">⭐</span>
+        <span class="stat-value">0</span>
+        <span class="stat-label">Completados</span>
+      </div>
+    </footer>
+
+
+    <!-- Decoración -->
+    <div class="decoration">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+
+
+</div>
+
+<script src="../aplicar-config.js"></script>
+
+    </body>
+
+</html>

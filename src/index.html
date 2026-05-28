@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ceartee - Bienvenido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Ventana.css">
+  <link rel="stylesheet" href="transiciones.css">
+  <script src="transiciones.js" defer></script>
+</head>
+<body>
+  <div id="debug-errores" style="position:fixed;top:0;left:0;background:#ff0000;color:#fff;z-index:99999;padding:12px;font-family:monospace;font-size:14px;white-space:pre-wrap;max-width:100%;max-height:200px;overflow:auto;"></div>
+<script>
+window.onerror = function(msg, url, line, col, error) {
+  var d = document.getElementById('debug-errores');
+  if(d) d.textContent += 'ERROR: ' + msg + '\nEn: ' + url + '\nLinea: ' + line + '\n\n';
+  return false;
+};
+console.error = function() {
+  var d = document.getElementById('debug-errores');
+  if(d) d.textContent += Array.from(arguments).join(' ') + '\n';
+};
+</script>npx tauri build
+
+  <!-- Overlay de transición -->
+  <div class="ceartee-fade-overlay" id="ceartee-fade"></div>
+
+  <!-- Burbujas de fondo -->
+  <div class="bg-animation">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- Grid de 3 columnas -->
+  <div class="page-layout">
+
+    <!-- ─── SIDEBAR IZQUIERDA ─── -->
+    <aside class="sidebar-left">
+
+      <p class="visit-label">Visítanos para conocer más<br>nuestro servicio</p>
+
+      <div class="address-block">
+        <h3 class="section-title">Dirección</h3>
+        <p>
+          Hidalgo S/N entre cerrada<br>
+          Ángel Flores y Carranza<br>
+          Col. Las Quintas<br>
+          CP 80060
+        </p>
+      </div>
+
+      <hr>
+
+      <div class="phone-row">
+        <span class="phone-icon-wrap">
+          <!-- Ícono teléfono SVG -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24
+              c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3
+              4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.58a1 1 0
+              01-.25 1.01l-2.2 2.2z"/>
+          </svg>
+        </span>
+        <span class="phone-number">667 127 8679</span>
+      </div>
+
+      <hr>
+
+      <div>
+        <p class="social-section-label">Redes Sociales</p>
+        <div class="social-links">
+          <a href="#" class="social-link">
+            <span class="social-badge badge-fb">f</span>
+            Ceartee Sinaloa
+          </a>
+          <a href="#" class="social-link">
+            <span class="social-badge badge-gm">M</span>
+            ceartee@sin.nuevaescuela.mx
+          </a>
+          <a href="#" class="social-link">
+            <span class="social-badge badge-tw">𝕏</span>
+            @ceartee
+          </a>
+          <a href="#" class="social-link">
+            <span class="social-badge badge-bl">B</span>
+            cearteesinaloa.blogspot.mx
+          </a>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ─── ÁREA CENTRAL ─── -->
+    <main class="main-area">
+      <div class="container" id="main-container">
+
+        <div class="logo">
+          <img
+            src="./assets/Imagenes/Logo_de_Ceartee.jfif"
+            alt="CEARTEE"
+            onerror="this.style.display='none'">
+        </div>
+
+        <h1 class="title" data-i18n="bienvenida">Bienvenido a Ceartee</h1>
+        <p class="subtitle" data-i18n="subtitulo">Tu experiencia comienza aquí</p>
+
+        <div id="area-accion">
+          <button class="btn-enter" id="btnEnter" data-i18n="iniciar">
+            Pulsa para Entrar
+          </button>
+        </div>
+
+        <div class="decoration">
+          <span></span><span></span><span></span>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- ─── SIDEBAR DERECHA ─── -->
+    <aside class="sidebar-right">
+
+      <div class="logo-badge">
+        <img
+          src="./assets/Imagenes/Logo_de_Ceartee.jfif"
+          alt="CEARTEE"
+          onerror="this.style.opacity='0'">
+      </div>
+
+      <div class="info-card">
+        <p class="info-tag">¿Qué es Ceartee?</p>
+        <p class="info-body">
+          Centro Experimental de Adecuación y Recursos
+          Telemáticos de Educación Especial
+        </p>
+      </div>
+
+      <div style="padding: 0 0 0 0; width:100%;">
+        <p class="info-desc">
+          Un espacio para impulsar la inclusión educativa
+          a través de tecnologías y recursos especializados.
+        </p>
+      </div>
+
+    </aside>
+
+  </div><!-- /page-layout -->
+
+  <script src="perfiles.js"></script>
+  <script src="Inicio.js"></script>
+  <script src="aplicar-config.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var areaAccion   = document.getElementById('area-accion');
+      var decoration   = document.querySelector('.decoration');
+
+      if (window.PerfilesManager) {
+        var perfil   = window.PerfilesManager.obtenerPerfilActivo();
+        var perfiles = window.PerfilesManager.obtenerPerfiles();
+
+        if (perfil) {
+          areaAccion.innerHTML = '';
+
+          var card = document.createElement('div');
+          card.className = 'perfil-activo-info';
+          card.innerHTML = `
+            <div class="perfil-avatar-grande">${perfil.avatar}</div>
+            <div class="perfil-nombre-grande">¡Hola, ${perfil.nombre}!</div>
+            <button class="btn-enter" id="btnContinuar">▶ Continuar</button>
+            <div class="btn-row">
+              <button class="btn-cambiar-perfil" id="btnCambiarPerfil">👥 Cambiar jugador</button>
+              <button class="btn-cambiar" onclick="cearteeNavigate('panel-docente.html')">👩‍🏫 Panel Docente</button>
+            </div>
+          `;
+          areaAccion.appendChild(card);
+
+          document.getElementById('btnContinuar').addEventListener('click', function () {
+            cearteeNavigate('Etapas.html');
+          });
+          document.getElementById('btnCambiarPerfil').addEventListener('click', function () {
+            window.PerfilesManager.logout();
+            mostrarSelectorPerfiles();
+          });
+
+        } else if (perfiles.length > 0) {
+          mostrarSelectorPerfiles();
+        } else {
+          mostrarSelectorPerfiles();
+        }
+      }
+
+      function mostrarSelectorPerfiles() {
+        areaAccion.style.display = 'none';
+        if (decoration) decoration.style.display = 'none';
+
+        var sel = document.createElement('div');
+        sel.id  = 'selector-perfiles-container';
+        document.getElementById('main-container').appendChild(sel);
+
+        window.renderPantallaPerfiles('selector-perfiles-container', function () {
+          window.location.reload();
+        });
+      }
+    });
+  </script>
+ <script src="updater.bundle.js"></script>
+</body>
+</html>

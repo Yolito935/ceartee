@@ -1,0 +1,364 @@
+/* =========================================
+   BASE
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f0ecf5;
+  color: #1a1a2e;
+  overflow-x: hidden;
+}
+
+/* =========================================
+   LAYOUT 3 COLUMNAS
+   ========================================= */
+.page-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 300px;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* =========================================
+   SIDEBAR IZQUIERDA
+   ========================================= */
+.sidebar-left {
+  background-color: #ffffff;
+  border-left: 5px solid #5cdbd3;
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.visit-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 2px;
+}
+
+.address-block p {
+  font-size: 0.78rem;
+  color: #6b7280;
+  line-height: 1.8;
+}
+
+.sidebar-left hr {
+  border: none;
+  border-top: 1px solid #f3f4f6;
+  margin: 6px 0;
+}
+
+.phone-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.phone-icon-wrap {
+  width: 34px;
+  height: 34px;
+  background-color: #ffebee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.phone-icon-wrap svg {
+  width: 14px;
+  height: 14px;
+  fill: #ef4444;
+}
+
+.phone-number {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.social-section-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #4b5563;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.social-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.badge-fb { background-color: #dbeafe; color: #2563eb; }
+.badge-gm { background-color: #fee2e2; color: #dc2626; }
+.badge-tw { background-color: #f3f4f6; color: #374151; }
+.badge-bl { background-color: #ffedd5; color: #ea580c; }
+
+/* =========================================
+   ÁREA CENTRAL
+   ========================================= */
+.main-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+#main-container {
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.logo {
+  margin-bottom: 16px;
+}
+
+.logo img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  margin-bottom: 32px;
+}
+
+/* Botón principal (tanto "Pulsa para Entrar" como "Continuar") */
+.btn-enter {
+  background-color: #1a1a2e;
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(26,26,46,0.18);
+  transition: transform 0.1s, box-shadow 0.2s;
+}
+
+.btn-enter:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(26,26,46,0.25);
+}
+
+/* Tarjeta de perfil activo (generada por JS) */
+.perfil-activo-info {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 36px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.perfil-avatar-grande {
+  font-size: 3.5rem;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.perfil-nombre-grande {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 20px;
+}
+
+.btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-cambiar-perfil,
+.btn-cambiar {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.2s;
+}
+
+.btn-cambiar-perfil:hover,
+.btn-cambiar:hover {
+  background-color: #f9fafb;
+}
+
+/* Decoración (3 puntos) */
+.decoration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.decoration span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: #d1d5db;
+  border-radius: 50%;
+}
+
+/* =========================================
+   SIDEBAR DERECHA
+   ========================================= */
+.sidebar-right {
+  padding: 40px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo-badge {
+  width: 100px;
+  height: 100px;
+}
+
+.logo-badge img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.info-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 22px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.info-tag {
+  color: #a78bfa;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.info-body {
+  color: #4b5563;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* Sobreescribir el div inline de tu HTML sin tocar el HTML */
+.sidebar-right > div[style] {
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+.info-desc {
+  color: #9ca3af;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* =========================================
+   EXTRAS
+   ========================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+/* Responsive: en pantallas pequeñas se apila */
+@media (max-width: 900px) {
+  .page-layout {
+    grid-template-columns: 1fr;
+  }
+  .sidebar-left,
+  .sidebar-right {
+    border-left: none;
+    border-top: 4px solid #5cdbd3;
+  }
+}
