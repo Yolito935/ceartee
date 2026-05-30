@@ -1,11 +1,11 @@
-{
-  "version": "1.0.3",
-  "notes": "Nueva version con mejoras de rendimiento y nuevos juegos",
+﻿{
+  "version": "1.0.2",
+  "notes": "Nueva version con mejoras",
   "pub_date": "2025-05-27T15:00:00Z",
   "platforms": {
     "windows-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUeFR0VHNEYjlJS01UVWUrSXFyN25CczhqK3BjelpCVDVLV0IzaWRKZXhHZTIvMkxNZnVBTHNIT0RFUzZ0RXIvT0lMNzFwQ0hIRnpXVEcrL3NpOG4xMDhWeXBiZDVkM3c0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzc4NjExNzY2CWZpbGU6Q0VBUlRFRV8xLjAuMl94NjQtc2V0dXAuZXhlCktYbS9FVWlQS2RKdmhLYjBEME9mcjFHc283bUY1OWZ5a3FuSVFrTGZFNktPbFZ5UE1POGFOUU1mdW9HOE5EOEd5Z1g2U0RuZ3pXa0JQVE9QeGtTRkRRPT0K",
-      "url": "https://github.com/Yolito935/ceartee/releases/download/v1.0.3/CEARTEE_1.0.3_x64-setup.exe"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXkK",
+      "url": "https://github.com/Yolito935/ceartee/releases/download/v1.0.2/murcia_1.0.2_x64-setup.exe"
     }
   }
 }
