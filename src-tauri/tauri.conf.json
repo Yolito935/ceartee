@@ -59,7 +59,7 @@
       
       "nsis": {
        
-        "installMode": "perMachine",
+        "installMode": "currentUser",
         "languages": ["Spanish"],
         "displayLanguageSelector": false,
         "installerIcon": "icons/icon.ico",
@@ -73,16 +73,15 @@
   
   "plugins": {
     "updater": {
-      "active": true,
-      "dialog": false,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRFM0M0OTJCMDZCMjJENDYKUldSR0xiSUdLMGs4VHJVc21RM0pQcGlTZzYxSVRLUFphc2FTbTNNbTE5aGVaRmJab1RBRkVZZUEK",
-      
-"endpoints": [
-  "https://raw.githubusercontent.com/Yolito935/ceartee/main/latest.json"
-],
-      "windows": {
-        "installMode": "passive"
-      }
-    }
+  "active": true,
+  "dialog": false,
+  "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDZFRDEzMjU0OEUyRjk0RDEKUldUUmxDK09WRExSYm4vZ1hnRjlVNUU5bi96T3ZJU0o3SEdhY21VZkVuMTYxTlZzY2pCY1JiL1cK",
+  "endpoints": [
+    "https://raw.githubusercontent.com/Yolito935/ceartee/main/latest.json"
+  ],
+  "windows": {
+    "installMode": "quiet"
+  }
+}
   }
 }
