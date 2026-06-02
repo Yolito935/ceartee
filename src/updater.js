@@ -9,15 +9,22 @@ async function iniciarUpdater() {
 
     const update = await check();
     if (!update?.available) {
-      console.log('[Updater] Todo actualizado');
+      console.log('[Updater] No hay actualizaciones');
       return;
     }
 
-    console.log(`[Updater] Nueva versión: ${update.version}`);
+    // Si el usuario ya rechazo ESTA version, no volver a mostrar
+    const rechazada = localStorage.getItem('updateRechazada');
+    if (rechazada === update.version) {
+      console.log('[Updater] El usuario ya rechazo la version', update.version);
+      return;
+    }
+
+    console.log('[Updater] Update encontrado:', update.version);
     mostrarModalActualizacion(update);
 
   } catch (err) {
-    console.error('[Updater] Error:', err);
+    console.error('[Updater] Error en check:', err);
   }
 }
 
@@ -33,65 +40,97 @@ function mostrarModalActualizacion(update) {
         <h2 style="margin:0 0 8px;">Nueva versión disponible</h2>
         <p style="opacity:0.9;margin-bottom:4px;">CEARTEE <strong>${update.version}</strong> está lista.</p>
         <p style="opacity:0.75;font-size:0.95rem;margin-bottom:1.5rem;">${update.body || 'Incluye mejoras y nuevos contenidos.'}</p>
-        
+
         <div id="upd-progress" style="display:none;margin:1.5rem 0;">
-          <p style="font-size:0.9rem;margin-bottom:8px;">Descargando actualización...</p>
-          <div style="width:100%;height:10px;background:rgba(255,255,255,0.15);border-radius:5px;overflow:hidden;">
-            <div id="upd-bar" style="width:0%;height:100%;background:#00d26a;transition:width 0.2s;"></div>
+          <div style="width:100%;height:12px;background:rgba(255,255,255,0.15);border-radius:6px;overflow:hidden;">
+            <div id="upd-bar" style="width:0%;height:100%;background:#00d26a;transition:width 0.25s ease;"></div>
           </div>
-          <p id="upd-pct" style="font-size:0.85rem;margin-top:6px;opacity:0.9;">0%</p>
+          <p id="upd-pct" style="font-size:0.9rem;margin-top:8px;opacity:0.9;">Preparando descarga...</p>
         </div>
 
         <div id="upd-buttons" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <button id="btn-upd-now" style="background:#00d26a;color:#002;border:none;padding:14px 32px;border-radius:10px;font-weight:bold;font-size:1rem;cursor:pointer;">Actualizar ahora</button>
           <button id="btn-upd-later" style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:14px 24px;border-radius:10px;cursor:pointer;font-size:1rem;">Más tarde</button>
         </div>
-        <p id="upd-status" style="margin-top:1rem;font-size:0.85rem;min-height:1.2rem;color:#a5d8ff;"></p>
+        <p id="upd-status" style="margin-top:1rem;font-size:0.85rem;min-height:1.2rem;color:#ffd166;word-break:break-word;"></p>
       </div>
     </div>
   `;
   document.body.appendChild(modal);
 
+  // BOTON "MAS TARDE": cierra y NO vuelve a mostrar para esta version
   document.getElementById('btn-upd-later').addEventListener('click', () => {
+    localStorage.setItem('updateRechazada', update.version);
     modal.remove();
   });
 
-  document.getElementById('btn-upd-now').addEventListener('click', async () => {
-    document.getElementById('upd-buttons').style.display = 'none';
-    document.getElementById('upd-progress').style.display = 'block';
-
-    try {
-      let descargado = 0;
-      
-      await update.downloadAndInstall((event) => {
-        switch (event.event) {
-          case 'Started':
-            document.getElementById('upd-status').textContent = 'Iniciando descarga...';
-            break;
-          case 'Progress':
-            if (event.data.chunkLength) descargado += event.data.chunkLength;
-            if (event.data.contentLength > 0) {
-              const pct = Math.min(100, Math.round((descargado / event.data.contentLength) * 100));
-              document.getElementById('upd-bar').style.width = pct + '%';
-              document.getElementById('upd-pct').textContent = pct + '%';
-            }
-            break;
-          case 'Finished':
-            document.getElementById('upd-status').textContent = 'Descarga completada. Instalando...';
-            break;
-        }
-      });
-
-      document.getElementById('upd-status').innerHTML = '<span style="color:#00d26a;font-weight:bold;">✓ Listo. Reiniciando...</span>';
-      setTimeout(() => relaunch(), 1500);
-
-    } catch (err) {
-      document.getElementById('upd-status').innerHTML = `<span style="color:#ff6b6b;">Error: ${err.message}</span>`;
-      document.getElementById('upd-buttons').style.display = 'flex';
-      document.getElementById('btn-upd-now').textContent = 'Reintentar';
-    }
+  // BOTON "ACTUALIZAR AHORA": inicia la descarga con barra de progreso
+  document.getElementById('btn-upd-now').addEventListener('click', () => {
+    iniciarDescarga(update);
   });
 }
 
-// Esperar 5 segundos después de cargar la página para no molestar al inicio
-setTimeout(iniciarUpdater, 5000);
+async function iniciarDescarga(update) {
+  document.getElementById('upd-buttons').style.display = 'none';
+  document.getElementById('upd-progress').style.display = 'block';
+
+  const barEl = document.getElementById('upd-bar');
+  const pctEl = document.getElementById('upd-pct');
+  const statusEl = document.getElementById('upd-status');
+
+  let contentLength = 0;
+  let descargado = 0;
+
+  try {
+    await update.downloadAndInstall((event) => {
+      switch (event.event) {
+        case 'Started':
+          contentLength = event.data?.contentLength || 0;
+          descargado = 0;
+          pctEl.textContent = '0%';
+          break;
+
+        case 'Progress':
+          descargado += event.data?.chunkLength || 0;
+          if (contentLength > 0) {
+            const pct = Math.min(100, Math.round((descargado / contentLength) * 100));
+            barEl.style.width = pct + '%';
+            pctEl.textContent = pct + '%';
+          } else {
+            pctEl.textContent = (descargado / 1048576).toFixed(1) + ' MB';
+          }
+          break;
+
+        case 'Finished':
+          barEl.style.width = '100%';
+          pctEl.textContent = '100%';
+          statusEl.style.color = '#00d26a';
+          statusEl.textContent = 'Descarga completa. Instalando...';
+          break;
+      }
+    });
+
+    barEl.style.width = '100%';
+    pctEl.textContent = '100%';
+    statusEl.style.color = '#00d26a';
+    statusEl.innerHTML = '<b>✓ Listo. Reiniciando...</b>';
+    setTimeout(() => relaunch(), 1500);
+
+  } catch (err) {
+    console.error('[Updater] Error completo:', err);
+    let mensaje = 'Error desconocido';
+    if (typeof err === 'string') {
+      mensaje = err;
+    } else if (err && typeof err === 'object') {
+      mensaje = err.message || err.error || err.statusText || JSON.stringify(err);
+    }
+    statusEl.style.color = '#ff6b6b';
+    statusEl.innerHTML = `<b>❌ Error:</b> ${mensaje}`;
+    // Permitir reintentar
+    document.getElementById('upd-progress').style.display = 'none';
+    document.getElementById('upd-buttons').style.display = 'flex';
+    document.getElementById('btn-upd-now').textContent = 'Reintentar';
+  }
+}
+
+setTimeout(iniciarUpdater, 3000);

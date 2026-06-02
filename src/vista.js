@@ -182,7 +182,7 @@ function mostrarPantallaError(mensaje, permiteReintentar) {
   if (!container) return;
   container.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:400px;padding:40px;text-align:center;font-family:'Poppins',sans-serif;">
-      <div style="font-size:72px;margin-bottom:16px;">🎮</div>
+      <div style="font-size:72px;margin-bottom:16px;"></div>
       <h2 style="color:#ff6b6b;font-size:26px;margin-bottom:12px;">¡Ups! No se pudo cargar</h2>
       <p style="color:#e0e0e0;font-size:17px;max-width:420px;margin-bottom:32px;line-height:1.6;">${mensaje}</p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
@@ -206,7 +206,7 @@ window.accionErrorCarga = function(tipo) {
 // CARGAR JUEGO JCLIC CON BARRA CONTROLADA
 // ==========================================
 function cargarJuegoJClic(rutaZip, nombreJuego) {
-  console.log('🎮 Cargando:', rutaZip, '| Nombre:', nombreJuego);
+  console.log(' Cargando:', rutaZip, '| Nombre:', nombreJuego);
   juegoListo = false;
   window.__ultimaRutaJuego = rutaZip;
   window.__ultimoNombreJuego = nombreJuego;
@@ -386,7 +386,7 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
 // ==========================================
 function irActividadSiguiente() {
   reproducirSonidoUI('navegar');
-  console.log('➡️ Siguiente');
+  console.log(' Siguiente');
   if (clickBotonNativo('next')) {
     setTimeout(limpiarInterfazJClic, 50);
   } else {
@@ -396,7 +396,7 @@ function irActividadSiguiente() {
 
 function irActividadAnterior() {
   reproducirSonidoUI('navegar');
-  console.log('⬅️ Anterior');
+  console.log('⬅ Anterior');
   if (clickBotonNativo('prev')) {
     setTimeout(limpiarInterfazJClic, 50);
   } else {
@@ -409,7 +409,7 @@ function irActividadAnterior() {
 // ==========================================
 function reiniciarActividad() {
   reproducirSonidoUI('accion');
-  console.log('🔄 Reiniciando');
+  console.log(' Reiniciando');
   detenerTodosLosAudios();
   window.location.reload();
 }
@@ -508,7 +508,7 @@ window.addEventListener('DOMContentLoaded', () => {
       <div style="text-align:center; padding:40px;">
         <h2>❌ No se especificó ningún juego</h2>
         <button onclick="window.location.href='Etapas.html'" style="margin-top:20px; padding:10px 30px; border-radius:10px; cursor:pointer;">
-          ← Volver al menú
+          
         </button>
       </div>`;
   }

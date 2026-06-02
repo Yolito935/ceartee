@@ -5,6 +5,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="vista.css">
   <link rel="stylesheet" href="transiciones.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
 <script src="transiciones.js"></script>
 
   <!-- 🔊 INTERCEPTAR AUDIO - DEBE SER LO PRIMERO -->
@@ -183,7 +186,9 @@ window.location.href = 'vista.html';
     
     <!-- Header -->
     <header class="header">
-      <button class="btn-backer" onclick="exitGame()" data-tooltip-pos="bottom" data-tooltip="Volver al menú">← Volver</button>
+      <button class="btn-backer" onclick="exitGame()" data-tooltip-pos="bottom" data-tooltip="Volver al menú">
+            
+      </button>
 <h1 id="gameTitle">Cargando...</h1>
 <button id="btn-fullscreen" onclick="toggleFullscreen()" data-tooltip-pos="bottom" data-tooltip="Pantalla completa">⛶</button>
     </header>
@@ -209,19 +214,19 @@ window.location.href = 'vista.html';
 
     <!-- Juego -->
     <div id="jclic-container">
-      <div class="loading"><h2>🎮 Cargando juego...</h2></div>
+      <div class="loading"><h2> Cargando juego...</h2></div>
     </div>
 
     <!-- Instrucciones -->
     <div class="barra-instrucciones" id="barra-instrucciones">
-      📚 Instrucciones aparecerán aquí...
+       Instrucciones aparecerán aquí...
     </div>
 
     <!-- Navegación -->
     <div class="nav-buttons">
-  <button class="btn-nav1" onclick="irActividadAnterior()" data-tooltip="Ejercicio anterior">← Anterior</button>
-  <button class="btn-nav2" onclick="irActividadSiguiente()" data-tooltip="Siguiente ejercicio">Siguiente →</button>
-  <button class="btn-nav3" onclick="reiniciarActividad()" data-tooltip="Reiniciar ejercicio">🔄 Reiniciar</button>
+  <button class="btn-nav1" onclick="irActividadAnterior()" data-tooltip="Ejercicio anterior"> Anterior</button>
+  <button class="btn-nav2" onclick="irActividadSiguiente()" data-tooltip="Siguiente ejercicio">Siguiente </button>
+  <button class="btn-nav3" onclick="reiniciarActividad()" data-tooltip="Reiniciar ejercicio"> Reiniciar</button>
 </div>
   </div>
 

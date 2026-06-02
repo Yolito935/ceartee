@@ -40,7 +40,7 @@ function cambiarInstruccionPorNombre(nombreActividad) {
     const p          = window.JClicObject?.currentPlayers?.[0];
     const messages   = p?.actPanel?.act?.messages;
     const initialTxt = messages?.initial?.text || '';
-    cambiarInstruccion('📚 ' + (initialTxt || nombreActividad));
+    cambiarInstruccion(' ' + (initialTxt || nombreActividad));
   } catch(e) {
     console.error('Error:', e);
   }
@@ -155,7 +155,7 @@ function sincronizarInstrucciones() {
         ultimaActividad = nombreActividad;
         ultimoSolved    = false;
         console.log('✅ JClic listo. Actividad:', nombreActividad);
-        cambiarInstruccion('📚 ' + (initialTxt || nombreActividad));
+        cambiarInstruccion(' ' + (initialTxt || nombreActividad));
         return;
       }
 
@@ -164,7 +164,7 @@ function sincronizarInstrucciones() {
         ultimaActividad = nombreActividad;
         ultimoSolved    = false;
         console.log('🎯 Nueva actividad:', nombreActividad);
-        cambiarInstruccion('📚 ' + (initialTxt || nombreActividad));
+        cambiarInstruccion(' ' + (initialTxt || nombreActividad));
         return;
       }
 
@@ -180,7 +180,7 @@ function sincronizarInstrucciones() {
       if (!solved && ultimoSolved) {
         ultimoSolved = false;
         console.log('🔄 Reseteada:', nombreActividad);
-        cambiarInstruccion('📚 ' + (initialTxt || nombreActividad));
+        cambiarInstruccion(' ' + (initialTxt || nombreActividad));
       }
 
     } catch(e) {}
@@ -193,7 +193,7 @@ function sincronizarInstrucciones() {
 window.addEventListener('load', () => {
   // Mostrar cargando solo al inicio
   const barra = document.getElementById('barra-instrucciones');
-  if (barra) barra.textContent = '📚 Cargando...';
+  if (barra) barra.textContent = ' Cargando...';
 
   ocultarInstruccionesJClic();
   sincronizarInstrucciones(); // ← Sin setTimeout, empieza ya

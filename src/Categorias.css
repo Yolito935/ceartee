@@ -6,6 +6,28 @@
   padding: 0;
   box-sizing: border-box;
 }
+/* =========================================
+   OCULTAR SCROLLBAR PERO MANTENER SCROLL
+   ========================================= */
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE y Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Por si hay otros contenedores con scroll */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
 
 html, body {
   height: 100%;
@@ -16,6 +38,10 @@ body {
   background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   color: #ffffff;
   overflow-x: hidden;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
 }
 
 /* =========================================
@@ -81,7 +107,7 @@ body {
   justify-content: space-between;
   align-items: center;
   background: #ffffff;
-  padding: 16px 32px;
+  padding: 86px 32px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   height: 64px;
 }
@@ -105,11 +131,12 @@ body {
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 120%;
+  padding:20px;
   transform: translate(-50%, -50%);
   width: 28px;
   height: 28px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000000'%3E%3Cpath d='M20 11H7.83l3.58-3.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20z'/%3E%3C/svg%3E");
+  background-image: url("./img_logos/volver-flecha.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -123,7 +150,7 @@ body {
 }
 
 .header-title h1 {
-  font-size: 0.95rem;
+  font-size: 30px;
   font-weight: 900;
   color: #111827;
   text-transform: uppercase;
@@ -138,6 +165,7 @@ body {
   width: 40px;
   height: 40px;
   position: relative;
+  
 }
 
 .btn-settings span {
@@ -146,9 +174,10 @@ body {
 
 .btn-settings::before {
   content: '';
+  padding:20px;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: -30%;
   transform: translate(-50%, -50%);
   width: 32px;
   height: 32px;
@@ -164,6 +193,7 @@ body {
 .page-subtitle {
   text-align: center;
   font-size: 0.95rem;
+  transform:translateY(50px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.95);
   margin: 24px 20px 28px;
@@ -176,9 +206,10 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  max-width: 720px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 0 20px;
+  margin-top:70px;
   width: 100%;
 }
 

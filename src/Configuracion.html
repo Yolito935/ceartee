@@ -7,6 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="settings.css">
   <link rel="stylesheet" href="transiciones.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
 <script src="transiciones.js"></script>
 </head>
 <body>
@@ -31,12 +34,12 @@
       </button>
       
       <div class="header-title">
-        <span class="header-emoji">⚙️</span>
+        <span class="header-emoji"></span>
         <h1>CONFIGURACIÓN</h1>
       </div>
       
       <button class="btn-reset" onclick="resetSettings()">
-        <span>🔄</span>
+        <span></span>
         <span class="btn-text">Restablecer</span>
       </button>
     </header>
@@ -47,7 +50,7 @@
       <!-- Sección: General -->
       <section class="settings-section">
         <h2 class="section-title">
-          <span class="section-icon">🎮</span>
+          <span class="section-icon"></span>
           General
         </h2>
         
@@ -80,6 +83,7 @@
             <label class="setting-label">Animaciones</label>
             <p class="setting-description">Activar/desactivar efectos visuales</p>
           </div>
+
           <label class="toggle-switch">
             <input type="checkbox" id="animations" checked>
             <span class="toggle-slider"></span>
@@ -90,7 +94,7 @@
       <!-- Sección: Sonido -->
       <section class="settings-section">
         <h2 class="section-title">
-          <span class="section-icon">🔊</span>
+          <span class="section-icon"></span>
           Sonido
         </h2>
         
@@ -144,7 +148,7 @@
       <!-- Sección: Juego -->
       <section class="settings-section">
         <h2 class="section-title">
-          <span class="section-icon">🎯</span>
+          <span class="section-icon"></span>
           Juego
         </h2>
         
@@ -183,14 +187,7 @@
           </select>
         </div>
 
-
-
-
-
-      </section>
-
-
-         <div class="setting-item" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px; padding-top: 20px;">
+<div class="setting-item" >
   <div class="setting-info">
     <label class="setting-label">Panel Docente</label>
     <p class="setting-description">Ver progreso de todos los alumnos</p>
@@ -199,12 +196,19 @@
 </div>
 
 
+
+      </section>
+
+
+         
+
+
       
 
       <!-- Sección: Avanzado -->
       <section class="settings-section">
         <h2 class="section-title">
-          <span class="section-icon">⚡</span>
+          <span class="section-icon"></span>
           Avanzado
         </h2>
         

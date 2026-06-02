@@ -110,7 +110,7 @@
     var html = `
       <div id="pantalla-perfiles" style="
         display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-        padding:20px 16px;font-family:'Poppins',sans-serif;color:white;
+        padding:20px 16px;font-family:'Poppins',sans-serif;rgba(102,126,234,0.4);
         background:transparent;border-radius:16px;max-width:400px;width:100%;margin:0 auto;
       ">
         <h2 style="font-size:22px;margin:0 0 4px;text-align:center;">¿Quién juega?</h2>
@@ -147,16 +147,15 @@
           
           <div id="btn-nuevo-perfil" style="
             width:90px;height:110px;border-radius:14px;
-            border:2px dashed rgba(255,255,255,0.3);
+            background:rgba(102,126,234,0.4);
+            border:2px dashed rgba(255,255,255,0.6);
             display:flex;flex-direction:column;align-items:center;justify-content:center;
-            cursor:pointer;transition:all 0.25s;color:rgba(255,255,255,0.6);
-          " onmouseover="this.style.borderColor='#667eea';this.style.color='#667eea';this.style.transform='translateY(-4px)'" 
-             onmouseout="this.style.borderColor='rgba(255,255,255,0.3)';this.style.color='rgba(255,255,255,0.6)';this.style.transform='translateY(0)'">
+            cursor:pointer;transition:all 0.25s;color:#ffffff;
+          " onmouseover="this.style.background='rgba(102,126,234,0.6)';this.style.borderColor='#ffffff';this.style.transform='translateY(-4px)'" 
+             onmouseout="this.style.background='rgba(102,126,234,0.4)';this.style.borderColor='rgba(255,255,255,0.6)';this.style.transform='translateY(0)'">
             <div style="font-size:32px;margin-bottom:2px;">+</div>
             <div style="font-weight:600;font-size:12px;">Nuevo</div>
           </div>
-        </div>
-      </div>
     `;
 
     contenedor.innerHTML = html;
@@ -226,12 +225,11 @@
       font-family:'Poppins',sans-serif;
     `;
     modal.innerHTML = `
-      <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);padding:24px;border-radius:20px;max-width:360px;width:90%;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 60px rgba(0,0,0,0.5);">
-        <h2 style="color:white;margin:0 0 16px;text-align:center;font-size:20px;">Nuevo jugador</h2>
+      <div style="background: linear-gradient(135deg, #8b0000, #8b0000); padding: 24px; border-radius: 20px; max-width: 360px; width: 90%; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
         <label style="color:#aaa;font-size:12px;display:block;margin-bottom:6px;">Nombre</label>
         <input type="text" id="input-nombre-perfil" maxlength="12" placeholder="Tu nombre" autocomplete="off" style="
-          width:100%;padding:10px 14px;border-radius:10px;border:2px solid rgba(255,255,255,0.1);
-          background:rgba(255,255,255,0.05);color:white;font-size:15px;font-family:inherit;
+          width:100%;padding:10px 14px;border-radius:10px;border:2px solid ;rgba(255,255,255,0.1);;
+          background:rgba(255,255,255,0.1);color:white;font-size:15px;font-family:inherit;
           outline:none;margin-bottom:16px;box-sizing:border-box;
         ">
         <label style="color:#aaa;font-size:12px;display:block;margin-bottom:10px;">Elige un avatar</label>
@@ -245,8 +243,8 @@
           `; }).join('')}
         </div>
         <div style="display:flex;gap:10px;">
-          <button id="btn-cancelar-perfil" style="flex:1;padding:10px;border-radius:10px;border:2px solid rgba(255,255,255,0.2);background:transparent;color:white;cursor:pointer;font-size:13px;font-weight:600;">Cancelar</button>
-          <button id="btn-crear-perfil" style="flex:1;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#667eea,#764ba2);color:white;cursor:pointer;font-size:13px;font-weight:600;">¡Jugar!</button>
+          <button id="btn-cancelar-perfil" style="flex:1;padding:10px;border-radius:10px;border:2px solid rgba(255,255,255,0.2);background:transparent;background:white;color:black;cursor:pointer;font-size:13px;font-weight:600;">Cancelar</button>
+          <button id="btn-crear-perfil" style="flex:1;padding:10px;border-radius:10px;border:none;background:white;color:black;cursor:pointer;font-size:13px;font-weight:600;">¡Jugar!</button>
         </div>
       </div>
     `;
