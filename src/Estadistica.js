@@ -1,102 +1,37 @@
 // ==========================================
-// ESTADISTICA.JS - Diccionario Seguro (Solo Actividades)
+// ESTADISTICA.JS - VERSIÓN FINAL CON TODOS LOS FIXES
+// Rojo + Blanco - Estilo humano
 // ==========================================
 
-// 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
-// DICCIONARIO: Escribe aquí los nombres EXACTOS de las últimas actividades
-// IMPORTANTE: Solo funcionará con el NOMBRE DE LA ACTIVIDAD, no del proyecto
 // 👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇👇
 window.ULTIMAS_ACTIVIDADES_DICCIONARIO = [
 
   //Lenguajes
+  "bp6.puz", "kas1.ass", "n_3.puz", "macepuz.puz", "6peresc.ass",
+  "56.ass", "sop1.sop", "epeix.ass", "l.sop", "seca1md.puz",
+  "compren7.sop", "personaj.ass", "anim09/24ani203.ass", "manolo12.ass", "series4.ass",
 
-  "bp6.puz", //4cuentos
-  "kas1.ass", //Actividad 5 años infantil
-  "n_3.puz", //Actividad a leer con l,m,s,p,t,n
-  "macepuz.puz",//Aprendo jugando
-  "6peresc.ass", //Caperuticta roja
-  "56.ass", //Diferentes objetos
-  "sop1.sop",//El polito chiqui
-  "epeix.ass", // El soldadito de plomo
-  "l.sop", //Iniciacion a la lectura
-  "seca1md.puz",//Jack y las habichuelas magicas
-  "compren7.sop",// La gaviota de la coviña
-  "personaj.ass",//Los cuentos del lobo
-  "anim09/24ani203.ass",//Nombre de los animales
-  "manolo12.ass",//Números y letras
-  "series4.ass",//Las Vocales
-  
+  //Saberes
+  "valores1.ass", "familia.puz", "8dir2.ass", "bloc_mc5.ass", "blofcm21.ass",
+  "pc_nosw3.ass", "porta.ass", "formes21.ass", "num7_9_9.ass", "pm5plou.puz",
+  "pvee0.ass", "aliment.ass", "6789tris.ass", "comp23.ass", "desco104.ass",
+  "nens.puz", "num0g.puz", "parejas.puz", "55.ass", "54.ass",
+  "despues.ass", "9joc.ass", "pnu5.puz", "trenca4.puz", "l5.puz",
+  "acnina6.puz", "txiki30.puz", "gnoms2.ass", "Secuen79.pac", "lluna.puz",
+  "59.ass", "p5q18.txa", "ass025.ass",
 
+  //Etica
+  "Contenedor.ass", "hipulls.ass", "dreta3.ass", "frase20.ass", "tran15.ass",
+  "relacio/h.ass", "tele.sop", "boda2.puz", "tucan4.puz", "soni10.ass",
 
-  //Saberes y pensamiento cienficio
-
-  "valores1.ass",//Actividad infantil 3 años
-  "familia.puz",//Actividad infantil 4 años
-  "8dir2.ass",// Actividades de orientacion especial
-  "bloc_mc5.ass",//Actividades de lógica 1 
-  "blofcm21.ass",//Actividades de logica 2
-  "pc_nosw3.ass",//Activiadades de logica 3 
-  "porta.ass",//Animales salvajes
-  "formes21.ass",//Bloques logicos
-  "num7_9_9.ass",//Calculos y numeros del 1 al 9
-  "pm5plou.puz",//Clic de las medidas
-  "pvee0.ass",//Clic de las posiciones
-  "aliment.ass",//Colores y formas
-  "6789tris.ass",//Conceptos basicos
-   "comp23.ass",//Contar del 1 al 9
-   "desco104.ass",//Descompisicion de numeros 0-10
-   "nens.puz",//Direccionalidad, colores y formas
-   "num0g.puz",//El cuento de los numeros 0-9 No funciona tiene bug aparece al principio de la actividad y ya no vuelve aparecer ya que se aparecio en la portada
-   "parejas.puz",//El verano
-   "55.ass",//Formas y mas formas
-   "54.ass",//iguales
-   "despues.ass",//Jugando con numeros 
-   "9joc.ass",//Jugando con numeros 2 
-   "pnu5.puz",//Las regletas
-   "trenca4.puz",//Logica,numeracion y lateralidad
-   "l5.puz",//Los 3 osos
-   "acnina6.puz",//nina la gallina
-   "txiki30.puz",//Ordenar tamaños
-   "gnoms2.ass",//Producto cartesiano
-   "Secuen79.pac",//Secuecias Tiene bug aparece en me dio de la secuencia 2
-   "lluna.puz",//series
-   "59.ass",//Sombras Tiene bug aparece en las actividades de la mitad de 5 años
-   "p5q18.txa",//Tiempo, espacio y cantidad
-   "ass025.ass",//Uno,dos,tres o ninguno
-
-
-   //Etica,naturalez y sociedades
-   "Contenedor.ass",//Aprendiendo a reciclar
-   "hipulls.ass",//Elefante y otros grandes
-   "dreta3.ass",//La ratita presumida
-   "frase20.ass",//Los musicos de bremen
-   "tran15.ass",//Los medios de transporte
-   "relacio/h.ass",//Observa y relaciona
-   "tele.sop",//Once upon a time
-   "boda2.puz",//Otros niños del mundo No aparece
-   "tucan4.puz",//Puzzle de animales
-   "soni10.ass",//Reconocimiento de sonidos
-   
-
-   //De lo humano a comunitario
-
-   "orde2.puz",//Cuento para la tolerancia
-   "p312e.puz"//Los rincones de la clase
-
-
-
-
-
-
-
-
-  
-  
-  
-
+  //Humano
+  "orde2.puz", "p312e.puz"
 ];
 // 👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆👆
 
+// ==========================================
+// VARIABLES GLOBALES
+// ==========================================
 window.tiempoSegundos           = 0;
 window.relojInterval            = null;
 window.syncInterval             = null;
@@ -112,10 +47,125 @@ window.reporteMostrado          = false;
 window.juegoTerminado           = false;
 window.datosActividadActual     = { score: 0, actions: 0, maxScore: 0, maxActions: 0, solved: false };
 window.totalActividades         = 0;
-window.yaIniciado               = false; // NUEVO: Evitar detección prematura
+window.yaIniciado               = false;
+window.__escHandlerReporte      = null;
 
 // ==========================================
-// BUSCAR JCLIC (Incluye Iframes)
+// HELPER DE TRADUCCIÓN
+// ==========================================
+function tEst(clave) {
+  try {
+    const config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+    const idioma = config.idioma || 'es';
+    if (window.textosI18n && window.textosI18n[idioma] && window.textosI18n[idioma][clave]) {
+      return window.textosI18n[idioma][clave];
+    }
+  } catch(e) {}
+  return clave;
+}
+
+// ==========================================
+// ✅ REGISTRAR ESTADÍSTICA (DEFINIDA AL INICIO - FIX)
+// ==========================================
+function registrarEstadistica(juego, acierto, error, tiempoSegundos) {
+  console.log('🎯 registrarEstadistica LLAMADA:', { juego, acierto, error, tiempoSegundos });
+  
+  try {
+    const perfil = window.PerfilesManager?.obtenerPerfilActivo();
+    if (!perfil) {
+      console.warn('⚠️ No hay perfil activo');
+      return;
+    }
+
+    const stats = window.PerfilesManager.obtenerDatos(perfil.id, 'stats', {
+      juegosCompletados: 0,
+      totalAciertos: 0,
+      totalErrores: 0,
+      mejorPuntuacion: 0,
+      mejorRacha: 0,
+      tiempoTotal: 0,
+      ultimaActividad: null,
+      juegos: {}
+    });
+
+    // Actualizar contadores generales
+    stats.juegosCompletados = (stats.juegosCompletados || 0) + 1;
+    stats.totalAciertos = (stats.totalAciertos || 0) + acierto;
+    stats.totalErrores = (stats.totalErrores || 0) + error;
+    stats.tiempoTotal = (stats.tiempoTotal || 0) + tiempoSegundos;
+    stats.ultimaActividad = new Date().toISOString();
+
+    // Calcular puntuación
+    const totalIntentos = acierto + error;
+    const puntuacion = totalIntentos > 0 ? Math.round((acierto / totalIntentos) * 100) : 0;
+    
+    if (puntuacion > (stats.mejorPuntuacion || 0)) {
+      stats.mejorPuntuacion = puntuacion;
+    }
+
+    // ✅ FIX: Inicializar stats.juegos si es undefined
+    if (!stats.juegos || typeof stats.juegos !== 'object') {
+      stats.juegos = {};
+    }
+
+    // Actualizar stats del juego específico
+    if (!stats.juegos[juego]) {
+      stats.juegos[juego] = {
+        vecesJugado: 0,
+        mejorPuntuacion: 0,
+        totalAciertos: 0,
+        totalErrores: 0,
+        mejorTiempo: null,
+        ultimaVez: null
+      };
+    }
+
+    const juegoStats = stats.juegos[juego];
+    juegoStats.vecesJugado = (juegoStats.vecesJugado || 0) + 1;
+    juegoStats.totalAciertos = (juegoStats.totalAciertos || 0) + acierto;
+    juegoStats.totalErrores = (juegoStats.totalErrores || 0) + error;
+    juegoStats.ultimaVez = new Date().toISOString();
+    
+    if (puntuacion > juegoStats.mejorPuntuacion) {
+      juegoStats.mejorPuntuacion = puntuacion;
+    }
+    
+    if (!juegoStats.mejorTiempo || tiempoSegundos < juegoStats.mejorTiempo) {
+      juegoStats.mejorTiempo = tiempoSegundos;
+    }
+
+    // Guardar stats
+    window.PerfilesManager.guardarDatos(perfil.id, 'stats', stats);
+    console.log('💾 Stats guardadas. Total juegos:', stats.juegosCompletados);
+
+    // ✅ ACTUALIZAR ESTRELLAS
+    if (window.EstrellasManager && window.EstrellasManager.actualizarDOM) {
+      setTimeout(function() {
+        window.EstrellasManager.actualizarDOM();
+        console.log('⭐ Estrellas actualizadas');
+      }, 100);
+    }
+
+    // ✅ ACTUALIZAR FOOTER DE ESTADÍSTICAS
+    if (typeof window.actualizarFooterStats === 'function') {
+      setTimeout(function() {
+        window.actualizarFooterStats();
+        console.log('📊 Footer actualizado');
+      }, 150);
+    }
+
+    console.log('✅ Estadística registrada:', juego, `${puntuacion}%`);
+  } catch(e) {
+    console.error('❌ Error registrando estadística:', e);
+  }
+}
+
+// ✅ EXPONER GLOBALMENTE AL INICIO
+window.registrarEstadistica = registrarEstadistica;
+console.log('✅ registrarEstadistica disponible globalmente');
+
+// ==========================================
+// BUSCAR JCLIC
 // ==========================================
 function getJClic() {
   if (window.JClicObject) return window.JClicObject;
@@ -138,7 +188,7 @@ function getJClic() {
 }
 
 // ==========================================
-// VERIFICAR SI ESTÁ EN EL DICCIONARIO
+// VERIFICAR DICCIONARIO
 // ==========================================
 function esActividadFinal(nombreActividad) {
   if (!nombreActividad) return false;
@@ -148,19 +198,13 @@ function esActividadFinal(nombreActividad) {
 
   return window.ULTIMAS_ACTIVIDADES_DICCIONARIO.some(entrada => {
     const entradaLower = entrada.toLowerCase().trim();
-
-    // ✅ REGLA 1: Coincidencia exacta total
     if (nombreLower === entradaLower) return true;
-
-    // ✅ REGLA 2: El nombre termina con /entrada (ruta completa)
     if (nombreLower.endsWith('/' + entradaLower)) return true;
-
-    // ✅ REGLA 3: La entrada contiene "/" y coincide exactamente
     if (entradaLower.includes('/') && nombreLower === entradaLower) return true;
-
     return false;
   });
 }
+
 // ==========================================
 // ACTUALIZAR PANEL
 // ==========================================
@@ -180,11 +224,10 @@ function actualizarPanel(id, valor) {
 // RELOJ
 // ==========================================
 function iniciarReloj() {
-  // Verificar configuración de autoTimer
   try {
     var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
     if (config.autoTimer === false) {
-      console.log('⏱️ Temporizador desactivado por configuración');
+      console.log('⏱️ Temporizador desactivado');
       actualizarPanel('tiempo', '--:--');
       return;
     }
@@ -270,22 +313,46 @@ function registrarActividad(nombre, datos, tiempoActividad) {
     tiempoFmt  : `${minR}:${secR}`
   });
   
-  console.log('📋 Registrada:', nombre, '| Score:', score, '| Solved:', solved);
+  console.log('📋 Registrada:', nombre);
 }
 
 // ==========================================
 // FINALIZAR JUEGO
 // ==========================================
 function finalizarJuego() {
-  // ✅ FIX: Prevenir doble ejecución
   if (window.juegoTerminado) return;
   window.juegoTerminado = true;
+
+  console.log('🏁 Finalizando juego...');
   
-  // ... resto de tu código ...
+  // ✅ ACTUALIZAR ESTRELLAS
+  if (window.EstrellasManager) {
+    window.EstrellasManager.actualizarDOM();
+  }
   
-  // Llamada a notificaciones (solo una vez)
+  // ✅ REGISTRAR ESTADÍSTICA
   try {
-    var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+    const nombreJuego = document.getElementById('gameTitle')?.textContent || 'Juego';
+    const totalActs = window.registroActividades.length;
+    const correctas = window.registroActividades.filter(r => r.correcta === 'Sí').length;
+    const totalAcciones = window.registroActividades.reduce((s, r) => s + r.acciones, 0);
+    const totalTiempo = window.tiempoSegundos || 0;
+    
+    if (window.PerfilesManager?.obtenerPerfilActivo()) {
+      window.registrarEstadistica(
+        nombreJuego,
+        correctas,
+        totalAcciones - correctas,
+        totalTiempo
+      );
+      console.log('📊 Estadística final registrada');
+    }
+  } catch(e) {
+    console.warn('Error registrando estadística final:', e);
+  }
+  
+  // Notificaciones
+  try {
     var totalActs = window.registroActividades.length;
     var correctas = window.registroActividades.filter(function(r) { return r.correcta === 'Sí'; }).length;
     var puntMedia = totalActs > 0 ? Math.round(window.registroActividades.reduce(function(s, r) { return s + r.puntuacion; }, 0) / totalActs) : 0;
@@ -308,6 +375,7 @@ function mostrarPuntuacionTiempoReal() {
   } catch(e) {}
   return true;
 }
+
 // ==========================================
 // SINCRONIZACIÓN
 // ==========================================
@@ -325,20 +393,9 @@ function iniciarSync() {
       const seq = p.project?.activitySequence;
       if (!seq?.elements?.length) return;
 
-      // ==========================================
-      // 🔍 DEBUG: Mostrar TODAS las actividades del juego actual
-      // ==========================================
       if (window.totalActividades === 0) {
         window.totalActividades = seq.elements.length;
         console.log('✅ Total de actividades:', window.totalActividades);
-        
-        // 👇 NUEVO: Listar TODAS las actividades con su índice
-        console.log('📋 LISTA COMPLETA DE ACTIVIDADES:');
-        seq.elements.forEach((el, idx) => {
-          const nombre = (el?.activity || el?.activityName || el?.name || 'SIN NOMBRE').trim();
-          const esUltima = idx === seq.elements.length - 1;
-          console.log(`  ${idx}: "${nombre}" ${esUltima ? '⭐ ÚLTIMA' : ''}`);
-        });
       }
 
       const cv      = p.counterVal;
@@ -349,12 +406,10 @@ function iniciarSync() {
       if (score   !== window.ultimoScore)   { window.ultimoScore   = score;   if (mostrarPuntuacionTiempoReal()) actualizarPanel('aciertos', score); }
       if (errores !== window.ultimoActions) { window.ultimoActions = errores; if (mostrarPuntuacionTiempoReal()) actualizarPanel('intentos', errores); }
 
-// Racha de aciertos
       if (window.Notificaciones) {
         if (score > window.ultimoScore && score > 0) window.Notificaciones.registrarAcierto();
         if (errores > window.ultimoActions && errores > 0) window.Notificaciones.registrarError();
       }
-
 
       const currentIdx  = seq.currentAct ?? -1;
       const currentName = obtenerNombreActividad(JClic);
@@ -373,8 +428,7 @@ function iniciarSync() {
 
       const cambioPantalla = (currentIdx !== window.prevIdx) || (currentName !== window.prevName);
 
-
-    if (cambioPantalla && window.yaIniciado && window.prevName) {
+      if (cambioPantalla && window.yaIniciado && window.prevName) {
         if (window.sistemaSonido) window.sistemaSonido.playNotificacion();
       }
       if (cambioPantalla) {
@@ -384,18 +438,11 @@ function iniciarSync() {
             : 0;
           registrarActividad(window.ultimaActividadDetectada, window.datosActividadActual, t);
 
-         // ✅ FIX: Usar índice O diccionario (lo que ocurra primero)
           const anteriorEraUltimaPorIndice = (window.prevIdx === window.totalActividades - 1);
           const anteriorEraUltimaPorDiccionario = esActividadFinal(window.prevName);
 
-          console.log(`🔍 Check: prevIdx=${window.prevIdx} | total-1=${window.totalActividades - 1} | esUltimaIndice=${anteriorEraUltimaPorIndice} | esUltimaDiccionario=${anteriorEraUltimaPorDiccionario} | nombre="${window.prevName}"`);
-
           if ((anteriorEraUltimaPorIndice || anteriorEraUltimaPorDiccionario) && !window.juegoTerminado) {
-            if (anteriorEraUltimaPorDiccionario) {
-              console.log('🏁 FIN REAL por DICCIONARIO:', window.prevName);
-            } else {
-              console.log('🏁 FIN REAL por ÍNDICE:', window.prevName);
-            }
+            console.log('🏁 FIN DEL JUEGO:', window.prevName);
             finalizarJuego();
             return;
           }
@@ -412,8 +459,6 @@ function iniciarSync() {
         if (typeof cambiarInstruccionPorNombre === 'function') {
           cambiarInstruccionPorNombre(currentName);
         }
-
-        console.log(`🔵 Actividad: "${currentName}" (Índice: ${currentIdx}/${window.totalActividades - 1})`);
       }
 
     } catch(e) {
@@ -423,7 +468,7 @@ function iniciarSync() {
 }
 
 // ==========================================
-// REPORTE FINAL (con botón Imprimir/PDF)
+// REPORTE FINAL
 // ==========================================
 function mostrarReporteFinal() {
   const anterior = document.getElementById('modal-reporte');
@@ -439,113 +484,125 @@ function mostrarReporteFinal() {
   const porcentCorrectas = Math.round((totalCorrectas / totalActs) * 100);
   const minT             = String(Math.floor(totalTiempo / 60)).padStart(2, '0');
   const secT             = String(totalTiempo % 60).padStart(2, '0');
-  const nombreJuego      = document.getElementById('gameTitle')?.textContent || 'Juego';
+  const nombreJuego      = document.getElementById('gameTitle')?.textContent || tEst('juego');
   const fechaHoy         = new Date().toLocaleDateString();
+  const perfil           = window.PerfilesManager?.obtenerPerfilActivo();
+  const nombrePerfil     = perfil ? perfil.nombre : '';
 
   const filas = window.registroActividades.map(r => {
-    const colorFila     = r.correcta === 'Sí' ? '#e8f5e9' : '#ffebee';
-    const colorCorrecta = r.correcta === 'Sí' ? '#1a1a2e' : '#1a1a2e'; // ✅ Negro para ambos
+    const bgFila    = r.correcta === 'Sí' ? '#f0f9f0' : '#fef0f0';
+    const icono     = r.correcta === 'Sí' ? '✅' : '❌';
+    const textoSiNo = r.correcta === 'Sí' ? tEst('si') : tEst('no');
     return `
-      <tr style="background:${colorFila};border-bottom:1px solid #ddd;">
-        <td style="padding:8px 12px;color:#1a1a2e;">${r.secuencia}</td>
-        <td style="padding:8px 12px;color:#1a1a2e;">${r.actividad}</td>
-        <td style="padding:8px 12px;text-align:center;color:${colorCorrecta};font-weight:bold;">
-          ${r.correcta === 'Sí' ? '✅ Sí' : '❌ No'}
-        </td>
-        <td style="padding:8px 12px;text-align:center;color:#1a1a2e;">${r.acciones}</td>
-        <td style="padding:8px 12px;text-align:center;color:#1a1a2e;">${r.puntuacion}%</td>
-        <td style="padding:8px 12px;text-align:center;color:#1a1a2e;">${r.tiempoFmt}</td>
+      <tr style="background:${bgFila};">
+        <td style="padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#1a1a2e;">${r.secuencia}</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #e0e0e0;color:#1a1a2e;font-weight:600;">${r.actividad}</td>
+        <td style="padding:10px 12px;text-align:center;border-bottom:1px solid #e0e0e0;color:#1a1a2e;">${icono} ${textoSiNo}</td>
+        <td style="padding:10px 12px;text-align:center;border-bottom:1px solid #e0e0e0;color:#1a1a2e;">${r.acciones}</td>
+        <td style="padding:10px 12px;text-align:center;border-bottom:1px solid #e0e0e0;color:#c1272d;font-weight:700;">${r.puntuacion}%</td>
+        <td style="padding:10px 12px;text-align:center;border-bottom:1px solid #e0e0e0;color:#1a1a2e;">${r.tiempoFmt}</td>
       </tr>`;
   }).join('');
-  // Contenedor imprimible (solo esto va al PDF)
+
   const reporteHTML = `
-    <div id="reporte-imprimible" style="font-family:Arial,sans-serif;color:#1a1a2e;padding:20px;">
-      <div style="text-align:center;margin-bottom:20px;">
-        <h1 style="margin:0;font-size:24px;color:#667eea;">📊 Reporte de Actividades</h1>
-        <p style="margin:4px 0;color:#666;font-size:14px;">${nombreJuego} · ${fechaHoy}</p>
+    <div style="font-family:Arial,sans-serif;color:#1a1a2e;padding:20px;background:#ffffff;">
+      <div style="text-align:center;margin-bottom:25px;padding-bottom:15px;border-bottom:3px solid #c1272d;">
+        <h1 style="margin:0;font-size:24px;color:#c1272d;">📊 ${tEst('reporteActividades')}</h1>
+        <p style="margin:6px 0 0;color:#666;font-size:14px;font-weight:600;">${nombreJuego}</p>
+        ${nombrePerfil ? `<p style="margin:2px 0 0;color:#666;font-size:13px;">${perfil.avatar} ${nombrePerfil}</p>` : ''}
+        <p style="margin:2px 0 0;color:#999;font-size:12px;">${fechaHoy}</p>
       </div>
       
-      <table style="width:100%;border-collapse:collapse;margin-bottom:20px;background:#f8f9fa;border-radius:10px;overflow:hidden;">
-        <tr style="background:linear-gradient(135deg,#667eea,#764ba2);color:white;">
-          <td style="padding:12px 16px;font-weight:bold;">📋 Totales</td>
-          <td style="padding:12px 16px;text-align:center;"><strong>${totalCorrectas}</strong> correctas (${porcentCorrectas}%)</td>
-          <td style="padding:12px 16px;text-align:center;">${totalAcciones} acciones</td>
-          <td style="padding:12px 16px;text-align:center;">${puntMedia}%</td>
-          <td style="padding:12px 16px;text-align:center;">⏱ ${minT}:${secT}</td>
+      <table style="width:100%;border-collapse:collapse;margin-bottom:20px;background:#fafafa;border:2px solid #c1272d;border-radius:8px;overflow:hidden;">
+        <tr style="background:#c1272d;color:white;">
+          <td style="padding:12px 16px;font-weight:bold;font-size:14px;">📋 ${tEst('totales')}</td>
+          <td style="padding:12px 16px;text-align:center;font-size:14px;"><strong>${totalCorrectas}</strong> / ${totalActs} (${porcentCorrectas}%)</td>
+          <td style="padding:12px 16px;text-align:center;font-size:14px;">${totalAcciones} ${tEst('acciones')}</td>
+          <td style="padding:12px 16px;text-align:center;font-size:14px;"><strong>${puntMedia}%</strong></td>
+          <td style="padding:12px 16px;text-align:center;font-size:14px;">⏱ ${minT}:${secT}</td>
         </tr>
       </table>
 
-      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;background:#ffffff;">
         <thead>
-          <tr style="background:#e0e0e0;color:#1a1a2e;">
-            <th style="padding:12px;text-align:left;">Secuencia</th>
-            <th style="padding:12px;text-align:left;">Actividad</th>
-            <th style="padding:12px;text-align:center;">Correcta</th>
-            <th style="padding:12px;text-align:center;">Acciones</th>
-            <th style="padding:12px;text-align:center;">Puntuación</th>
-            <th style="padding:12px;text-align:center;">Tiempo</th>
+          <tr style="background:#c1272d;color:white;">
+            <th style="padding:12px;text-align:left;font-weight:700;">${tEst('secuencia')}</th>
+            <th style="padding:12px;text-align:left;font-weight:700;">${tEst('actividad')}</th>
+            <th style="padding:12px;text-align:center;font-weight:700;">${tEst('correcta')}</th>
+            <th style="padding:12px;text-align:center;font-weight:700;">${tEst('acciones')}</th>
+            <th style="padding:12px;text-align:center;font-weight:700;">${tEst('puntuacion')}</th>
+            <th style="padding:12px;text-align:center;font-weight:700;">${tEst('tiempo')}</th>
           </tr>
         </thead>
         <tbody>${filas}</tbody>
       </table>
-      
-      <div style="margin-top:30px;text-align:center;color:#999;font-size:12px;">
-        Generado por CEARTEE · Reporte de progreso educativo
-      </div>
     </div>
   `;
 
   const modalHTML = `
-    <div id="modal-reporte" style="position:fixed!important;top:0!important;left:0!important;
-      width:100vw!important;height:100vh!important;background:rgba(0,0,0,0.85)!important;
-      z-index:2147483647!important;display:flex!important;align-items:center!important;
-      justify-content:center!important;font-family:Arial,sans-serif!important;">
-      <div style="background:white;border-radius:20px;max-width:900px;width:95%;max-height:88vh;
-        overflow:hidden;display:flex;flex-direction:column;box-shadow:0 25px 60px rgba(0,0,0,0.5);">
-        
-        <div style="background:linear-gradient(135deg,#667eea,#764ba2);padding:20px 24px;display:flex;
-          align-items:center;justify-content:space-between;border-radius:20px 20px 0 0;">
-          <h2 style="color:white;margin:0;font-size:20px;">📊 Reporte de Actividades</h2>
-          <button onclick="cerrarReporte()" style="background:rgba(255,255,255,0.2);border:2px solid white;
-            color:white;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;font-weight:bold;">X</button>
+    <div id="modal-reporte" class="reporte-overlay">
+      <div class="reporte-contenedor">
+        <div class="reporte-header">
+          <h2>📊 ${tEst('reporteActividades')}</h2>
+          <button id="btn-cerrar-reporte" class="reporte-cerrar">✕</button>
         </div>
-
-        <div style="overflow-y:auto;flex:1;padding:24px;">
+        <div class="reporte-cuerpo">
           ${reporteHTML}
         </div>
-
-        <div style="padding:20px 24px;text-align:center;border-top:2px solid #e5e7eb;background:#f9fafb;
-          border-radius:0 0 20px 20px;display:flex;gap:15px;justify-content:center;">
-          <button onclick="imprimirReporte()" style="background:linear-gradient(135deg,#667eea,#764ba2);
-            color:white;border:none;padding:12px 30px;border-radius:25px;font-size:16px;font-weight:600;cursor:pointer;">
-            📄 Imprimir / Guardar PDF
-          </button>
-          <button onclick="reiniciarDesdeReporte()" style="background:linear-gradient(135deg,#27ae60,#2ecc71);
-            color:white;border:none;padding:12px 30px;border-radius:25px;font-size:16px;font-weight:600;cursor:pointer;">
-            🔄 Jugar de nuevo
-          </button>
-          <button onclick="cerrarReporte()" style="background:#ddd;color:#333;border:none;padding:12px 30px;
-            border-radius:25px;font-size:16px;cursor:pointer;">
-            ✅ Cerrar
-          </button>
+        <div class="reporte-footer">
+          <button id="btn-imprimir-reporte" class="reporte-btn reporte-btn-blanco">📄 ${tEst('imprimirPDF')}</button>
+          <button id="btn-reiniciar-reporte" class="reporte-btn reporte-btn-blanco">🔄 ${tEst('jugarDeNuevo')}</button>
+          <button id="btn-cerrar-reporte-2" class="reporte-btn reporte-btn-blanco">✅ ${tEst('cerrar')}</button>
         </div>
       </div>
     </div>`;
 
-  document.documentElement.insertAdjacentHTML('beforeend', modalHTML);
-  
-  // Guardar el HTML limpio para imprimir después
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+  setTimeout(function() {
+    const overlay = document.getElementById('modal-reporte');
+    if (!overlay) return;
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) cerrarReporte();
+    });
+
+    const btnCerrar = document.getElementById('btn-cerrar-reporte');
+    if (btnCerrar) btnCerrar.addEventListener('click', function(e) { e.stopPropagation(); cerrarReporte(); });
+
+    const btnImprimir = document.getElementById('btn-imprimir-reporte');
+    if (btnImprimir) btnImprimir.addEventListener('click', function(e) { e.stopPropagation(); imprimirReporte(); });
+
+    const btnReiniciar = document.getElementById('btn-reiniciar-reporte');
+    if (btnReiniciar) btnReiniciar.addEventListener('click', function(e) { e.stopPropagation(); reiniciarDesdeReporte(); });
+
+    const btnCerrar2 = document.getElementById('btn-cerrar-reporte-2');
+    if (btnCerrar2) btnCerrar2.addEventListener('click', function(e) { e.stopPropagation(); cerrarReporte(); });
+
+    if (window.__escHandlerReporte) document.removeEventListener('keydown', window.__escHandlerReporte);
+    window.__escHandlerReporte = function(e) { if (e.key === 'Escape') cerrarReporte(); };
+    document.addEventListener('keydown', window.__escHandlerReporte);
+  }, 50);
+
   window.__reporteParaImprimir = reporteHTML;
 }
 
-// ==========================================
-// IMPRIMIR REPORTE (PDF o físico)
-// ==========================================
+function cerrarReporte() {
+  const modal = document.getElementById('modal-reporte');
+  if (modal) modal.remove();
+  const iframe = document.getElementById('iframe-imprimir-reporte');
+  if (iframe) iframe.remove();
+  if (window.__escHandlerReporte) {
+    document.removeEventListener('keydown', window.__escHandlerReporte);
+    window.__escHandlerReporte = null;
+  }
+  window.__reporteParaImprimir = null;
+  window.juegoTerminado = false;
+  window.reporteMostrado = false;
+}
+
 function imprimirReporte() {
   if (!window.__reporteParaImprimir) return;
-
-  // ✅ SOLUCIÓN: Usar iframe oculto en vez de window.open()
-  // Esto evita el popup blocker de Tauri y funciona en el .exe
   var iframeId = 'iframe-imprimir-reporte';
   var iframeAnterior = document.getElementById(iframeId);
   if (iframeAnterior) iframeAnterior.remove();
@@ -557,113 +614,18 @@ function imprimirReporte() {
 
   var doc = iframe.contentWindow.document;
   doc.open();
-  doc.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Reporte CEARTEE</title>
-      <style>
-        @page { size: auto; margin: 15mm; }
-        body { 
-          font-family: 'Segoe UI', Arial, sans-serif; 
-          padding: 20px; 
-          color: #1a1a2e;
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
-        }
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h1 { margin: 0; font-size: 26px; color: #667eea; }
-        .header p { margin: 5px 0 0; color: #666; font-size: 14px; }
-        .resumen { 
-          width: 100%; 
-          border-collapse: collapse; 
-          margin-bottom: 25px;
-          background: #f8f9fa;
-          border-radius: 10px;
-          overflow: hidden;
-        }
-        .resumen td { 
-          padding: 14px 16px; 
-          text-align: center; 
-          font-size: 14px;
-        }
-        .resumen td:first-child { 
-          background: linear-gradient(135deg,#667eea,#764ba2); 
-          color: white; 
-          font-weight: bold;
-          text-align: left;
-        }
-        table.detalle { 
-          width: 100%; 
-          border-collapse: collapse; 
-          font-size: 13px;
-        }
-        table.detalle th { 
-          background: #e0e0e0; 
-          color: #1a1a2e; 
-          padding: 12px; 
-          text-align: left;
-          font-weight: 600;
-          border-bottom: 2px solid #764ba2;
-        }
-        table.detalle td { 
-          padding: 10px 12px; 
-          border-bottom: 1px solid #eee;
-        }
-        table.detalle tr:nth-child(even) { background: #fafafa; }
-        .footer { 
-          text-align: center; 
-          margin-top: 30px; 
-          font-size: 11px; 
-          color: #999; 
-          border-top: 1px solid #eee;
-          padding-top: 15px;
-        }
-      </style>
-    </head>
-    <body>
-      ${window.__reporteParaImprimir}
-      <div class="footer">
-        Generado por CEARTEE · Reporte de progreso educativo
-      </div>
-    </body>
-    </html>
-  `);
+  doc.write(`<!DOCTYPE html><html><head><title>Reporte</title><style>@page{size:auto;margin:15mm;}body{font-family:Arial;padding:20px;color:#1a1a2e;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}h1{color:#c1272d;}</style></head><body>${window.__reporteParaImprimir}</body></html>`);
   doc.close();
 
-  // Esperar a que el iframe renderice y luego imprimir
   setTimeout(function() {
-    try {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-    } catch(e) {
-      console.error('Error al imprimir:', e);
-    }
-    
-    // Limpiar iframe después de un tiempo
-    setTimeout(function() {
-      var el = document.getElementById(iframeId);
-      if (el) el.remove();
-    }, 60000); // Mantener 1 minuto por si el usuario cancela y quiere reintentar
+    try { iframe.contentWindow.focus(); iframe.contentWindow.print(); } catch(e) {}
+    setTimeout(function() { var el = document.getElementById(iframeId); if (el) el.remove(); }, 60000);
   }, 500);
-}
-
-// ==========================================
-// CERRAR Y REINICIAR
-// ==========================================
-function cerrarReporte() {
-  const modal = document.getElementById('modal-reporte');
-  if (modal) {
-    modal.style.transition = 'opacity 0.3s ease';
-    modal.style.opacity = '0';
-    setTimeout(() => modal.remove(), 300);
-  }
-  window.__reporteParaImprimir = null;
 }
 
 function reiniciarDesdeReporte() {
   cerrarReporte();
-  setTimeout(() => window.location.reload(), 300);
+  setTimeout(() => window.location.reload(), 100);
 }
 
 // ==========================================
@@ -695,13 +657,44 @@ function arrancarEstadisticas() {
     actualizarPanel('aciertos', '-');
     actualizarPanel('intentos', '-');
   }
-  actualizarPanel('tiempo',   '00:00');
+  actualizarPanel('tiempo', '00:00');
   
   iniciarReloj();
   iniciarSync();
   iniciarAcumulador();
 }
 
+// ==========================================
+// CSS
+// ==========================================
+function inyectarCSSReporte() {
+  if (document.getElementById('reporte-css')) return;
+  const style = document.createElement('style');
+  style.id = 'reporte-css';
+  style.textContent = `
+    .reporte-overlay { position:fixed!important; top:0!important; left:0!important; width:100vw!important; height:100vh!important; background:rgba(0,0,0,0.8)!important; z-index:2147483647!important; display:flex!important; align-items:center!important; justify-content:center!important; font-family:Arial,sans-serif!important; padding:20px; box-sizing:border-box; animation:reporteFadeIn 0.3s ease; }
+    @keyframes reporteFadeIn { from{opacity:0;} to{opacity:1;} }
+    .reporte-contenedor { background:#fff; border-radius:10px; max-width:900px; width:100%; max-height:90vh; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 5px 25px rgba(0,0,0,0.4); border:3px solid #c1272d; }
+    .reporte-header { background:#c1272d; color:#fff; padding:18px 24px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+    .reporte-header h2 { margin:0; font-size:20px; font-weight:700; }
+    .reporte-cerrar { background:#fff; color:#c1272d; border:none; width:34px; height:34px; border-radius:50%; font-size:18px; font-weight:bold; cursor:pointer; flex-shrink:0; }
+    .reporte-cerrar:hover { background:#c1272d; color:#fff; transform:scale(1.1); }
+    .reporte-cuerpo { overflow-y:auto; flex:1; background:#fafafa; }
+    .reporte-footer { padding:18px 24px; display:flex; gap:12px; justify-content:center; background:#f5f5f5; border-top:3px solid #c1272d; flex-shrink:0; flex-wrap:wrap; }
+    .reporte-btn { padding:11px 24px; border:2px solid #c1272d; border-radius:6px; font-size:14px; font-weight:700; cursor:pointer; text-transform:uppercase; }
+    .reporte-btn-blanco { background:#fff; color:#c1272d; }
+    .reporte-btn-blanco:hover { background:#c1272d; color:#fff; }
+  `;
+  document.head.appendChild(style);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', inyectarCSSReporte);
+} else {
+  inyectarCSSReporte();
+}
+
+// ✅ LISTENER DE LOAD (SOLO LLAMA A arrancarEstadisticas)
 window.addEventListener('load', () => {
   setTimeout(arrancarEstadisticas, 2000);
 });

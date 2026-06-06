@@ -51,3 +51,35 @@ function reproducirSonidoUI(tipo) {
     }
   } catch(e) {}
 }
+
+// ==========================================
+// ACTUALIZAR CONTADOR DE COMPLETADOS
+// ==========================================
+function actualizarContadorCompletados() {
+  if (!window.PerfilesManager) return;
+  
+  const perfil = window.PerfilesManager.obtenerPerfilActivo();
+  if (!perfil) return;
+  
+  const stats = window.PerfilesManager.obtenerDatos(perfil.id, 'stats', {
+    juegos: {}
+  });
+  
+  // Contar cuántos juegos diferentes ha completado
+  const juegosUnicos = Object.keys(stats.juegos || {}).length;
+  
+  const contador = document.getElementById('contador-completados');
+  if (contador) {
+    contador.textContent = juegosUnicos;
+  }
+  
+  console.log('🎮 Juegos completados:', juegosUnicos);
+}
+
+// Actualizar al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(actualizarContadorCompletados, 1000);
+});
+
+// Actualizar cada 2 segundos (por si completa un juego y vuelve)
+setInterval(actualizarContadorCompletados, 2000);

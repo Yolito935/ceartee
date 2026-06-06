@@ -6,20 +6,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 /* =========================================
-   OCULTAR SCROLLBAR PERO MANTENER SCROLL
+   OCULTAR SCROLLBAR
    ========================================= */
 html, body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE y Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
-/* Por si hay otros contenedores con scroll */
 * {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -56,7 +56,7 @@ body {
 }
 
 /* =========================================
-   FONDO ANIMADO (BURBUJAS MUY SUTILES)
+   FONDO ANIMADO
    ========================================= */
 .bg-animation {
   position: fixed;
@@ -94,7 +94,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-bottom: 140px; /* espacio para el footer flotante */
+  padding-bottom: 140px;
 }
 
 /* =========================================
@@ -112,7 +112,6 @@ body {
   height: 64px;
 }
 
-/* --- Botón Volver --- */
 .btn-back {
   background: none;
   border: none;
@@ -132,7 +131,7 @@ body {
   position: absolute;
   top: 50%;
   left: 120%;
-  padding:20px;
+  padding: 20px;
   transform: translate(-50%, -50%);
   width: 28px;
   height: 28px;
@@ -142,7 +141,8 @@ body {
   background-position: center;
 }
 
-/* --- Título centrado --- */
+
+
 .header-title {
   position: absolute;
   left: 50%;
@@ -150,14 +150,13 @@ body {
 }
 
 .header-title h1 {
-  font-size: 30px;
+  font-size: 50px;
   font-weight: 900;
   color: #111827;
   text-transform: uppercase;
   letter-spacing: 0.25em;
 }
 
-/* --- Botón Settings --- */
 .btn-settings {
   background: none;
   border: none;
@@ -165,7 +164,6 @@ body {
   width: 40px;
   height: 40px;
   position: relative;
-  
 }
 
 .btn-settings span {
@@ -174,7 +172,7 @@ body {
 
 .btn-settings::before {
   content: '';
-  padding:20px;
+  padding: 20px;
   position: absolute;
   top: 50%;
   left: -30%;
@@ -193,7 +191,7 @@ body {
 .page-subtitle {
   text-align: center;
   font-size: 0.95rem;
-  transform:translateY(50px);
+  transform: translateY(50px);
   font-weight: 500;
   color: rgba(255, 255, 255, 0.95);
   margin: 24px 20px 28px;
@@ -209,7 +207,7 @@ body {
   max-width: 920px;
   margin: 0 auto;
   padding: 0 20px;
-  margin-top:70px;
+  margin-top: 70px;
   width: 100%;
 }
 
@@ -236,7 +234,6 @@ body {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
-/* Brillo interior sutil (reemplaza card-glow del HTML) */
 .category-card::before {
   content: '';
   position: absolute;
@@ -253,17 +250,26 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 60px;
+  height: 90px; /* Era 60px, ahora es 90px */
 }
 
 .card-icon img {
-  max-width: 70px;
-  max-height: 55px;
+  max-width: 130px;
+  max-height: 110px;
   width: auto;
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
+
+.img_logos {
+  max-width: 130px !important;
+  max-height: 110px !important;
+}
+
+
+
+
 
 .card-title {
   font-size: 0.9rem;
@@ -323,6 +329,89 @@ body {
 }
 
 /* =========================================
+   ✅ ESTRELLAS DE CATEGORÍAS (CORREGIDO)
+   ========================================== */
+.categoria-estrellas {
+  margin: 8px 0 12px 0;
+  text-align: center;
+  min-height: 55px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0;
+  gap: 4px;
+  position: relative;
+  z-index: 2;
+}
+
+.estrellas-container {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 24px;
+}
+
+/* ⭐ Estrella ACTIVA (dorada) */
+.estrella-activa {
+  color: #FFD700 !important;
+  font-size: 22px;
+  line-height: 1;
+  text-shadow: 
+    0 0 4px rgba(255, 215, 0, 0.6),
+    0 1px 2px rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  font-weight: 900;
+  animation: estrellaBrillo 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.5));
+}
+
+/* ☆ Estrella VACÍA (gris oscuro) */
+.estrella-vacia {
+  color: #424242 !important;
+  font-size: 22px;
+  line-height: 1;
+  opacity: 0.7;
+  display: inline-block;
+  font-weight: 400;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación de brillo */
+@keyframes estrellaBrillo {
+  0%, 100% {
+    transform: scale(1);
+    text-shadow: 
+      0 0 4px rgba(255, 215, 0, 0.6),
+      0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    transform: scale(1.15);
+    text-shadow: 
+      0 0 8px rgba(255, 215, 0, 0.9),
+      0 0 12px rgba(255, 215, 0, 0.5),
+      0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Contador de juegos */
+.estrellas-contador {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+/* =========================================
    FOOTER DE ESTADÍSTICAS
    ========================================= */
 .footer-stats {
@@ -376,7 +465,7 @@ body {
 }
 
 /* =========================================
-   DECORACIÓN (oculta en esta vista)
+   DECORACIÓN
    ========================================= */
 .decoration {
   display: none;
@@ -405,5 +494,9 @@ body {
   .stat-item {
     padding: 0 16px;
     min-width: 70px;
+  }
+
+  .estrella-activa, .estrella-vacia {
+    font-size: 20px;
   }
 }

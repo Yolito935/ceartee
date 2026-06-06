@@ -84,103 +84,88 @@
     <div class="categories-grid">
       
        <!-- Lenguajes -->
-        
-      <div class="category-card" onclick="window.location.href='Lenguajes.html'"  data-category="puzzles"  onclick="selectCategory('puzzles')">
-        <div clas="card-glow" ></div>
-        <div class="card-icon" ><img src="./img_logos/Lenguajes.png" style="width: 60px;"></div>
-        <h2 class="card-title">Lenguajes</h2>
-        <div class="card-info">
-          <span class="game-count">15 juegos</span>
-          <div class="difficulty">
-            <span class="star active">★</span>
-            <span class="star active">★</span>
-            <span class="star">★</span>
-          </div>
-          
-          
+<div class="category-card" data-categoria="lenguajes">
+  <div class="card-icon"><img src="./img_logos/Lenguajes.png" class="img_logos"></div>
+  <h3 class="card-title" data-i18n="lenguaje">Lenguajes</h3>
+  
+  <!-- ✅ AGREGAR ESTO -->
+  <div class="categoria-estrellas" data-categoria="lenguajes">
+    <!-- Las estrellas se generan dinámicamente -->
+  </div>
+  <p class="card-counter game-count">15 juegos</p>
+  
+  <button class="card-btn" onclick="cearteeNavigate('Lenguajes.html')">
+    <span data-i18n="explorar">▶ EXPLORAR</span>
+  </button>
+</div>
 
-        </div>
-        <div class="card-btn">
-          <span>▶ EXPLORAR</span>
-        </div>
-      </div>
+<!-- Saberes -->
+<div class="category-card" data-categoria="saberes">
+  <div class="card-icon"><img src="./img_logos/Saberes.png" class="img_logos"></div>
+  <h3 class="card-title" data-i18n="saberes">Saberes y pensamiento cientifico</h3>
+  
+  <!-- ✅ AGREGAR ESTO -->
+  <div class="categoria-estrellas" data-categoria="saberes">
+    <!-- Las estrellas se generan dinámicamente -->
+  </div>
+  <p class="card-counter game-count">32 juegos</p>
+  
+  <button class="card-btn" onclick="cearteeNavigate('Saberes.html')">
+    <span data-i18n="explorar">▶ EXPLORAR</span>
+  </button>
+</div>
 
-      <!-- Saberes y pensamiento -->
-      <div class="category-card" onclick="window.location.href='Saberesypensamientocientifico.html'" data-category="letras" onclick="selectCategory('letras')">
-        <div class="card-glow"></div>
-        <div class="card-icon"><img src="./img_logos/Saberes.png" style="width: 100px;"></div>
-        <h2 class="card-title">Saberes y pensamiento cientifico</h2>
-        <div class="card-info">
-          <span class="game-count">32 juegos</span>
-          <div class="difficulty">
-            <span class="star active">★</span>
-            <span class="star">★</span>
-            <span class="star">★</span>
-          </div>
-        </div>
-        <div class="card-btn">
-          <span>▶ EXPLORAR</span>
-        </div>
-      </div>
+<!-- Ética -->
+<div class="category-card" data-categoria="etica">
+  <div class="card-icon"><img src="./img_logos/Etica.png" class="img_logos"></div>
+  <h3 class="card-title" data-i18n="etica">Ética, naturaleza y sociedades</h3>
+  
+  <!-- ✅ AGREGAR ESTO -->
+  <div class="categoria-estrellas" data-categoria="etica">
+    <!-- Las estrellas se generan dinámicamente -->
+  </div>
+  <p class="card-counter game-count">10 juegos</p>
+  
+  <button class="card-btn" onclick="cearteeNavigate('Etica.html')">
+    <span data-i18n="explorar">▶ EXPLORAR</span>
+  </button>
+</div>
 
-      <!-- Etica,naturelza y sociedades -->
-      <div class="category-card" data-category="numeros" onclick="window.location.href='Etica.html'" onclick="selectCategory('numeros')">
-        <div class="card-glow"></div>
-        <div class="card-icon" ><img src="./img_logos/Etica.png" style="width: 100px;"></div>
-        <h2 class="card-title">Ética,naturaleza y sociedades</h2>
-        <div class="card-info">
-          <span class="game-count">10 juegos</span>
-          <div class="difficulty">
-            <span class="star active">★</span>
-            <span class="star active">★</span>
-            <span class="star">★</span>
-          </div>
-        </div>
-        <div class="card-btn">
-          <span>▶ EXPLORAR</span>
-        </div>
-      </div>
+<!-- Humano -->
+<div class="category-card" data-categoria="humano">
+  <div class="card-icon"><img src="./img_logos/Humano.png" class="img_logos"></div>
+  <h3 class="card-title" data-i18n="humano">De lo humano a comunitario</h3>
+  
+  <!-- ✅ AGREGAR ESTO -->
+  <div class="categoria-estrellas" data-categoria="humano">
+    <!-- Las estrellas se generan dinámicamente -->
+  </div>
+  <p class="card-counter game-count">2 juegos</p>
+  
+  <button class="card-btn" onclick="cearteeNavigate('Delohumanoacomunitario.html')">
+    <span data-i18n="explorar">▶ EXPLORAR</span>
+  </button>
+</div>
 
-      <!-- De lo humano a comunitario -->
-      <div class="category-card" onclick="window.location.href='Delohumanoacomunitario.html'" data-category="geografia" onclick="selectCategory('geografia')">
-        <div class="card-glow"></div>
-        <div class="card-icon"><img src="./img_logos/Humano.png" style="width: 100px;"></div>
-        <h2 class="card-title">De lo humano a comunitario</h2>
-        <div class="card-info">
-          <span class="game-count">2 juegos</span>
-          <div class="difficulty">
-            <span class="star active">★</span>
-            <span class="star active">★</span>
-            <span class="star active">★</span>
-          </div>
-        </div>
-        <div class="card-btn">
-          <span>▶ EXPLORAR</span>
-        </div>
-      </div>
-
-      
-
-    <!-- Footer con estadísticas -->
     <footer class="footer-stats">
-      <div class="stat-item">
-        <span class="stat-icon"></span>
-        <span class="stat-value">59</span>
-        <span class="stat-label">Juegos</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-icon"></span>
-        <span class="stat-value">4</span>
-        <span class="stat-label">Categorías</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-icon"></span>
-        <span class="stat-value">0</span>
-        <span class="stat-label">Completados</span>
-      </div>
-    </footer>
+  <div class="stat-item">
+    <span class="stat-icon"></span>
+    <span class="stat-value">59</span>
+    <span class="stat-label" data-i18n="juegosStat">Juegos</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-icon"></span>
+    <span class="stat-value">4</span>
+    <span class="stat-label" data-i18n="categoriasStat">Categorías</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-item">
+    <span class="stat-icon"></span>
+    <span class="stat-value" id="contador-completados">0</span>
+    <span class="stat-label" data-i18n="completadosStat">Completados</span>
+  </div>
+</footer>
 
 
     <!-- Decoración -->
@@ -207,8 +192,9 @@
 
 
 </div>
+<script src="Categorias.js"></script>
 <script src="perfiles.js"></script>
-
+ <script src="Estrellas.js"></script>
 <script src="aplicar-config.js"></script>
 
     </body>

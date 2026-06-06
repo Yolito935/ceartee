@@ -23,7 +23,7 @@ body {
 
 /* La imagen del ícono dentro del círculo */
 .btn-img-icon {
-  width: 18px;
+  width: 80px;
   height: auto;
   object-fit: contain;
 }

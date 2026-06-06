@@ -1,287 +1,725 @@
 // ==========================================
-// PERFILES.JS - Sistema de perfiles locales para CEARTEE
+// PERFILES.JS - VERSIÓN FINAL CORREGIDA CON I18N
 // ==========================================
 
 (function() {
-  'use strict';
 
-  window.PerfilesManager = {
-    colores: ['#ff6b6b','#4ecdc4','#45b7d1','#96ceb4','#ffeaa7','#fd79a8','#a29bfe','#fab1a0'],
+  // ==========================================
+  // CONFIGURACIÓN
+  // ==========================================
+  const STORAGE_KEY = 'ceartee_perfiles';
+  const ACTIVE_KEY = 'ceartee_perfil_activo';
+  
+  // Avatares disponibles
+  const AVATARES = ['👶', '👧', '👦', '👨', '👩', '🧒', '👴', '👵', '🐶', '🐱', '🐭', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯', '🦁', '🐮', '🐷', '🦄', '🐸', '🐵', '🐔', '🦆', '🦉', '🐺', '🐗', '🦒', '🦘'];
 
+  // ==========================================
+  // HELPER DE TRADUCCIÓN
+  // ==========================================
+  function t(clave) {
+    try {
+      var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+      var idioma = config.idioma || 'es';
+      if (window.textosI18n && window.textosI18n[idioma] && window.textosI18n[idioma][clave]) {
+        return window.textosI18n[idioma][clave];
+      }
+    } catch(e) {}
+    return clave;
+  }
+
+  // ==========================================
+  // GESTIÓN DE PERFILES
+  // ==========================================
+  const PerfilesManager = {
+    
     obtenerPerfiles: function() {
-      try { return JSON.parse(localStorage.getItem('ceartee_perfiles') || '[]'); }
-      catch(e) { return []; }
+      try {
+        const data = localStorage.getItem(STORAGE_KEY);
+        return data ? JSON.parse(data) : [];
+      } catch(e) {
+        return [];
+      }
     },
 
-    guardarPerfiles: function(lista) {
-      localStorage.setItem('ceartee_perfiles', JSON.stringify(lista));
-    },
-
-    crearPerfil: function(nombre, avatar) {
-      var perfiles = this.obtenerPerfiles();
-      var nuevo = {
-        id: 'perf_' + Date.now(),
-        nombre: nombre.trim() || 'Jugador',
-        avatar: avatar || '👤',
-        color: this.colores[Math.floor(Math.random() * this.colores.length)],
-        creado: new Date().toISOString()
-      };
-      perfiles.push(nuevo);
-      this.guardarPerfiles(perfiles);
-      return nuevo;
-    },
-
-    eliminarPerfil: function(id) {
-      var perfiles = this.obtenerPerfiles().filter(function(p){ return p.id !== id; });
-      this.guardarPerfiles(perfiles);
-      localStorage.removeItem('ceartee_config_' + id);
-      localStorage.removeItem('ceartee_stats_' + id);
-      var activo = localStorage.getItem('ceartee_perfil_activo');
-      if (activo === id) localStorage.removeItem('ceartee_perfil_activo');
+    guardarPerfiles: function(perfiles) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(perfiles));
+        return true;
+      } catch(e) {
+        console.error('Error guardando perfiles:', e);
+        return false;
+      }
     },
 
     obtenerPerfilActivo: function() {
-      var id = localStorage.getItem('ceartee_perfil_activo');
-      if (!id) return null;
-      return this.obtenerPerfiles().find(function(p){ return p.id === id; }) || null;
+      try {
+        const id = localStorage.getItem(ACTIVE_KEY);
+        if (!id) return null;
+        const perfiles = this.obtenerPerfiles();
+        return perfiles.find(p => p.id === id) || null;
+      } catch(e) {
+        return null;
+      }
     },
 
-    setPerfilActivo: function(id) {
-      localStorage.setItem('ceartee_perfil_activo', id);
+    crearPerfil: function(nombre, avatar) {
+      const perfiles = this.obtenerPerfiles();
+      const nuevoPerfil = {
+        id: Date.now().toString() + Math.floor(Math.random() * 1000),
+        nombre: nombre.trim(),
+        avatar: avatar || AVATARES[0],
+        fechaCreacion: new Date().toISOString(),
+        ultimaActividad: new Date().toISOString()
+      };
+      perfiles.push(nuevoPerfil);
+      this.guardarPerfiles(perfiles);
+      
+      // ✅ INICIALIZAR STATS EN 0
+      this.guardarDatos(nuevoPerfil.id, 'stats', {
+        juegosCompletados: 0,
+        totalAciertos: 0,
+        totalErrores: 0,
+        mejorPuntuacion: 0,
+        mejorRacha: 0,
+        tiempoTotal: 0,
+        ultimaActividad: null,
+        juegos: {}
+      });
+      
+      console.log('✅ Perfil creado con stats en 0:', nuevoPerfil.nombre);
+      return nuevoPerfil;
+    },
+
+    eliminarPerfil: function(perfilId) {
+      let perfiles = this.obtenerPerfiles();
+      perfiles = perfiles.filter(p => p.id !== perfilId);
+      this.guardarPerfiles(perfiles);
+      if (localStorage.getItem(ACTIVE_KEY) === perfilId) {
+        localStorage.removeItem(ACTIVE_KEY);
+      }
+      this.eliminarDatosPerfil(perfilId);
+    },
+
+    editarPerfil: function(perfilId, nombre, avatar) {
+      const perfiles = this.obtenerPerfiles();
+      const perfil = perfiles.find(p => p.id === perfilId);
+      if (perfil) {
+        if (nombre) perfil.nombre = nombre.trim();
+        if (avatar) perfil.avatar = avatar;
+        this.guardarPerfiles(perfiles);
+        return true;
+      }
+      return false;
+    },
+
+    seleccionarPerfil: function(perfilId) {
+      try {
+        const perfiles = this.obtenerPerfiles();
+        const perfil = perfiles.find(p => p.id === perfilId);
+        if (perfil) {
+          localStorage.setItem(ACTIVE_KEY, perfilId);
+          perfil.ultimaActividad = new Date().toISOString();
+          this.guardarPerfiles(perfiles);
+          console.log('✅ Perfil seleccionado:', perfil.nombre);
+          return true;
+        }
+        console.error('❌ Perfil no encontrado:', perfilId);
+        return false;
+      } catch(e) {
+        console.error('❌ Error seleccionando perfil:', e);
+        return false;
+      }
     },
 
     logout: function() {
-      localStorage.removeItem('ceartee_perfil_activo');
+      localStorage.removeItem(ACTIVE_KEY);
     },
 
-     obtenerDatos: function(perfilId, clave, defaultValue) {
-      var key = 'ceartee_' + clave + '_' + perfilId;
-      var raw = localStorage.getItem(key);
-      if (raw) {
-        try { return JSON.parse(raw); } catch(e) { return defaultValue; }
+    obtenerDatos: function(perfilId, tipo, defaultValue) {
+      try {
+        const key = `ceartee_perfil_${perfilId}_${tipo}`;
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : defaultValue;
+      } catch(e) {
+        return defaultValue;
       }
-      // Los perfiles nuevos empiezan limpios, SIN heredar nada
-      return defaultValue;
-    },
-    guardarDatos: function(perfilId, clave, datos) {
-      var key = 'ceartee_' + clave + '_' + perfilId;
-      localStorage.setItem(key, JSON.stringify(datos));
     },
 
-    getConfig: function() {
-      var perfil = this.obtenerPerfilActivo();
-      if (!perfil) {
-        try { return JSON.parse(localStorage.getItem('appConfig') || '{}'); } catch(e){ return {}; }
+    guardarDatos: function(perfilId, tipo, datos) {
+      try {
+        const key = `ceartee_perfil_${perfilId}_${tipo}`;
+        localStorage.setItem(key, JSON.stringify(datos));
+        return true;
+      } catch(e) {
+        return false;
       }
-      return this.obtenerDatos(perfil.id, 'config', {});
     },
 
-    setConfig: function(config) {
-      var perfil = this.obtenerPerfilActivo();
-      if (!perfil) { localStorage.setItem('appConfig', JSON.stringify(config)); return; }
-      this.guardarDatos(perfil.id, 'config', config);
-    },
+    eliminarDatosPerfil: function(perfilId) {
+      const keys = Object.keys(localStorage);
+      keys.forEach(key => {
+        if (key.startsWith(`ceartee_perfil_${perfilId}_`)) {
+          localStorage.removeItem(key);
+        }
+      });
+    }
+  };
 
-    getStats: function() {
-      var perfil = this.obtenerPerfilActivo();
-      if (!perfil) {
-        try { return JSON.parse(localStorage.getItem('notificacionesDatos') || '{}'); } catch(e){ return {}; }
+  // ✅ EXPONER GLOBALMENTE
+  window.PerfilesManager = PerfilesManager;
+
+  // ==========================================
+  // ✅ RENDERIZAR SELECTOR DE PERFILES
+  // ==========================================
+  window.renderPantallaPerfiles = function(containerId, onSelect) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error('❌ No se encontró el contenedor:', containerId);
+      return;
+    }
+
+    const perfiles = PerfilesManager.obtenerPerfiles();
+    
+    // ✅ Guardar callback globalmente
+    window._perfilesCallback = onSelect;
+    
+    let html = '<div class="selector-perfiles-wrapper">';
+    html += '<h2 class="selector-titulo">' + t('quienJuega') + '</h2>';
+    html += '<p class="selector-subtitulo">' + t('tocaCarita') + '</p>';
+    
+    html += '<div class="perfiles-lista">';
+    
+    // Perfiles existentes
+    perfiles.forEach(function(perfil) {
+      html += '<div class="perfil-card" data-perfil-id="' + perfil.id + '">';
+      html += '<button class="btn-eliminar-perfil" data-perfil-id="' + perfil.id + '" title="' + t('eliminar') + '">🗑️</button>';
+      html += '<div class="perfil-avatar-grande">' + perfil.avatar + '</div>';
+      html += '<div class="perfil-nombre">' + escapeHtml(perfil.nombre) + '</div>';
+      html += '</div>';
+    });
+    
+    // Botón de nuevo perfil
+    html += '<div class="perfil-card perfil-nuevo" id="btnNuevoPerfil">';
+    html += '<div class="perfil-avatar-grande">➕</div>';
+    html += '<div class="perfil-nombre">' + t('nuevo') + '</div>';
+    html += '</div>';
+    
+    html += '</div>'; // .perfiles-lista
+    html += '</div>'; // .selector-perfiles-wrapper
+    
+    container.innerHTML = html;
+    
+    // ✅ Event listeners - Seleccionar perfil
+    container.querySelectorAll('.perfil-card[data-perfil-id]').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btn-eliminar-perfil')) return;
+        
+        const perfilId = this.getAttribute('data-perfil-id');
+        PerfilesManager.seleccionarPerfil(perfilId);
+        if (onSelect && typeof onSelect === 'function') {
+          onSelect();
+        } else {
+          window.location.reload();
+        }
+      });
+    });
+    
+    // ✅ Event listener - Nuevo perfil
+    var btnNuevo = container.querySelector('#btnNuevoPerfil');
+    if (btnNuevo) {
+      btnNuevo.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('➕ Click en Nuevo Perfil');
+        mostrarModalCrearPerfil(containerId, onSelect);
+      });
+    }
+    
+    // Event listener - Eliminar perfil
+    container.querySelectorAll('.btn-eliminar-perfil').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const perfilId = this.getAttribute('data-perfil-id');
+        const perfil = perfiles.find(p => p.id === perfilId);
+        const nombre = perfil ? perfil.nombre : '';
+        
+        if (confirm(t('eliminar') + ' "' + nombre + '"?')) {
+          PerfilesManager.eliminarPerfil(perfilId);
+          window.renderPantallaPerfiles(containerId, onSelect);
+        }
+      });
+    });
+  };
+
+  // ==========================================
+  // ✅ MODAL CREAR PERFIL
+  // ==========================================
+  function mostrarModalCrearPerfil(containerId, onSelect) {
+    console.log('🎨 Mostrando modal crear perfil');
+    
+    var existingModal = document.getElementById('modal-crear-perfil');
+    if (existingModal) {
+      existingModal.remove();
+    }
+    
+    const div = document.createElement('div');
+    div.id = 'modal-crear-perfil';
+    div.className = 'modal-overlay';
+    div.innerHTML = 
+      '<div class="modal-content">' +
+        '<h3>' + t('nombre') + '</h3>' +
+        '<input type="text" id="input-nombre-perfil" placeholder="' + t('tuNombre') + '" maxlength="20" autocomplete="off">' +
+        '<h3>' + t('eligeAvatar') + '</h3>' +
+        '<div class="avatar-selector" id="avatar-selector"></div>' +
+        '<div class="modal-buttons">' +
+          '<button class="btn-cancelar-modal">' + t('cancelar') + '</button>' +
+          '<button class="btn-crear-modal">' + t('jugar') + '</button>' +
+        '</div>' +
+      '</div>';
+    
+    document.body.appendChild(div);
+    
+    // Generar selector de avatares
+    var avatarContainer = div.querySelector('#avatar-selector');
+    if (avatarContainer) {
+      AVATARES.forEach(function(avatar, i) {
+        var span = document.createElement('span');
+        span.className = 'avatar-option' + (i === 0 ? ' selected' : '');
+        span.textContent = avatar;
+        span.setAttribute('data-avatar', avatar);
+        span.addEventListener('click', function() {
+          div.querySelectorAll('.avatar-option').forEach(function(s) { 
+            s.classList.remove('selected'); 
+          });
+          this.classList.add('selected');
+        });
+        avatarContainer.appendChild(span);
+      });
+    }
+    
+    // ✅ Event listener - Cancelar
+    var btnCancelar = div.querySelector('.btn-cancelar-modal');
+    if (btnCancelar) {
+      btnCancelar.addEventListener('click', function() {
+        div.remove();
+      });
+    }
+    
+    // ✅ Event listener - Crear
+    var btnCrear = div.querySelector('.btn-crear-modal');
+    if (btnCrear) {
+      btnCrear.addEventListener('click', function() {
+        var nombreInput = document.getElementById('input-nombre-perfil');
+        var nombre = nombreInput ? nombreInput.value.trim() : '';
+        var avatarSeleccionado = div.querySelector('.avatar-option.selected');
+        
+        if (!nombre) {
+          if (nombreInput) {
+            nombreInput.focus();
+            nombreInput.style.borderColor = '#ff5252';
+            setTimeout(function() {
+              nombreInput.style.borderColor = '';
+            }, 2000);
+          }
+          return;
+        }
+        
+        var avatar = avatarSeleccionado ? avatarSeleccionado.getAttribute('data-avatar') : AVATARES[0];
+        
+        // ✅ Crear perfil y seleccionar
+        var nuevoPerfil = PerfilesManager.crearPerfil(nombre, avatar);
+        PerfilesManager.seleccionarPerfil(nuevoPerfil.id);
+        
+        div.remove();
+        
+        // ✅ Llamar callback o recargar
+        if (onSelect && typeof onSelect === 'function') {
+          onSelect();
+        } else {
+          window.location.reload();
+        }
+      });
+    }
+    
+    // Enter en el input
+    var inputNombre = div.querySelector('#input-nombre-perfil');
+    if (inputNombre) {
+      inputNombre.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          if (btnCrear) btnCrear.click();
+        }
+      });
+    }
+    
+    // Click fuera del modal para cerrar
+    div.addEventListener('click', function(e) {
+      if (e.target === div) {
+        div.remove();
       }
-      return this.obtenerDatos(perfil.id, 'stats', {});
-    },
+    });
+    
+    // Mostrar modal con animación
+    setTimeout(function() { 
+      div.classList.add('active');
+      if (inputNombre) inputNombre.focus();
+    }, 10);
+  }
 
-    setStats: function(stats) {
-      var perfil = this.obtenerPerfilActivo();
-      if (!perfil) { localStorage.setItem('notificacionesDatos', JSON.stringify(stats)); return; }
-      this.guardarDatos(perfil.id, 'stats', stats);
+  // ✅ EXPONER GLOBALMENTE
+  window.mostrarModalCrearPerfil = mostrarModalCrearPerfil;
+
+  // ==========================================
+  // MODAL EDITAR PERFIL
+  // ==========================================
+  window.mostrarModalEditarPerfil = function(perfilId) {
+    var perfil = PerfilesManager.obtenerPerfiles().find(p => p.id === perfilId);
+    if (!perfil) return;
+    
+    var existingModal = document.getElementById('modal-editar-perfil');
+    if (existingModal) existingModal.remove();
+    
+    var div = document.createElement('div');
+    div.id = 'modal-editar-perfil';
+    div.className = 'modal-overlay';
+    div.innerHTML = 
+      '<div class="modal-content">' +
+        '<h3>' + t('editar') + '</h3>' +
+        '<input type="text" id="input-editar-nombre" value="' + escapeHtml(perfil.nombre) + '" maxlength="20">' +
+        '<h3>' + t('eligeAvatar') + '</h3>' +
+        '<div class="avatar-selector" id="avatar-selector-editar"></div>' +
+        '<div class="modal-buttons">' +
+          '<button class="btn-cancelar-modal">' + t('cancelar') + '</button>' +
+          '<button class="btn-guardar-modal">' + t('confirmar') + '</button>' +
+        '</div>' +
+      '</div>';
+    
+    document.body.appendChild(div);
+    
+    var avatarContainer = div.querySelector('#avatar-selector-editar');
+    AVATARES.forEach(function(avatar) {
+      var span = document.createElement('span');
+      span.className = 'avatar-option' + (avatar === perfil.avatar ? ' selected' : '');
+      span.textContent = avatar;
+      span.setAttribute('data-avatar', avatar);
+      span.addEventListener('click', function() {
+        div.querySelectorAll('.avatar-option').forEach(function(s) { 
+          s.classList.remove('selected'); 
+        });
+        this.classList.add('selected');
+      });
+      avatarContainer.appendChild(span);
+    });
+    
+    div.querySelector('.btn-cancelar-modal').addEventListener('click', function() {
+      div.remove();
+    });
+    
+    div.querySelector('.btn-guardar-modal').addEventListener('click', function() {
+      var nuevoNombre = div.querySelector('#input-editar-nombre').value.trim();
+      var nuevoAvatar = div.querySelector('.avatar-option.selected');
+      
+      if (nuevoNombre) {
+        PerfilesManager.editarPerfil(perfilId, nuevoNombre, nuevoAvatar ? nuevoAvatar.getAttribute('data-avatar') : null);
+        div.remove();
+        window.location.reload();
+      }
+    });
+    
+    setTimeout(function() { div.classList.add('active'); }, 10);
+  };
+
+  // ==========================================
+  // MODAL CAMBIAR JUGADOR (LOGOUT)
+  // ==========================================
+  window.mostrarModalCambiarJugador = function() {
+    var perfil = PerfilesManager.obtenerPerfilActivo();
+    if (!perfil) return;
+    
+    var existingModal = document.getElementById('modal-cambiar-jugador');
+    if (existingModal) existingModal.remove();
+    
+    var div = document.createElement('div');
+    div.id = 'modal-cambiar-jugador';
+    div.className = 'modal-overlay';
+    div.innerHTML = 
+      '<div class="modal-content modal-pequeno">' +
+        '<div class="perfil-actual-preview">' +
+          '<div class="perfil-avatar-grande">' + perfil.avatar + '</div>' +
+          '<div class="perfil-nombre">' + escapeHtml(perfil.nombre) + '</div>' +
+        '</div>' +
+        '<p>' + t('cambiarJugador') + '?</p>' +
+        '<div class="modal-buttons">' +
+          '<button class="btn-cancelar-modal">' + t('cancelar') + '</button>' +
+          '<button class="btn-cambiar-modal">' + t('confirmar') + '</button>' +
+        '</div>' +
+      '</div>';
+    
+    document.body.appendChild(div);
+    
+    div.querySelector('.btn-cancelar-modal').addEventListener('click', function() {
+      div.remove();
+    });
+    
+    div.querySelector('.btn-cambiar-modal').addEventListener('click', function() {
+      PerfilesManager.logout();
+      div.remove();
+      window.location.reload();
+    });
+    
+    setTimeout(function() { div.classList.add('active'); }, 10);
+  };
+
+  // ==========================================
+  // UTILIDADES
+  // ==========================================
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ==========================================
+  // ACTUALIZAR TEXTOS DINÁMICOS
+  // ==========================================
+  window.actualizarTextosPerfiles = function() {
+    var container = document.getElementById('selector-perfiles-container');
+    if (container && window._perfilesCallback) {
+      window.renderPantallaPerfiles('selector-perfiles-container', window._perfilesCallback);
     }
   };
 
   // ==========================================
-  // UI DE PERFILES (COMPACTA)
+  // CSS DINÁMICO
   // ==========================================
-  window.renderPantallaPerfiles = function(contenedorId, onSeleccionar) {
-    var contenedor = document.getElementById(contenedorId || 'app-container');
-    if (!contenedor) contenedor = document.body;
-
-    var perfiles = window.PerfilesManager.obtenerPerfiles();
-    var perfilActivo = window.PerfilesManager.obtenerPerfilActivo();
-
-    var html = `
-      <div id="pantalla-perfiles" style="
-        display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
-        padding:20px 16px;font-family:'Poppins',sans-serif;rgba(102,126,234,0.4);
-        background:transparent;border-radius:16px;max-width:400px;width:100%;margin:0 auto;
-      ">
-        <h2 style="font-size:22px;margin:0 0 4px;text-align:center;">¿Quién juega?</h2>
-        <p style="opacity:0.7;margin:0 0 20px;font-size:13px;text-align:center;">Toca tu carita para comenzar</p>
-        
-        <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
-          ${perfiles.map(function(p){
-            var esActivo = perfilActivo && perfilActivo.id === p.id;
-            return `
-              <div class="tarjeta-perfil" data-id="${p.id}" style="
-                position:relative;width:90px;height:110px;border-radius:14px;
-                background:${esActivo ? 'linear-gradient(135deg,#667eea,#764ba2)' : 'rgba(255,255,255,0.08)'};
-                border:2px solid ${esActivo ? '#fff' : 'transparent'};
-                display:flex;flex-direction:column;align-items:center;justify-content:center;
-                cursor:pointer;transition:all 0.25s;
-                box-shadow:${esActivo ? '0 4px 16px rgba(102,126,234,0.4)' : '0 2px 8px rgba(0,0,0,0.2)'};
-              " onmouseover="this.style.transform='translateY(-4px) scale(1.05)'" 
-                 onmouseout="this.style.transform='translateY(0) scale(1)'">
-                
-                <div class="btn-eliminar-perfil" data-id="${p.id}" style="
-                  position:absolute;top:4px;right:4px;width:20px;height:20px;
-                  border-radius:50%;background:rgba(255,255,255,0.15);
-                  display:flex;align-items:center;justify-content:center;
-                  cursor:pointer;font-size:11px;opacity:0.5;transition:all 0.2s;z-index:2;color:white;
-                " onmouseover="this.style.opacity='1';this.style.background='rgba(255,107,107,0.9)'" 
-                   onmouseout="this.style.opacity='0.5';this.style.background='rgba(255,255,255,0.15)'">✕</div>
-                
-                <div style="font-size:36px;margin-bottom:4px;">${p.avatar}</div>
-                <div style="font-weight:700;font-size:12px;text-align:center;padding:0 6px;word-break:break-word;line-height:1.2;">${p.nombre}</div>
-                ${esActivo ? '<div style="margin-top:3px;font-size:9px;opacity:0.9;">⭐</div>' : ''}
-              </div>
-            `;
-          }).join('')}
-          
-          <div id="btn-nuevo-perfil" style="
-            width:90px;height:110px;border-radius:14px;
-            background:rgba(102,126,234,0.4);
-            border:2px dashed rgba(255,255,255,0.6);
-            display:flex;flex-direction:column;align-items:center;justify-content:center;
-            cursor:pointer;transition:all 0.25s;color:#ffffff;
-          " onmouseover="this.style.background='rgba(102,126,234,0.6)';this.style.borderColor='#ffffff';this.style.transform='translateY(-4px)'" 
-             onmouseout="this.style.background='rgba(102,126,234,0.4)';this.style.borderColor='rgba(255,255,255,0.6)';this.style.transform='translateY(0)'">
-            <div style="font-size:32px;margin-bottom:2px;">+</div>
-            <div style="font-weight:600;font-size:12px;">Nuevo</div>
-          </div>
+  function inyectarCSS() {
+    if (document.getElementById('perfiles-css')) return;
+    
+    var style = document.createElement('style');
+    style.id = 'perfiles-css';
+    style.textContent = `
+      .selector-perfiles-wrapper {
+        text-align: center;
+        padding: 20px;
+      }
+      .selector-titulo {
+        font-size: 2em;
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .selector-subtitulo {
+        color: rgba(255,255,255,0.8);
+        margin-bottom: 30px;
+      }
+      .perfiles-lista {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .perfil-card {
+        background: rgba(255,255,255,0.1);
+        border: 2px solid rgba(255,255,255,0.2);
+        border-radius: 15px;
+        padding: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        min-width: 120px;
+        text-align: center;
+      }
+      .perfil-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255,255,255,0.15);
+        border-color: rgba(255,255,255,0.4);
+      }
+      .perfil-nuevo {
+        background: rgba(100,150,255,0.2);
+        border-color: rgba(100,150,255,0.4);
+      }
+      .perfil-avatar-grande {
+        font-size: 4em;
+        margin-bottom: 10px;
+      }
+      .perfil-nombre {
+        font-weight: 600;
+        color: #fff;
+      }
+      .btn-eliminar-perfil {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(255,0,0,0.3);
+        border: none;
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.2s;
+        z-index: 10;
+      }
+      .btn-eliminar-perfil:hover {
+        background: rgba(255,0,0,0.6);
+        transform: scale(1.1);
+      }
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .modal-overlay.active {
+        display: flex;
+        opacity: 1;
+      }
+      .modal-content {
+        background: linear-gradient(135deg, #c1272d, #8b1a1f);
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        color: #fff;
+        transform: scale(0.8);
+        transition: transform 0.3s;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .modal-overlay.active .modal-content {
+        transform: scale(1);
+      }
+      .modal-content.modal-pequeno {
+        max-width: 350px;
+      }
+      .modal-content h3 {
+        margin: 15px 0 10px;
+        font-size: 1.3em;
+      }
+      .modal-content input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-radius: 10px;
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 15px;
+        transition: all 0.2s;
+        box-sizing: border-box;
+      }
+      .modal-content input[type="text"]:focus {
+        outline: none;
+        border-color: rgba(255,255,255,0.6);
+        background: rgba(255,255,255,0.15);
+      }
+      .modal-content input::placeholder {
+        color: rgba(255,255,255,0.6);
+      }
+      .avatar-selector {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        margin: 15px 0;
+        padding: 10px;
+        background: rgba(0,0,0,0.2);
+        border-radius: 10px;
+      }
+      .avatar-option {
+        font-size: 2em;
+        padding: 8px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s;
+        background: rgba(255,255,255,0.1);
+        text-align: center;
+        user-select: none;
+      }
+      .avatar-option:hover {
+        background: rgba(255,255,255,0.2);
+        transform: scale(1.1);
+      }
+      .avatar-option.selected {
+        background: rgba(100,200,255,0.4);
+        border: 2px solid #64c8ff;
+        transform: scale(1.15);
+      }
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .modal-buttons button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn-cancelar-modal {
+        background: rgba(255,255,255,0.2);
+        color: #fff;
+      }
+      .btn-cancelar-modal:hover {
+        background: rgba(255,255,255,0.3);
+      }
+      .btn-crear-modal,
+      .btn-guardar-modal,
+      .btn-cambiar-modal {
+        background: #fff;
+        color: #c1272d;
+      }
+      .btn-crear-modal:hover,
+      .btn-guardar-modal:hover,
+      .btn-cambiar-modal:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+      }
+      .perfil-actual-preview {
+        margin: 20px 0;
+      }
+      .perfil-actual-preview .perfil-avatar-grande {
+        font-size: 5em;
+      }
     `;
-
-    contenedor.innerHTML = html;
-
-    document.querySelectorAll('.tarjeta-perfil').forEach(function(el){
-      el.addEventListener('click', function(e){
-        if (e.target.classList.contains('btn-eliminar-perfil')) return;
-        var id = this.getAttribute('data-id');
-        window.PerfilesManager.setPerfilActivo(id);
-        if (onSeleccionar) onSeleccionar(id);
-        else window.location.href = 'Etapas.html';
-      });
-    });
-
-    document.querySelectorAll('.btn-eliminar-perfil').forEach(function(el){
-      el.addEventListener('click', function(e){
-        e.stopPropagation();
-        var id = this.getAttribute('data-id');
-        var perfil = window.PerfilesManager.obtenerPerfiles().find(function(p){ return p.id === id; });
-        mostrarConfirmacionEliminar(perfil, id, contenedorId, onSeleccionar);
-      });
-    });
-
-    document.getElementById('btn-nuevo-perfil').addEventListener('click', function(){
-      mostrarModalNuevoPerfil(contenedorId, onSeleccionar);
-    });
-  };
-
-  function mostrarConfirmacionEliminar(perfil, id, contenedorId, onSeleccionar) {
-    var modal = document.createElement('div');
-    modal.style.cssText = `
-      position:fixed;top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.85);z-index:999999;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Poppins',sans-serif;
-    `;
-    modal.innerHTML = `
-      <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);padding:28px;border-radius:20px;max-width:320px;width:85%;border:1px solid rgba(255,255,255,0.1);text-align:center;">
-        <div style="font-size:40px;margin-bottom:10px;">🗑️</div>
-        <h2 style="color:white;margin:0 0 6px;font-size:18px;">¿Eliminar perfil?</h2>
-        <p style="color:#ff6b6b;font-size:17px;font-weight:700;margin-bottom:6px;">${perfil ? perfil.avatar + ' ' + perfil.nombre : ''}</p>
-        <p style="color:#aaa;font-size:13px;margin-bottom:20px;line-height:1.4;">Se borrarán todos sus logros y progreso. No se puede deshacer.</p>
-        <div style="display:flex;gap:10px;">
-          <button id="btn-cancelar-eliminar" style="flex:1;padding:10px;border-radius:10px;border:2px solid rgba(255,255,255,0.2);background:transparent;color:white;cursor:pointer;font-size:13px;font-weight:600;">Cancelar</button>
-          <button id="btn-confirmar-eliminar" style="flex:1;padding:10px;border-radius:10px;border:none;background:linear-gradient(135deg,#ff6b6b,#ee5a24);color:white;cursor:pointer;font-size:13px;font-weight:600;">Sí, eliminar</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    document.getElementById('btn-cancelar-eliminar').addEventListener('click', function(){ modal.remove(); });
-    document.getElementById('btn-confirmar-eliminar').addEventListener('click', function(){
-      window.PerfilesManager.eliminarPerfil(id);
-      modal.remove();
-      window.renderPantallaPerfiles(contenedorId, onSeleccionar);
-    });
+    document.head.appendChild(style);
   }
 
-  function mostrarModalNuevoPerfil(contenedorId, onSeleccionar) {
-    var avatales = ['👧','🧒','👦','👩','🧑','👨','🐱','🐶','🦊','🐼','🦁','🐯','🦄','🐸','🐙','🤖'];
-    var modal = document.createElement('div');
-    modal.id = 'modal-nuevo-perfil';
-    modal.style.cssText = `
-      position:fixed;top:0;left:0;width:100%;height:100%;
-      background:rgba(0,0,0,0.85);z-index:999999;
-      display:flex;align-items:center;justify-content:center;
-      font-family:'Poppins',sans-serif;
-    `;
-    modal.innerHTML = `
-      <div style="background: linear-gradient(135deg, #8b0000, #8b0000); padding: 24px; border-radius: 20px; max-width: 360px; width: 90%; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
-        <label style="color:#aaa;font-size:12px;display:block;margin-bottom:6px;">Nombre</label>
-        <input type="text" id="input-nombre-perfil" maxlength="12" placeholder="Tu nombre" autocomplete="off" style="
-          width:100%;padding:10px 14px;border-radius:10px;border:2px solid ;rgba(255,255,255,0.1);;
-          background:rgba(255,255,255,0.1);color:white;font-size:15px;font-family:inherit;
-          outline:none;margin-bottom:16px;box-sizing:border-box;
-        ">
-        <label style="color:#aaa;font-size:12px;display:block;margin-bottom:10px;">Elige un avatar</label>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:20px;">
-          ${avatales.map(function(a){ return `
-            <div class="opcion-avatar" data-avatar="${a}" style="
-              width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.05);
-              display:flex;align-items:center;justify-content:center;font-size:22px;
-              cursor:pointer;transition:all 0.2s;border:2px solid transparent;
-            ">${a}</div>
-          `; }).join('')}
-        </div>
-        <div style="display:flex;gap:10px;">
-          <button id="btn-cancelar-perfil" style="flex:1;padding:10px;border-radius:10px;border:2px solid rgba(255,255,255,0.2);background:transparent;background:white;color:black;cursor:pointer;font-size:13px;font-weight:600;">Cancelar</button>
-          <button id="btn-crear-perfil" style="flex:1;padding:10px;border-radius:10px;border:none;background:white;color:black;cursor:pointer;font-size:13px;font-weight:600;">¡Jugar!</button>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-    // ✅ Limpiar input y forzar foco sin autocompletado
-var inputNombre = document.getElementById('input-nombre-perfil');
-if (inputNombre) {
-  inputNombre.value = '';
-  inputNombre.setAttribute('autocomplete', 'off');
-}
-
-    var avatarSeleccionado = '👤';
-    modal.querySelectorAll('.opcion-avatar').forEach(function(el){
-      el.addEventListener('click', function(){
-        modal.querySelectorAll('.opcion-avatar').forEach(function(x){
-          x.style.borderColor='transparent'; x.style.background='rgba(255,255,255,0.05)';
-        });
-        this.style.borderColor='#667eea'; this.style.background='rgba(102,126,234,0.2)';
-        avatarSeleccionado = this.getAttribute('data-avatar');
-      });
-    });
-    if (modal.querySelector('.opcion-avatar')) modal.querySelector('.opcion-avatar').click();
-
-    document.getElementById('btn-cancelar-perfil').addEventListener('click', function(){ modal.remove(); });
-    document.getElementById('btn-crear-perfil').addEventListener('click', function(){
-      var nombre = document.getElementById('input-nombre-perfil').value.trim();
-      if (!nombre) { document.getElementById('input-nombre-perfil').style.borderColor='#ff6b6b'; return; }
-      var perfil = window.PerfilesManager.crearPerfil(nombre, avatarSeleccionado);
-      window.PerfilesManager.setPerfilActivo(perfil.id);
-      modal.remove();
-      if (onSeleccionar) onSeleccionar(perfil.id);
-      else window.location.href = 'Etapas.html';
-    });
-    document.getElementById('input-nombre-perfil').addEventListener('keydown', function(e){
-      if (e.key === 'Enter') document.getElementById('btn-crear-perfil').click();
-    });
-    document.getElementById('input-nombre-perfil').focus();
+  // Inyectar CSS al cargar
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inyectarCSS);
+  } else {
+    inyectarCSS();
   }
+
+  // ==========================================
+  // ESCUCHAR CAMBIOS DE IDIOMA
+  // ==========================================
+  setInterval(function() {
+    var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+    if (config.idioma !== window._ultimoIdioma) {
+      window._ultimoIdioma = config.idioma;
+      if (typeof window.actualizarTextosPerfiles === 'function') {
+        window.actualizarTextosPerfiles();
+      }
+    }
+  }, 500);
+
+  window._ultimoIdioma = (JSON.parse(localStorage.getItem('appConfig') || '{}')).idioma || 'es';
 
 })();

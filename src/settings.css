@@ -73,6 +73,14 @@ body {
   border-radius: 50%;
 }
 
+/* La imagen del ícono dentro del círculo */
+.btn-img-icon {
+  width: 98px;
+  height: auto;
+  object-fit: contain;
+  
+}
+
 .bg-animation span:nth-child(1) { width: 80px;  height: 80px;  top: 10%; left: 8%;  }
 .bg-animation span:nth-child(2) { width: 40px;  height: 40px;  top: 20%; left: 85%; }
 .bg-animation span:nth-child(3) { width: 120px; height: 120px; top: 70%; left: 75%; }
@@ -125,10 +133,11 @@ body {
   content: '';
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 150%;
   transform: translate(-50%, -50%);
   width: 28px;
   height: 28px;
+  padding:20px;
   background-image: url("./img_logos/volver-flecha.png");
   background-size: contain;
   background-repeat: no-repeat;

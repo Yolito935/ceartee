@@ -1,7 +1,6 @@
 // ==========================================
-// APLICAR-CONFIG.JS
+// APLICAR-CONFIG.JS - VERSIÓN FINAL CON I18N COMPLETO + MUTATION OBSERVER
 // Se carga en TODOS los HTML
-// Lee el localStorage y aplica la configuración
 // ==========================================
 
 (function() {
@@ -16,7 +15,7 @@
     } catch(e) {}
 
     return {
-      idioma        : 'es',
+      idioma        : 'ca',
       tema          : 'dark',
       animaciones   : true,
       volumen       : 70,
@@ -33,44 +32,89 @@
   }
 
   // ==========================================
-  // APLICAR TEMA
+  // TRADUCCIONES COMPLETAS (3 IDIOMAS)
   // ==========================================
-  function aplicarTema(tema) {
-    document.body.classList.remove('tema-dark', 'tema-light', 'tema-auto');
-    if (tema === 'auto') {
-      const esClaro = window.matchMedia('(prefers-color-scheme: light)').matches;
-      document.body.classList.add(esClaro ? 'tema-light' : 'tema-dark');
-      document.body.classList.add('tema-auto');
-    } else {
-      document.body.classList.add('tema-' + tema);
-    }
-  }
-
-  // ==========================================
-  // APLICAR ANIMACIONES
-  // ==========================================
-  function aplicarAnimaciones(activas) {
-    if (activas) {
-      document.body.classList.remove('sin-animaciones');
-    } else {
-      document.body.classList.add('sin-animaciones');
-    }
-  }
-
-  // ==========================================
-  // TRADUCCIONES COMPLETAS
-  // ==========================================
-    const textos = {
+  const textos = {
     es: {
-      bienvenida       : 'Bienvenido a Cearte',
+      // ── index.html ──
+      bienvenida       : 'Bienvenido a Murcia',
       subtitulo        : 'Tu experiencia comienza aquí',
       iniciar          : 'Pulsa para Entrar',
+      visitanosLabel   : 'Visítanos para conocer más',
+      visitanosSub     : 'nuestro servicio',
+      direccion        : 'Dirección',
+      redesSociales    : 'Redes Sociales',
+      redesSocialesLabel: 'Redes Sociales',
+      cearteeSinaloa   : 'Ceartee Sinaloa',
+      cearteeEmail     : 'ceartee@sin.nuevaescuela.mx',
+      cearteeBlog      : 'cearteesinaloa.blogspot.mx',
+      queEsCeartee     : '¿Qué es Ceartee?',
+      cearteeDesc      : 'Centro Experimental de Adecuación y Recursos Telemáticos de Educación Especial',
+      cearteeLargo     : 'Un espacio para impulsar la inclusión educativa a través de tecnologías y recursos especializados.',
+      
+      // Selector de perfiles
+      quienJuega       : '¿Quién juega?',
+      tocaCarita       : 'Toca tu carita para comenzar',
+      nuevo            : 'Nuevo',
+      nombre           : 'Nombre',
+      tuNombre         : 'Tu nombre',
+      eligeAvatar      : 'Elige un avatar',
+      cancelar         : 'Cancelar',
+      jugar            : '¡Jugar!',
+      si               : 'Sí',
+      no               : 'No',
+      eliminar         : 'Eliminar',
+      editar           : 'Editar',
+      atras            : 'Atrás',
+      seleccionarAvatar: 'Selecciona un avatar',
+      confirmar        : 'Confirmar',
+      salir            : 'Salir',
+      cerrarSesion     : 'Cerrar sesión',
+      hola             : 'Hola',
+      continuar        : 'Continuar',
+      cambiarJugador   : 'Cambiar jugador',
+      panelDocente     : 'Panel Docente',
+      irPanelDocente   : 'Panel Docente',
+      progresoAlumnos  : 'Ver progreso de todos los alumnos',
 
+            // ✅ INSTRUCCIONES.JS
+      muyBienDefault   : '🎉 ¡¡¡ Muy bien !!! 🎉',
+      prefijoMuyBien   : '🎉',
+      sufijoMuyBien    : '🎉',
+      cargandoMsg      : 'Cargando...',
+      bienvenidaInstr  : 'Bienvenido',
+      disfrutaInstr    : 'Disfruta el juego',
+      presionaJugar    : 'Presiona para jugar',
+      listoJugar       : '¡Listo para jugar!',
+      seleccionaOpcion : 'Selecciona una opción',
+      muyBien          : '¡Muy bien!',
+      excelente        : '¡Excelente!',
+      intentaloNuevo   : 'Inténtalo de nuevo',
+      correcto         : 'Correcto',
+      incorrecto       : 'Incorrecto',
+      tiempoAgotado    : 'Tiempo agotado',
+      hasGanado        : '¡Has ganado!',
+      hasPerdido       : 'Has perdido',
+      juegoTerminado   : 'Juego terminado',
+      siguienteNivel   : 'Siguiente nivel',
+      quieresReintentar: '¿Quieres intentar de nuevo?',
+      siReintentar     : 'Sí, reintentar',
+      noSalir          : 'No, salir',
+      puntos           : 'puntos',
+      estrellas        : 'estrellas',
+      nivel            : 'Nivel',
+      ronda            : 'Ronda',
+      ejercicio        : 'Ejercicio',
+      actividad        : 'Actividad',
+
+
+      // ── Etapas ──
       etapasTitulo     : 'Etapas',
       preescolar       : 'Preescolar',
       primaria         : 'Primaria',
       secundaria       : 'Secundaria',
 
+      // ── Categorías ──
       catPreescolar    : 'CATEGORÍAS PREESCOLAR',
       catPrimaria      : 'CATEGORÍAS PRIMARIA',
       catSecundaria    : 'CATEGORÍAS SECUNDARIA',
@@ -84,6 +128,61 @@
       categoriasStat   : 'Categorías',
       completadosStat  : 'Completados',
 
+      // ── Vista.js / vista.html ──
+      lenguajesH1      : 'Lenguajes',
+      saberesH1        : 'Saberes y pensamiento cientifico',
+      eticaH1          : 'Ética,naturaleza y sociedades',
+      humanoH1         : 'De lo humano a comunitario',
+      jugarBtn         : 'JUGAR',
+      noResultados     : 'No se encontraron juegos',
+      anos3_5          : '3-5 años',
+      anos4_6          : '4-6 años',
+      anos6_8          : '6-8 años',
+      anos9_12         : '9-12 años',
+      anos13_15        : '13-15 años',
+      minTxt           : 'min',
+      cargando         : 'Cargando...',
+      cargandoJuego    : 'Cargando juego...',
+      instrucciones    : 'Instrucciones aparecerán aquí...',
+      volverMenu       : 'Volver al menú',
+      pantallaCompleta : 'Pantalla completa',
+      ejercicioAnterior: 'Ejercicio anterior',
+      siguienteEjercicio: 'Siguiente ejercicio',
+      reiniciarEjercicio: 'Reiniciar ejercicio',
+      volver           : '',
+      volverGenerico   : ' ',
+      aciertos         : 'Aciertos:',
+      intentos         : 'Intentos:',
+      tiempo           : 'Tiempo:',
+      correctas        : 'Correct:',
+      intentosTxt      : 'Attempts:',
+      tiempoTxt        : 'Time:',
+      siguiente        : 'Siguiente',
+      anterior         : 'Anterior',
+      reiniciar        : 'Reiniciar',
+      barraInstrucciones: 'Instrucciones aparecerán aquí...',
+
+      // ✅ VISTA.JS - Textos del loader y mensajes
+      loaderPreparando    : 'Preparando tu experiencia de aprendizaje',
+      loaderFinalizando   : 'Finalizando',
+      loaderEsperando     : 'Esperando al juego',
+      errorTituloCarga    : '¡Ups! No se pudo cargar',
+      errorNoJuego        : 'No se especificó ningún juego',
+      btnReintentar       : 'Intentar de nuevo',
+      noPuedeAvanzar      : 'No se puede avanzar',
+      noPuedeRetroceder   : 'No se puede retroceder',
+      kioscoPresionaEsc   : 'Presiona ESC 2 veces para salir',
+      errorNoDescargar    : 'No se pudo descargar el archivo',
+      errorZipVacio       : 'El archivo del juego está vacío o incompleto.',
+      errorZipDanado      : 'El archivo del juego está dañado. No es un ZIP válido.',
+      errorNoProyecto     : 'El archivo no contiene un proyecto JClic válido.',
+      errorProyectoVacio  : 'El proyecto dentro del ZIP está vacío o incompleto.',
+      errorZipCorrupto    : 'El archivo ZIP está corrupto.',
+      errorTimeout        : 'El juego tardó demasiado en cargar. ¿Quieres intentarlo de nuevo?',
+      errorMotor          : 'El motor de juegos tuvo un problema al iniciar esta actividad.',
+      errorNoMotor        : 'El motor de juegos no se pudo iniciar.',
+
+      // ── Juegos ──
       juegosTitulo     : 'JUEGOS',
       juegosSub        : 'Selecciona un juego para jugar',
       buscarJuegos     : 'Buscar juego...',
@@ -92,90 +191,249 @@
       medio            : 'Medio',
       dificil          : 'Difícil',
 
-      lenguajesH1      : 'Lenguajes',
-      saberesH1        : 'Saberes y pensamiento cientifico',
-      eticaH1          : 'Ética,naturaleza y sociedades',
-      humanoH1         : 'De lo humano a comunitario',
-      jugar            : 'JUGAR',
-      noResultados     : 'No se encontraron juegos',
-      anos3_5          : '3-5 años',
-      anos4_6          : '4-6 años',
-      anos6_8          : '6-8 años',
-      anos9_12         : '9-12 años',
-      anos13_15        : '13-15 años',
-      minTxt           : 'min',
-
-      volver           : ' Volver',
-      aciertos         : 'Aciertos:',
-      intentos         : 'Intentos:',
-      tiempo           : 'Tiempo:',
-      siguiente        : 'Siguiente →',
-      anterior         : '← Anterior',
-      reiniciar        : '🔄 Reiniciar',
-      cargando         : '🎮 Cargando juego...',
-
+      // ── Configuración ──
       configuracion    : 'CONFIGURACIÓN',
-      salir            : 'Salir',
-
-
-      //Configuracion
-       confGeneral        : 'General',
-      confSonido         : 'Sonido',
-      confJuego          : 'Juego',
-      confBackup         : 'Backup y Sincronización',
-      confAvanzado       : 'Avanzado',
-      confIdioma         : 'Idioma',
-      confIdiomaDesc     : 'Selecciona el idioma de la interfaz',
-      confTema           : 'Tema',
-      confTemaDesc       : 'Elige el tema visual de la aplicación',
-      confAnimaciones    : 'Animaciones',
+      confGeneral      : 'General',
+      confSonido       : 'Sonido',
+      confJuego        : 'Juego',
+      confBackup       : 'Backup y Sincronización',
+      confAvanzado     : 'Avanzado',
+      confIdioma       : 'Idioma',
+      confIdiomaDesc   : 'Selecciona el idioma de la interfaz',
+      langEspanol      : 'Español',
+      langCatala       : 'Català',
+      langEnglish      : 'English',
+      confTema         : 'Tema',
+      confTemaDesc     : 'Elige el tema visual de la aplicación',
+      confAnimaciones  : 'Animaciones',
       confAnimacionesDesc: 'Activar/desactivar efectos visuales',
-      confVolumenJuego     : 'Volumen del juego',
-      confVolumenJuegoDesc : 'Controla el volumen de los sonidos dentro de los juegos',
-      confVolumen        : 'Volumen principal',
-      confVolumenDesc    : 'Controla el volumen de los efectos de sonido',
-      confSonidoNoti     : 'Sonido de notificaciones',
-      confSonidoNotiDesc : 'Reproducir sonido al recibir notificaciones',
-      confSonidoJuego    : 'Sonido al completar juego',
-      confSonidoJuegoDesc: 'Reproducir efecto de victoria',
-      confTimer          : 'Temporizador automático',
-      confTimerDesc      : 'Iniciar temporizador al abrir un juego',
-      confPuntuacion     : 'Mostrar puntuación en tiempo real',
-      confPuntuacionDesc : 'Actualizar estadísticas mientras juegas',
-      confDificultad     : 'Dificultad por defecto',
-      confDificultadDesc : 'Nivel de dificultad al iniciar juegos',
-      confBackupInterval : 'Auto-backup cada',
-      confBackupDesc     : 'Frecuencia de guardado automático',
-      confNube           : 'Sincronización en la nube',
-      confNubeDesc       : 'Guardar progreso en la nube (requiere cuenta)',
-      confDevMode        : 'Modo desarrollador',
-      confDevModeDesc    : 'Mostrar información de depuración',
-      confLimpiar        : 'Limpiar caché',
-      confLimpiarDesc    : 'Eliminar datos temporales',
-      confLimpiarBtn     : 'Limpiar',
-      confCancelar       : '✕ CANCELAR',
-      confGuardar        : '✓ GUARDAR CAMBIOS',
-      confRestablecer    : 'Restablecer',
-      confTemaOscuro     : 'Oscuro (Predeterminado)',
-      confTemaClaro      : 'Claro',
-      confTemaAuto       : 'Automático',
-      confFacil          : 'Fácil',
-      confMedio          : 'Medio',
-      confDificil        : 'Difícil',
-      conf5min           : '5 minutos',
-      conf15min          : '15 minutos',
-      conf30min          : '30 minutos',
-      conf1hora          : '1 hora',
-      confTodas          : 'Todas',
+      confVolumenJuego : 'Volumen del juego',
+      confVolumenJuegoDesc: 'Controla el volumen de los sonidos dentro de los juegos',
+      confVolumen      : 'Volumen principal',
+      confVolumenDesc  : 'Controla el volumen de los efectos de sonido',
+      confSonidoNoti   : 'Efectos de sonido',
+      confSonidoNotiDesc: 'Reproducir cuando los botones tienen efectos de sonido',
+      confSonidoJuego  : 'Sonido al completar juego',
+      confSonidoJuegoDesc: 'Reproducir notificacion de efecto de victoria',
+      confTimer        : 'Temporizador automático',
+      confTimerDesc    : 'Iniciar temporizador al abrir un juego',
+      confPuntuacion   : 'Mostrar puntuación en tiempo real',
+      confPuntuacionDesc: 'Actualizar estadísticas mientras juegas',
+      confDificultad   : 'Dificultad por defecto',
+      confDificultadDesc: 'Nivel de dificultad al iniciar juegos',
+      confBackupInterval: 'Auto-backup cada',
+      confBackupDesc   : 'Frecuencia de guardado automático',
+      confNube         : 'Sincronización en la nube',
+      confNubeDesc     : 'Guardar progreso en la nube (requiere cuenta)',
+      confDevMode      : 'Modo desarrollador',
+      confDevModeDesc  : 'Mostrar información de depuración',
+      confLimpiar      : 'Limpiar caché',
+      confLimpiarDesc  : 'Eliminar datos temporales',
+      confLimpiarBtn   : 'Limpiar',
+      confCancelar     : 'CANCELAR',
+      confGuardar      : 'GUARDAR CAMBIOS',
+      confRestablecer  : 'Restablecer',
+      confTemaOscuro   : 'Oscuro (Predeterminado)',
+      confTemaClaro    : 'Claro',
+      confTemaAuto     : 'Automático',
+      confFacil        : 'Fácil',
+      confMedio        : 'Medio',
+      confDificil      : 'Difícil',
+      conf5min         : '5 minutos',
+      conf15min        : '15 minutos',
+      conf30min        : '30 minutos',
+      conf1hora        : '1 hora',
+      confTodas        : 'Todas',
 
-      nombresJuegos    : {},
+      // ── Panel docente ──
+      accesoDocente    : 'Acceso Docente',
+      accesoDesc       : 'Ingresa la contraseña para ver el progreso de los alumnos',
+      contrasenyaPlaceholder: 'Contraseña',
+      passwordPlaceholder  : 'Contraseña',
+      entrar           : 'Entrar',
+      passError        : 'Contraseña incorrecta',
+      volverInicio     : '← Volver al inicio',
+      panelTitulo      : '👩‍🏫 Panel de Control Docente',
+      numAlumnos       : 'alumnos',
+      alumnos          : 'alumnos',
+      buscarAlumno     : 'Buscar alumno por nombre...',
+      ordenNombre      : 'Ordenar por nombre',
+      ordenJuegos      : 'Más juegos completados',
+      ordenPuntuacion  : 'Mejor puntuación',
+      ordenReciente    : 'Más reciente',
+      thAlumno         : 'Alumno',
+      thJuegos         : 'Juegos',
+      thPuntuacion     : 'Mejor Punt.',
+      thRacha          : 'Racha',
+      thLogros         : 'Logros',
+      thUltima         : 'Última vez',
+      noAlumnos        : 'No hay alumnos registrados todavía.',
+      crearPerfil      : 'Crear primer perfil',
+      footerDocente    : 'CEARTEE - Panel Docente • Los datos se guardan localmente en esta computadora',
+      
+      completados      : 'completados',
+      mejorTxt         : 'mejor',
+      rachaTxt         : 'mejor racha',
+      sinLogros        : 'Sin logros aún',
+      haceDias         : 'Hace',
+      diasTxt          : 'días',
+      haceHoras        : 'Hace',
+      horasTxt         : 'horas',
+      haceMinutos      : 'Hace',
+      minutosTxt       : 'minutos',
+      nunca            : 'Nunca',
+      soloHaceMomento  : 'Hace un momento',
+
+                // ✅ ESTADISTICA.JS - Reporte Final
+      reporteActividades    : 'Reporte de Actividades',
+      juego                 : 'Juego',
+      totales               : 'Totales',
+      secuencia             : 'Secuencia',
+      actividad             : 'Actividad',
+      correcta              : 'Correcta',
+      acciones              : 'Acciones',
+      puntuacion            : 'Puntuación',
+      tiempo                : 'Tiempo',
+      generadoPor           : 'Generado por',
+      imprimirPDF           : 'Imprimir / Guardar PDF',
+      jugarDeNuevo          : 'Jugar de nuevo',
+      cerrar                : 'Cerrar',
+      si                    : 'Sí',
+      no                    : 'No',
+
+      nombresJuegos    : {
+        '4 Cuentos'                        : '4 Cuentos',
+        'Actividad 5 años infantil'        : 'Actividad 5 años infantil',
+        'Aprende a leer con l,m,s,p,t,n'   : 'Aprende a leer con l,m,s,p,t,n',
+        'Aprendo jugando'                  : 'Aprendo jugando',
+        'Caperucita Roja'                  : 'Caperucita Roja',
+        'Diferentes objetos'               : 'Diferentes objetos',
+        'El pollito Chiqui'                : 'El pollito Chiqui',
+        'El Soldadito de plomo'            : 'El Soldadito de plomo',
+        'Iniciación a la lectura'          : 'Iniciación a la lectura',
+        'Jack y las habichuelas mágicas'   : 'Jack y las habichuelas mágicas',
+        'La gaviota de la Coviña'          : 'La gaviota de la Coviña',
+        'Los cuentos del lobo'             : 'Los cuentos del lobo',
+        'Nombre de los animales'           : 'Nombre de los animales',
+        'Números y letras'                 : 'Números y letras',
+        'Las Vocales'                      : 'Las Vocales',
+        'Actinfantil 3 años'                      : 'Actinfantil 3 años',
+        'Act infantil 4 años'                     : 'Act infantil 4 años',
+        'Actividades de orientacion especial'     : 'Actividades de orientacion especial',
+        'Actividades de lógica 1'                 : 'Actividades de lógica 1',
+        'Actividades de lógica 2'                 : 'Actividades de lógica 2',
+        'Actividades de lógica 3'                 : 'Actividades de lógica 3',
+        'Animales salvajes'                       : 'Animales salvajes',
+        'Bloques lógicos'                         : 'Bloques lógicos',
+        'Cálculo y Números del 1 al 9'           : 'Cálculo y Números del 1 al 9',
+        'Clic de las medidas'                     : 'Clic de las medidas',
+        'Clic de las posiciones'                  : 'Clic de las posiciones',
+        'Conceptos básicos'                       : 'Conceptos básicos',
+        'Contar del 1 al 9'                       : 'Contar del 1 al 9',
+        'Descomposición de números 0-10'          : 'Descomposición de números 0-10',
+        'Direccionalidad, colores y formas'       : 'Direccionalidad, colores y formas',
+        'El cuento de los números 0-9'            : 'El cuento de los números 0-9',
+        'El verano'                               : 'El verano',
+        'Formas y más formas'                     : 'Formas y más formas',
+        'Iguales'                                 : 'Iguales',
+        'Jugando con números'                     : 'Jugando con números',
+        'Jugando con números 2'                   : 'Jugando con números 2',
+        'Las regletas'                            : 'Las regletas',
+        'Lógica, numeración y lateralidad'        : 'Lógica, numeración y lateralidad',
+        'Los 3 osos'                              : 'Los 3 osos',
+        'Nina la gallina'                         : 'Nina la gallina',
+        'Ordenar tamaños'                         : 'Ordenar tamaños',
+        'Producto cartesiano'                     : 'Producto cartesiano',
+        'Secuencias'                              : 'Secuencias',
+        'Series'                                  : 'Series',
+        'Sombras'                                 : 'Sombras',
+        'Tiempo, espacio y Cantidad'              : 'Tiempo, espacio y Cantidad',
+        'Uno, dos, tres o ninguno'                : 'Uno, dos, tres o ninguno',
+        'Aprendiendo a reciclar'        : 'Aprendiendo a reciclar',
+        'El elefante y otros grandes'   : 'El elefante y otros grandes',
+        'La ratita presumida'           : 'La ratita presumida',
+        'Los musicos de bremen'         : 'Los musicos de bremen',
+        'Los medios de transporte'      : 'Los medios de transporte',
+        'Observa y relaciona'           : 'Observa y relaciona',
+        'Once upon a time'              : 'Once upon a time',
+        'Otros niños del mundo'         : 'Otros niños del mundo',
+        'Puzzles de animales'           : 'Puzzles de animales',
+        'Reconocimientos de sonidos'    : 'Reconocimientos de sonidos',
+        'Cuento para la tolerancia'   : 'Cuento para la tolerancia',
+        'Los rincones de la clase'    : 'Los rincones de la clase'
+      },
       descripcionesJuegos: {}
     },
 
     ca: {
-      bienvenida       : 'Benvingut a Ceartee',
+      bienvenida       : 'Benvingut a Murcia',
       subtitulo        : 'La teva experiència comença aquí',
       iniciar          : 'Pulsa per Entrar',
+      visitanosLabel   : 'Visita\'ns per conèixer més',
+      visitanosSub     : 'el nostre servei',
+      direccion        : 'Direcció',
+      redesSociales    : 'Xarxes Socials',
+      redesSocialesLabel: 'Xarxes Socials',
+      cearteeSinaloa   : 'Ceartee Sinaloa',
+      cearteeEmail     : 'ceartee@sin.nuevaescuela.mx',
+      cearteeBlog      : 'cearteesinaloa.blogspot.mx',
+      queEsCeartee     : 'Què és Ceartee?',
+      cearteeDesc      : 'Centre Experimental d\'Adequació i Recursos Telemàtics d\'Educació Especial',
+      cearteeLargo     : 'Un espai per impulsar la inclusió educativa a través de tecnologies i recursos especialitzats.',
+      
+      quienJuega       : 'Qui juga?',
+      tocaCarita       : 'Toca la teva careta per començar',
+      nuevo            : 'Nou',
+      nombre           : 'Nom',
+      tuNombre         : 'El teu nom',
+      eligeAvatar      : 'Tria un avatar',
+      cancelar         : 'Cancel·lar',
+      jugar            : 'Jugar!',
+      si               : 'Sí',
+      no               : 'No',
+      eliminar         : 'Eliminar',
+      editar           : 'Editar',
+      atras            : 'Enrere',
+      seleccionarAvatar: 'Selecciona un avatar',
+      confirmar        : 'Confirmar',
+      salir            : 'Sortir',
+      cerrarSesion     : 'Tancar sessió',
+      hola             : 'Hola',
+      continuar        : 'Continuar',
+      cambiarJugador   : 'Canviar jugador',
+      panelDocente     : 'Panell Docent',
+      irPanelDocente   : 'Panell Docent',
+      progresoAlumnos  : 'Veure el progrés de tots els alumnes',
+
+            // ✅ INSTRUCCIONS.JS
+      muyBienDefault   : '🎉 !!! Molt bé !!! 🎉',
+      prefijoMuyBien   : '🎉',
+      sufijoMuyBien    : '🎉',
+      cargandoMsg      : 'Carregant...',
+      bienvenidaInstr  : 'Benvingut',
+      disfrutaInstr    : 'Disfruta del joc',
+      presionaJugar    : 'Prem per jugar',
+      listoJugar       : 'Llest per jugar!',
+      seleccionaOpcion : 'Selecciona una opció',
+      muyBien          : 'Molt bé!',
+      excelente        : 'Excel·lent!',
+      intentaloNuevo   : 'Torna-ho a provar',
+      correcto         : 'Correcte',
+      incorrecto       : 'Incorrecte',
+      tiempoAgotado    : 'Temps esgotat',
+      hasGanado        : 'Has guanyat!',
+      hasPerdido       : 'Has perdut',
+      juegoTerminado   : 'Joc acabat',
+      siguienteNivel   : 'Següent nivell',
+      quieresReintentar: 'Vols tornar-ho a provar?',
+      siReintentar     : 'Sí, tornar-ho a provar',
+      noSalir          : 'No, sortir',
+      puntos           : 'punts',
+      estrellas        : 'estrelles',
+      nivel            : 'Nivell',
+      ronda            : 'Ronda',
+      ejercicio        : 'Exercici',
+      actividad        : 'Activitat',
 
       etapasTitulo     : 'Etapes',
       preescolar       : 'Preescolar',
@@ -199,7 +457,7 @@
       saberesH1        : 'Sabers i pensament científic',
       eticaH1          : 'Ètica,natura i societats',
       humanoH1         : 'De l\'humà a comunitari',
-      jugar            : 'JUGAR',
+      jugarBtn         : 'JUGAR',
       noResultados     : 'No s\'han trobat jocs',
       anos3_5          : '3-5 anys',
       anos4_6          : '4-6 anys',
@@ -207,6 +465,45 @@
       anos9_12         : '9-12 anys',
       anos13_15        : '13-15 anys',
       minTxt           : 'min',
+      cargando         : 'Carregant...',
+      cargandoJuego    : 'Carregant joc...',
+      instrucciones    : 'Les instruccions apareixeran aquí...',
+      volverMenu       : 'Tornar al menú',
+      pantallaCompleta : 'Pantalla completa',
+      ejercicioAnterior: 'Exercici anterior',
+      siguienteEjercicio: 'Següent exercici',
+      reiniciarEjercicio: 'Reiniciar exercici',
+      volver           : '',
+      volverGenerico   : '← Tornar',
+      aciertos         : 'Encerts:',
+      intentos         : 'Intents:',
+      tiempo           : 'Temps:',
+      correctas        : 'Correctes:',
+      intentosTxt      : 'Intents:',
+      tiempoTxt        : 'Temps:',
+      siguiente        : 'Següent',
+      anterior         : 'Anterior',
+      reiniciar        : 'Reiniciar',
+      barraInstrucciones: 'Les instruccions apareixeran aquí...',
+
+      loaderPreparando    : 'Preparant la teva experiència d\'aprenentatge',
+      loaderFinalizando   : 'Finalitzant',
+      loaderEsperando     : 'Esperant el joc',
+      errorTituloCarga    : 'Ups! No s\'ha pogut carregar',
+      errorNoJuego        : 'No s\'ha especificat cap joc',
+      btnReintentar       : 'Tornar-ho a provar',
+      noPuedeAvanzar      : 'No es pot avançar',
+      noPuedeRetroceder   : 'No es pot retrocedir',
+      kioscoPresionaEsc   : 'Prem ESC 2 vegades per sortir',
+      errorNoDescargar    : 'No s\'ha pogut descarregar l\'arxiu',
+      errorZipVacio       : 'L\'arxiu del joc està buit o incomplet.',
+      errorZipDanado      : 'L\'arxiu del joc està malmès. No és un ZIP vàlid.',
+      errorNoProyecto     : 'L\'arxiu no conté un projecte JClic vàlid.',
+      errorProyectoVacio  : 'El projecte dins del ZIP està buit o incomplet.',
+      errorZipCorrupto    : 'L\'arxiu ZIP està corrupte.',
+      errorTimeout        : 'El joc ha trigat massa a carregar. Vols tornar-ho a provar?',
+      errorMotor          : 'El motor de jocs ha tingut un problema en iniciar aquesta activitat.',
+      errorNoMotor        : 'El motor de jocs no s\'ha pogut iniciar.',
 
       juegosTitulo     : 'JOCS',
       juegosSub        : 'Selecciona un joc per jugar',
@@ -216,71 +513,118 @@
       medio            : 'Mitjà',
       dificil          : 'Difícil',
 
-      volver           : ' Tornar',
-      aciertos         : 'Encerts:',
-      intentos         : 'Intents:',
-      tiempo           : 'Temps:',
-      siguiente        : 'Següent →',
-      anterior         : '← Anterior',
-      reiniciar        : '🔄 Reiniciar',
-      cargando         : '🎮 Carregant joc...',
-
       configuracion    : 'CONFIGURACIÓ',
-      salir            : 'Sortir',
-
-      //Configuracion
-            confGeneral        : 'General',
-      confSonido         : 'So',
-      confJuego          : 'Joc',
-      confBackup         : 'Còpia de seguretat i Sincronització',
-      confAvanzado       : 'Avançat',
-      confIdioma         : 'Idioma',
-      confIdiomaDesc     : 'Selecciona l\'idioma de la interfície',
-      confTema           : 'Tema',
-      confTemaDesc       : 'Tria el tema visual de l\'aplicació',
-      confAnimaciones    : 'Animacions',
+      confGeneral      : 'General',
+      confSonido       : 'So',
+      confJuego        : 'Joc',
+      confBackup       : 'Còpia de seguretat i Sincronització',
+      confAvanzado     : 'Avançat',
+      confIdioma       : 'Idioma',
+      confIdiomaDesc   : 'Selecciona l\'idioma de la interfície',
+      langEspanol      : 'Español',
+      langCatala       : 'Català',
+      langEnglish      : 'English',
+      confTema         : 'Tema',
+      confTemaDesc     : 'Tria el tema visual de l\'aplicació',
+      confAnimaciones  : 'Animacions',
       confAnimacionesDesc: 'Activar/desactivar efectes visuals',
-      confVolumenJuego     : 'Volum del joc',
-      confVolumenJuegoDesc : 'Controla el volum dels sons dins dels jocs',
-      confVolumen        : 'Volum principal',
-      confVolumenDesc    : 'Controla el volum dels efectes de so',
-      confSonidoNoti     : 'So de notificacions',
-      confSonidoNotiDesc : 'Reproduir so en rebre notificacions',
-      confSonidoJuego    : 'So en completar el joc',
+      confVolumenJuego : 'Volum del joc',
+      confVolumenJuegoDesc: 'Controla el volum dels sons dins dels jocs',
+      confVolumen      : 'Volum principal',
+      confVolumenDesc  : 'Controla el volum dels efectes de so',
+      confSonidoNoti   : 'So de notificacions',
+      confSonidoNotiDesc: 'Reproduir so en rebre notificacions',
+      confSonidoJuego  : 'So en completar el joc',
       confSonidoJuegoDesc: 'Reproduir efecte de victòria',
-      confTimer          : 'Temporitzador automàtic',
-      confTimerDesc      : 'Iniciar temporitzador en obrir un joc',
-      confPuntuacion     : 'Mostrar puntuació en temps real',
-      confPuntuacionDesc : 'Actualitzar estadístiques mentre jugues',
-      confDificultad     : 'Dificultat per defecte',
-      confDificultadDesc : 'Nivell de dificultat en iniciar jocs',
-      confBackupInterval : 'Auto-backup cada',
-      confBackupDesc     : 'Freqüència de desat automàtic',
-      confNube           : 'Sincronització al núvol',
-      confNubeDesc       : 'Desar progrés al núvol (requereix compte)',
-      confDevMode        : 'Mode desenvolupador',
-      confDevModeDesc    : 'Mostrar informació de depuració',
-      confLimpiar        : 'Netejar caché',
-      confLimpiarDesc    : 'Eliminar dades temporals',
-      confLimpiarBtn     : 'Netejar',
-      confCancelar       : '✕ CANCEL·LAR',
-      confGuardar        : '✓ DESAR CANVIS',
-      confRestablecer    : 'Restablir',
-      confTemaOscuro     : 'Fosc (Predeterminat)',
-      confTemaClaro      : 'Clar',
-      confTemaAuto       : 'Automàtic',
-      confFacil          : 'Fàcil',
-      confMedio          : 'Mitjà',
-      confDificil        : 'Difícil',
-      conf5min           : '5 minuts',
-      conf15min          : '15 minuts',
-      conf30min          : '30 minuts',
-      conf1hora          : '1 hora',
-      confTodas          : 'Totes',
+      confTimer        : 'Temporitzador automàtic',
+      confTimerDesc    : 'Iniciar temporitzador en obrir un joc',
+      confPuntuacion   : 'Mostrar puntuació en temps real',
+      confPuntuacionDesc: 'Actualitzar estadístiques mentre jugues',
+      confDificultad   : 'Dificultat per defecte',
+      confDificultadDesc: 'Nivell de dificultat en iniciar jocs',
+      confBackupInterval: 'Auto-backup cada',
+      confBackupDesc   : 'Freqüència de desat automàtic',
+      confNube         : 'Sincronització al núvol',
+      confNubeDesc     : 'Desar progrés al núvol (requereix compte)',
+      confDevMode      : 'Mode desenvolupador',
+      confDevModeDesc  : 'Mostrar informació de depuració',
+      confLimpiar      : 'Netejar caché',
+      confLimpiarDesc  : 'Eliminar dades temporals',
+      confLimpiarBtn   : 'Netejar',
+      confCancelar     : 'CANCEL·LAR',
+      confGuardar      : 'DESAR CANVIS',
+      confRestablecer  : 'Restablir',
+      confTemaOscuro   : 'Fosc (Predeterminat)',
+      confTemaClaro    : 'Clar',
+      confTemaAuto     : 'Automàtic',
+      confFacil        : 'Fàcil',
+      confMedio        : 'Mitjà',
+      confDificil      : 'Difícil',
+      conf5min         : '5 minuts',
+      conf15min        : '15 minuts',
+      conf30min        : '30 minuts',
+      conf1hora        : '1 hora',
+      confTodas        : 'Totes',
+
+      accesoDocente    : 'Accés Docent',
+      accesoDesc       : 'Introdueix la contrasenya per veure el progrés dels alumnes',
+      contrasenyaPlaceholder: 'Contrasenya',
+      passwordPlaceholder  : 'Contrasenya',
+      entrar           : 'Entrar',
+      passError        : 'Contrasenya incorrecta',
+      volverInicio     : '← Tornar a l\'inici',
+      panelTitulo      : '👩‍🏫 Panell de Control Docent',
+      numAlumnos       : 'alumnes',
+      alumnos          : 'alumnes',
+      buscarAlumno     : 'Cercar alumne per nom...',
+      ordenNombre      : 'Ordenar per nom',
+      ordenJuegos      : 'Més jocs completats',
+      ordenPuntuacion  : 'Millor puntuació',
+      ordenReciente    : 'Més recent',
+      thAlumno         : 'Alumne',
+      thJuegos         : 'Jocs',
+      thPuntuacion     : 'Millor Punt.',
+      thRacha          : 'Ratxa',
+      thLogros         : 'Assoliments',
+      thUltima         : 'Última vegada',
+      noAlumnos        : 'No hi ha alumnes registrats encara.',
+      crearPerfil      : 'Crear primer perfil',
+      footerDocente    : 'CEARTEE - Panell Docent • Les dades es guarden localment en aquest ordinador',
+
+       
+      
+      completados      : 'completats',
+      mejorTxt         : 'millor',
+      rachaTxt         : 'millor ratxa',
+      sinLogros        : 'Sense assoliments encara',
+      haceDias         : 'Fa',
+      diasTxt          : 'dies',
+      haceHoras        : 'Fa',
+      horasTxt         : 'hores',
+      haceMinutos      : 'Fa',
+      minutosTxt       : 'minuts',
+      nunca            : 'Mai',
+      soloHaceMomento  : 'Fa un moment',
+
+                 // ✅ ESTADISTICA.JS - Reporte Final
+      reporteActividades    : 'Report d\'Activitats',
+      juego                 : 'Joc',
+      totales               : 'Totals',
+      secuencia             : 'Seqüència',
+      actividad             : 'Activitat',
+      correcta              : 'Correcta',
+      acciones              : 'Accions',
+      puntuacion            : 'Puntuació',
+      tiempo                : 'Temps',
+      generadoPor           : 'Generat per',
+      imprimirPDF           : 'Imprimir / Guardar PDF',
+      jugarDeNuevo          : 'Jugar de nou',
+      cerrar                : 'Tancar',
+      si                    : 'Sí',
+      no                    : 'No',
+
 
       nombresJuegos    : {
-        //Preescolar
-        //Lenguajes 
         '4 Cuentos'                        : '4 Contes',
         'Actividad 5 años infantil'        : 'Activitat 5 anys infantil',
         'Aprende a leer con l,m,s,p,t,n'   : 'Aprèn a llegir amb l,m,s,p,t,n',
@@ -296,9 +640,6 @@
         'Nombre de los animales'           : 'Nom dels animals',
         'Números y letras'                 : 'Números i lletres',
         'Las Vocales'                      : 'Les Vocals',
-
-
-             //Saberes y pensamiento cientifico
         'Actinfantil 3 años'                      : 'Actinfantil 3 anys',
         'Act infantil 4 años'                     : 'Act infantil 4 anys',
         'Actividades de orientacion especial'     : 'Activitats d\'orientació especial',
@@ -331,8 +672,6 @@
         'Sombras'                                 : 'Ombres',
         'Tiempo, espacio y Cantidad'              : 'Temps, espai i Quantitat',
         'Uno, dos, tres o ninguno'                : 'Un, dos, tres o cap',
-
-        //Etica,naturaleza y sociedades
         'Aprendiendo a reciclar'        : 'Aprenent a reciclar',
         'El elefante y otros grandes'   : 'L\'elefant i altres grans',
         'La ratita presumida'           : 'La rateta presumida',
@@ -343,38 +682,51 @@
         'Otros niños del mundo'         : 'Altres nens del món',
         'Puzzles de animales'           : 'Puzzles d\'animals',
         'Reconocimientos de sonidos'    : 'Reconeixements de sons',
-
-        //De lo humano a comunitario
-
         'Cuento para la tolerancia'   : 'Conte per a la tolerància',
         'Los rincones de la clase'    : 'Els racons de la classe'
-
-
       },
-
-      descripcionesJuegos: {
-        'Arma el rompecabezas de animales salvajes'          : 'Munta el trencaclosques d\'animals salvatges',
-        'Actividades educativas para niños de 5 años'       : 'Activitats educatives per a nens de 5 anys',
-        'Aprende las letras l, m, s, p, t, n jugando'      : 'Aprèn les lletres l, m, s, p, t, n jugant',
-        'Diviértete aprendiendo con actividades interactivas': 'Diverteix-te aprenent amb activitats interactives',
-        'Revive el cuento clásico de Caperucita Roja'       : 'Reviu el conte clàssic de Caputxeta Vermella',
-        'Identifica y clasifica diferentes objetos'         : 'Identifica i classifica diferents objectes',
-        'Acompaña al pollito Chiqui en su aventura'        : 'Acompanya el pollet Chiqui en la seva aventura',
-        'Descubre la historia del soldadito de plomo'      : 'Descobreix la història del soldadet de plom',
-        'Da tus primeros pasos en el mundo de la lectura'  : 'Dona els teus primers passos en el món de la lectura',
-        'Vive la aventura mágica de Jack'                  : 'Viur l\'aventura màgica de Jack',
-        'Conoce la historia de la gaviota'                 : 'Coneix la història de la gavina',
-        'Descubre los cuentos que cuenta el lobo'          : 'Descobreix els contes que explica el llop',
-        'Aprende los nombres de diferentes animales'       : 'Aprèn els noms de diferents animals',
-        'Practica con números y letras'                    : 'Practica amb números i lletres',
-        'Aprende las vocales de forma divertida'           : 'Aprèn les vocals de forma divertida'
-      }
+      descripcionesJuegos: {}
     },
 
     en: {
-      bienvenida       : 'Welcome to Ceartee',
+      bienvenida       : 'Welcome to Murcia',
       subtitulo        : 'Your experience starts here',
       iniciar          : 'Click to Enter',
+      visitanosLabel   : 'Visit us to learn more',
+      visitanosSub     : 'our service',
+      direccion        : 'Address',
+      redesSociales    : 'Social Media',
+      redesSocialesLabel: 'Social Media',
+      cearteeSinaloa   : 'Ceartee Sinaloa',
+      cearteeEmail     : 'ceartee@sin.nuevaescuela.mx',
+      cearteeBlog      : 'cearteesinaloa.blogspot.mx',
+      queEsCeartee     : 'What is Ceartee?',
+      cearteeDesc      : 'Center for Experimental Adaptation and Telematic Resources for Special Education',
+      cearteeLargo     : 'A space to promote educational inclusion through specialized technologies and resources.',
+      
+      quienJuega       : 'Who is playing?',
+      tocaCarita       : 'Tap your face to start',
+      nuevo            : 'New',
+      nombre           : 'Name',
+      tuNombre         : 'Your name',
+      eligeAvatar      : 'Choose an avatar',
+      cancelar         : 'Cancel',
+      jugar            : 'Play!',
+      si               : 'Yes',
+      no               : 'No',
+      eliminar         : 'Delete',
+      editar           : 'Edit',
+      atras            : '',
+      seleccionarAvatar: 'Select an avatar',
+      confirmar        : 'Confirm',
+      salir            : 'Exit',
+      cerrarSesion     : 'Log out',
+      hola             : 'Hello',
+      continuar        : 'Continue',
+      cambiarJugador   : 'Change player',
+      panelDocente     : 'Teacher Panel',
+      irPanelDocente   : 'Teacher Panel',
+      progresoAlumnos  : 'View all students progress',
 
       etapasTitulo     : 'Stages',
       preescolar       : 'Preschool',
@@ -398,7 +750,7 @@
       saberesH1        : 'Knowledge & Scientific Thinking',
       eticaH1          : 'Ethics, Nature & Societies',
       humanoH1         : 'From Human to Community',
-      jugar            : 'PLAY',
+      jugarBtn         : 'PLAY',
       noResultados     : 'No games found',
       anos3_5          : '3-5 years',
       anos4_6          : '4-6 years',
@@ -406,6 +758,45 @@
       anos9_12         : '9-12 years',
       anos13_15        : '13-15 years',
       minTxt           : 'min',
+      cargando         : 'Loading...',
+      cargandoJuego    : 'Loading game...',
+      instrucciones    : 'Instructions will appear here...',
+      volverMenu       : 'Back to menu',
+      pantallaCompleta : 'Fullscreen',
+      ejercicioAnterior: 'Previous exercise',
+      siguienteEjercicio: 'Next exercise',
+      reiniciarEjercicio: 'Restart exercise',
+      volver           : '',
+      volverGenerico   : ' Back',
+      aciertos         : 'Correct:',
+      intentos         : 'Attempts:',
+      tiempo           : 'Time:',
+      correctas        : 'Correct:',
+      intentosTxt      : 'Attempts:',
+      tiempoTxt        : 'Time:',
+      siguiente        : 'Next',
+      anterior         : 'Previous',
+      reiniciar        : 'Restart',
+      barraInstrucciones: 'Instructions will appear here...',
+
+      loaderPreparando    : 'Preparing your learning experience',
+      loaderFinalizando   : 'Finishing',
+      loaderEsperando     : 'Waiting for the game',
+      errorTituloCarga    : 'Oops! Could not load',
+      errorNoJuego        : 'No game was specified',
+      btnReintentar       : 'Try again',
+      noPuedeAvanzar      : 'Cannot advance',
+      noPuedeRetroceder   : 'Cannot go back',
+      kioscoPresionaEsc   : 'Press ESC 2 times to exit',
+      errorNoDescargar    : 'Could not download the file',
+      errorZipVacio       : 'The game file is empty or incomplete.',
+      errorZipDanado      : 'The game file is damaged. Not a valid ZIP.',
+      errorNoProyecto     : 'The file does not contain a valid JClic project.',
+      errorProyectoVacio  : 'The project inside the ZIP is empty or incomplete.',
+      errorZipCorrupto    : 'The ZIP file is corrupted.',
+      errorTimeout        : 'The game took too long to load. Do you want to try again?',
+      errorMotor          : 'The game engine had a problem starting this activity.',
+      errorNoMotor        : 'The game engine could not be started.',
 
       juegosTitulo     : 'GAMES',
       juegosSub        : 'Select a game to play',
@@ -415,73 +806,145 @@
       medio            : 'Medium',
       dificil          : 'Hard',
 
-      volver           : ' Back',
-      aciertos         : 'Correct:',
-      intentos         : 'Attempts:',
-      tiempo           : 'Time:',
-      siguiente        : 'Next →',
-      anterior         : '← Previous',
-      reiniciar        : '🔄 Restart',
-      cargando         : '🎮 Loading game...',
-
       configuracion    : 'SETTINGS',
-      salir            : 'Exit',
-
-      //Configuración
-      confGeneral        : 'General',
-      confSonido         : 'Sound',
-      confJuego          : 'Game',
-      confBackup         : 'Backup & Sync',
-      confAvanzado       : 'Advanced',
-      confIdioma         : 'Language',
-      confIdiomaDesc     : 'Select the interface language',
-      confTema           : 'Theme',
-      confTemaDesc       : 'Choose the visual theme of the app',
-      confAnimaciones    : 'Animations',
+      confGeneral      : 'General',
+      confSonido       : 'Sound',
+      confJuego        : 'Game',
+      confBackup       : 'Backup & Sync',
+      confAvanzado     : 'Advanced',
+      confIdioma       : 'Language',
+      confIdiomaDesc   : 'Select the interface language',
+      langEspanol      : 'Spanish',
+      langCatala       : 'Catalan',
+      langEnglish      : 'English',
+      confTema         : 'Theme',
+      confTemaDesc     : 'Choose the visual theme of the app',
+      confAnimaciones  : 'Animations',
       confAnimacionesDesc: 'Enable/disable visual effects',
-       confVolumenJuego     : 'Game volume',
-      confVolumenJuegoDesc : 'Controls the volume of sounds inside the games',
-      confVolumen        : 'Master volume',
-      confVolumenDesc    : 'Control the volume of sound effects',
-      confSonidoNoti     : 'Notification sound',
-      confSonidoNotiDesc : 'Play sound when receiving notifications',
-      confSonidoJuego    : 'Sound on game completion',
+      confVolumenJuego : 'Game volume',
+      confVolumenJuegoDesc: 'Controls the volume of sounds inside the games',
+      confVolumen      : 'Master volume',
+      confVolumenDesc  : 'Control the volume of sound effects',
+      confSonidoNoti   : 'Sound effects',
+      confSonidoNotiDesc: 'Play when the buttons have sound effects',
+      confSonidoJuego  : 'Sound on game completion',
       confSonidoJuegoDesc: 'Play victory effect',
-      confTimer          : 'Automatic timer',
-      confTimerDesc      : 'Start timer when opening a game',
-      confPuntuacion     : 'Show score in real time',
-      confPuntuacionDesc : 'Update stats while playing',
-      confDificultad     : 'Default difficulty',
-      confDificultadDesc : 'Difficulty level when starting games',
-      confBackupInterval : 'Auto-backup every',
-      confBackupDesc     : 'Automatic save frequency',
-      confNube           : 'Cloud sync',
-      confNubeDesc       : 'Save progress to the cloud (requires account)',
-      confDevMode        : 'Developer mode',
-      confDevModeDesc    : 'Show debug information',
-      confLimpiar        : 'Clear cache',
-      confLimpiarDesc    : 'Remove temporary data',
-      confLimpiarBtn     : 'Clear',
-      confCancelar       : '✕ CANCEL',
-      confGuardar        : '✓ SAVE CHANGES',
-      confRestablecer    : 'Reset',
-      confTemaOscuro     : 'Dark (Default)',
-      confTemaClaro      : 'Light',
-      confTemaAuto       : 'Automatic',
-      confFacil          : 'Easy',
-      confMedio          : 'Medium',
-      confDificil        : 'Hard',
-      conf5min           : '5 minutes',
-      conf15min          : '15 minutes',
-      conf30min          : '30 minutes',
-      conf1hora          : '1 hour',
-      confTodas          : 'All',
+      confTimer        : 'Automatic timer',
+      confTimerDesc    : 'Start timer when opening a game',
+      confPuntuacion   : 'Show score in real time',
+      confPuntuacionDesc: 'Update stats while playing',
+      confDificultad   : 'Default difficulty',
+      confDificultadDesc: 'Difficulty level when starting games',
+      confBackupInterval: 'Auto-backup every',
+      confBackupDesc   : 'Automatic save frequency',
+      confNube         : 'Cloud sync',
+      confNubeDesc     : 'Save progress to the cloud (requires account)',
+      confDevMode      : 'Developer mode',
+      confDevModeDesc  : 'Show debug information',
+      confLimpiar      : 'Clear cache',
+      confLimpiarDesc  : 'Remove temporary data',
+      confLimpiarBtn   : 'Clear',
+      confCancelar     : 'CANCEL',
+      confGuardar      : 'SAVE CHANGES',
+      confRestablecer  : 'Reset',
+      confTemaOscuro   : 'Dark (Default)',
+      confTemaClaro    : 'Light',
+      confTemaAuto     : 'Automatic',
+      confFacil        : 'Easy',
+      confMedio        : 'Medium',
+      confDificil      : 'Hard',
+      conf5min         : '5 minutes',
+      conf15min        : '15 minutes',
+      conf30min        : '30 minutes',
+      conf1hora        : '1 hour',
+      confTodas        : 'All',
+
+            // ✅ INSTRUCTIONS.JS
+      muyBienDefault   : '🎉 !!! Very good !!! 🎉',
+      prefijoMuyBien   : '🎉',
+      sufijoMuyBien    : '🎉',
+      cargandoMsg      : 'Loading...',
+      bienvenidaInstr  : 'Welcome',
+      disfrutaInstr    : 'Enjoy the game',
+      presionaJugar    : 'Press to play',
+      listoJugar       : 'Ready to play!',
+      seleccionaOpcion : 'Select an option',
+      muyBien          : 'Very good!',
+      excelente        : 'Excellent!',
+      intentaloNuevo   : 'Try again',
+      correcto         : 'Correct',
+      incorrecto       : 'Incorrect',
+      tiempoAgotado    : 'Time out',
+      hasGanado        : 'You won!',
+      hasPerdido       : 'You lost',
+      juegoTerminado   : 'Game over',
+      siguienteNivel   : 'Next level',
+      quieresReintentar: 'Do you want to try again?',
+      siReintentar     : 'Yes, retry',
+      noSalir          : 'No, exit',
+      puntos           : 'points',
+      estrellas        : 'stars',
+      nivel            : 'Level',
+      ronda            : 'Round',
+      ejercicio        : 'Exercise',
+      actividad        : 'Activity',
+
+      accesoDocente    : 'Teacher Access',
+      accesoDesc       : 'Enter the password to view student progress',
+      contrasenyaPlaceholder: 'Password',
+      passwordPlaceholder  : 'Password',
+      entrar           : 'Enter',
+      passError        : 'Incorrect password',
+      volverInicio     : '← Back to start',
+      panelTitulo      : '👩‍🏫 Teacher Control Panel',
+      numAlumnos       : 'students',
+      alumnos          : 'students',
+      buscarAlumno     : 'Search student by name...',
+      ordenNombre      : 'Sort by name',
+      ordenJuegos      : 'Most games completed',
+      ordenPuntuacion  : 'Best score',
+      ordenReciente    : 'Most recent',
+      thAlumno         : 'Student',
+      thJuegos         : 'Games',
+      thPuntuacion     : 'Best Score',
+      thRacha          : 'Streak',
+      thLogros         : 'Achievements',
+      thUltima         : 'Last time',
+      noAlumnos        : 'No students registered yet.',
+      crearPerfil      : 'Create first profile',
+      footerDocente    : 'CEARTEE - Teacher Panel • Data is saved locally on this computer',
+      
+      completados      : 'completed',
+      mejorTxt         : 'best',
+      rachaTxt         : 'best streak',
+      sinLogros        : 'No achievements yet',
+      haceDias         : '',
+      diasTxt          : 'days ago',
+      haceHoras        : '',
+      horasTxt         : 'hours ago',
+      haceMinutos      : '',
+      minutosTxt       : 'minutes ago',
+      nunca            : 'Never',
+      soloHaceMomento  : 'A moment ago',
+
+                  // ✅ STATISTICS.JS - Final Report
+      reporteActividades    : 'Activities Report',
+      juego                 : 'Game',
+      totales               : 'Totals',
+      secuencia             : 'Sequence',
+      actividad             : 'Activity',
+      correcta              : 'Correct',
+      acciones              : 'Actions',
+      puntuacion            : 'Score',
+      tiempo                : 'Time',
+      generadoPor           : 'Generated by',
+      imprimirPDF           : 'Print / Save PDF',
+      jugarDeNuevo          : 'Play again',
+      cerrar                : 'Close',
+      si                    : 'Yes',
+      no                    : 'No',
 
       nombresJuegos    : {
-
-        //Preescolar
-        //Lenguajes
-
         '4 Cuentos'                        : '4 Stories',
         'Actividad 5 años infantil'        : '5-year-old Kids Activity',
         'Aprende a leer con l,m,s,p,t,n'   : 'Learn to read with l,m,s,p,t,n',
@@ -497,8 +960,6 @@
         'Nombre de los animales'           : 'Names of animals',
         'Números y letras'                 : 'Numbers and letters',
         'Las Vocales'                      : 'The Vowels',
-
-        //Saberes y pensamiento cientifico
         'Actinfantil 3 años'                      : 'Kids Activity 3 years',
         'Act infantil 4 años'                     : 'Kids Activity 4 years',
         'Actividades de orientacion especial'     : 'Special orientation activities',
@@ -531,8 +992,6 @@
         'Sombras'                                 : 'Shadows',
         'Tiempo, espacio y Cantidad'              : 'Time, space & quantity',
         'Uno, dos, tres o ninguno'                : 'One, two, three or none',
-
-        //Etica, naturaleza y sociedades
         'Aprendiendo a reciclar'        : 'Learning to recycle',
         'El elefante y otros grandes'   : 'The elephant and other big ones',
         'La ratita presumida'           : 'The vain little mouse',
@@ -543,47 +1002,77 @@
         'Otros niños del mundo'         : 'Other children of the world',
         'Puzzles de animales'           : 'Animal puzzles',
         'Reconocimientos de sonidos'    : 'Sound recognition',
-
-        //De lo humano a comunitario
-
         'Cuento para la tolerancia'   : 'A tale for tolerance',
         'Los rincones de la clase'    : 'The corners of the classroom'
-        
-
       },
-       descripcionesJuegos: {
-        'Arma el rompecabezas de animales salvajes'          : 'Put together the wild animals puzzle',
-        'Actividades educativas para niños de 5 años'       : 'Educational activities for 5-year-old kids',
-        'Aprende las letras l, m, s, p, t, n jugando'      : 'Learn the letters l, m, s, p, t, n by playing',
-        'Diviértete aprendiendo con actividades interactivas': 'Have fun learning with interactive activities',
-        'Revive el cuento clásico de Caperucita Roja'       : 'Relive the classic tale of Little Red Riding Hood',
-        'Identifica y clasifica diferentes objetos'         : 'Identify and classify different objects',
-        'Acompaña al pollito Chiqui en su aventura'        : 'Join Chiqui the little chick on his adventure',
-        'Descubre la historia del soldadito de plomo'      : 'Discover the story of the Tin Soldier',
-        'Da tus primeros pasos en el mundo de la lectura'  : 'Take your first steps into the world of reading',
-        'Vive la aventura mágica de Jack'                  : 'Experience Jack\'s magical adventure',
-        'Conoce la historia de la gaviota'                 : 'Learn the story of the seagull',
-        'Descubre los cuentos que cuenta el lobo'          : 'Discover the tales told by the wolf',
-        'Aprende los nombres de diferentes animales'       : 'Learn the names of different animals',
-        'Practica con números y letras'                    : 'Practice with numbers and letters',
-        'Aprende las vocales de forma divertida'           : 'Learn the vowels in a fun way'
-      }
+      descripcionesJuegos: {}
     }
   };
 
+  // ✅ EXPONER TEXTOS GLOBALMENTE
+  window.textosI18n = textos;
+
+    // ==========================================
+  // APLICAR TEMA
   // ==========================================
-  // APLICAR IDIOMA
+  function aplicarTema(tema) {
+    document.body.classList.remove('tema-dark', 'tema-light', 'tema-auto');
+    if (tema === 'auto') {
+      const esClaro = window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.body.classList.add(esClaro ? 'tema-light' : 'tema-dark');
+      document.body.classList.add('tema-auto');
+    } else {
+      document.body.classList.add('tema-' + tema);
+    }
+  }
+
+  // ==========================================
+  // APLICAR ANIMACIONES (BACKEND ONLY)
+  // ==========================================
+  function aplicarAnimaciones(activas) {
+    if (activas) {
+      document.body.classList.remove('sin-animaciones');
+    } else {
+      document.body.classList.add('sin-animaciones');
+    }
+  }
+  // ==========================================
+  // APLICAR IDIOMA (VERSIÓN CON MUTATION OBSERVER)
   // ==========================================
   function aplicarIdioma(idioma) {
     const t = textos[idioma] || textos['es'];
 
-    // 1. data-i18n
+    // 1. data-i18n (textos normales)
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const clave = el.getAttribute('data-i18n');
       if (t[clave]) el.textContent = t[clave];
     });
 
-   // 2. Botón volver en todas las páginas
+    // 2. data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const clave = el.getAttribute('data-i18n-placeholder');
+      if (t[clave]) el.setAttribute('placeholder', t[clave]);
+    });
+
+    // 3. data-i18n-title
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const clave = el.getAttribute('data-i18n-title');
+      if (t[clave]) el.setAttribute('title', t[clave]);
+    });
+
+    // 4. data-i18n-tooltip
+    document.querySelectorAll('[data-i18n-tooltip]').forEach(el => {
+      const clave = el.getAttribute('data-i18n-tooltip');
+      if (t[clave]) el.setAttribute('data-tooltip', t[clave]);
+    });
+
+    // 5. data-i18n-value
+    document.querySelectorAll('[data-i18n-value]').forEach(el => {
+      const clave = el.getAttribute('data-i18n-value');
+      if (t[clave]) el.setAttribute('value', t[clave]);
+    });
+
+    // 6. Botón volver
     document.querySelectorAll('.btn-back .btn-text').forEach(el => {
       el.textContent = t.volver;
     });
@@ -591,19 +1080,19 @@
       el.textContent = t.volver;
     });
 
-    // 3. Aplicar por página
-     aplicarTextoIndex(t);
+    // 7. Aplicar por página
+    aplicarTextoIndex(t);
     aplicarTextoEtapas(t);
     aplicarTextoCategorias(t);
     aplicarTextoJuegos(t);
     aplicarTextoVista(t);
     aplicarTextoConfig(t);
+    aplicarTextoPanelDocente(t);
 
     document.documentElement.lang = idioma;
   }
 
-
-// === index.html ===
+  // === index.html ===
   function aplicarTextoIndex(t) {
     const title = document.querySelector('.title');
     if (title) title.textContent = t.bienvenida;
@@ -612,11 +1101,8 @@
     if (sub) sub.textContent = t.subtitulo;
 
     const btn = document.getElementById('btnEnter') || document.querySelector('.btn-enter');
-    if (btn) btn.textContent = t.iniciar;
+    if (btn && !btn.hasAttribute('data-i18n')) btn.textContent = t.iniciar;
   }
-
-
-
 
   // === Etapas.html ===
   function aplicarTextoEtapas(t) {
@@ -627,16 +1113,9 @@
         h1.textContent = t.etapasTitulo;
       }
     }
-
-    document.querySelectorAll('.Btn-button').forEach(btn => {
-      btn.textContent = t.preescolar;
-    });
-    document.querySelectorAll('.Btn-button2').forEach(btn => {
-      btn.textContent = t.primaria;
-    });
-    document.querySelectorAll('.Btn-button3').forEach(btn => {
-      btn.textContent = t.secundaria;
-    });
+    document.querySelectorAll('.Btn-button').forEach(btn => { btn.textContent = t.preescolar; });
+    document.querySelectorAll('.Btn-button2').forEach(btn => { btn.textContent = t.primaria; });
+    document.querySelectorAll('.Btn-button3').forEach(btn => { btn.textContent = t.secundaria; });
   }
 
   // === Categorias.html ===
@@ -644,17 +1123,10 @@
     const h1 = document.querySelector('.header-title h1');
     if (h1) {
       const txt = h1.textContent.toUpperCase();
-      if (txt.includes('PREESCOLAR') || txt.includes('PRESCHOOL')) {
-        h1.textContent = t.catPreescolar;
-      }
-      if (txt.includes('PRIMARIA') || txt.includes('PRIMARY') || txt.includes('PRIMÀRIA')) {
-        h1.textContent = t.catPrimaria;
-      }
-      if (txt.includes('SECUNDARIA') || txt.includes('SECONDARY') || txt.includes('SECUNDÀRIA')) {
-        h1.textContent = t.catSecundaria;
-      }
+      if (txt.includes('PREESCOLAR') || txt.includes('PRESCHOOL')) h1.textContent = t.catPreescolar;
+      if (txt.includes('PRIMARIA') || txt.includes('PRIMARY') || txt.includes('PRIMÀRIA')) h1.textContent = t.catPrimaria;
+      if (txt.includes('SECUNDARIA') || txt.includes('SECONDARY') || txt.includes('SECUNDÀRIA')) h1.textContent = t.catSecundaria;
     }
-
     const sub = document.querySelector('.page-subtitle');
     if (sub) sub.textContent = t.catSub;
 
@@ -662,19 +1134,10 @@
       const titulo = card.querySelector('.card-title');
       if (!titulo) return;
       const txt = titulo.textContent.trim().toLowerCase();
-
-      if (txt.includes('lenguaj') || txt.includes('llenguat') || txt.includes('language')) {
-        titulo.textContent = t.lenguaje;
-      }
-      if (txt.includes('saber') || txt.includes('knowledge')) {
-        titulo.textContent = t.saberes;
-      }
-      if (txt.includes('étic') || txt.includes('ètic') || txt.includes('ethic')) {
-        titulo.textContent = t.etica;
-      }
-      if (txt.includes('humano') || txt.includes('humà') || txt.includes('human')) {
-        titulo.textContent = t.humano;
-      }
+      if (txt.includes('lenguaj') || txt.includes('llenguat') || txt.includes('language')) titulo.textContent = t.lenguaje;
+      if (txt.includes('saber') || txt.includes('knowledge')) titulo.textContent = t.saberes;
+      if (txt.includes('étic') || txt.includes('ètic') || txt.includes('ethic')) titulo.textContent = t.etica;
+      if (txt.includes('humano') || txt.includes('humà') || txt.includes('human')) titulo.textContent = t.humano;
 
       const btn = card.querySelector('.card-btn span');
       if (btn) btn.textContent = t.explorar;
@@ -682,104 +1145,46 @@
       var gameCount = card.querySelector('.game-count');
       if (gameCount) {
         var num = gameCount.textContent.replace(/[^0-9]/g, '');
-        if (num) {
-          gameCount.textContent = num + ' ' + t.juegosStat.toLowerCase();
-        }
+        if (num) gameCount.textContent = num + ' ' + t.juegosStat.toLowerCase();
       }
     });
 
     document.querySelectorAll('.footer-stats .stat-label').forEach(el => {
       const txt = el.textContent.trim().toLowerCase();
       if (txt.includes('juego') || txt.includes('joc') || txt.includes('game')) el.textContent = t.juegosStat;
-      if (txt.includes('categor') || txt.includes('categorie')) el.textContent = t.categoriasStat;
+      if (txt.includes('categor')) el.textContent = t.categoriasStat;
       if (txt.includes('completad') || txt.includes('completat') || txt.includes('completed')) el.textContent = t.completadosStat;
     });
   }
-  
-    // === Lenguajes.html / Etica.html / Saberes.html / Humano.html ===
-    function aplicarTextoJuegos(t) {
+
+  // === Lenguajes.html / Etica.html / Saberes.html / Humano.html ===
+  function aplicarTextoJuegos(t) {
     var h1 = document.querySelector('.header-title h1');
     if (h1) {
       var txt = h1.textContent.trim().toLowerCase();
-      if (txt.includes('lenguaj') || txt.includes('llenguat') || txt.includes('language')) {
-        h1.textContent = t.lenguajesH1;
-      }
-      if (txt.includes('saber') || txt.includes('knowledge')) {
-        h1.textContent = t.saberesH1;
-      }
-      if (txt.includes('étic') || txt.includes('ètic') || txt.includes('ethic')) {
-        h1.textContent = t.eticaH1;
-      }
-      if (txt.includes('humano') || txt.includes('humà') || txt.includes('human')) {
-        h1.textContent = t.humanoH1;
-      }
+      if (txt.includes('lenguaj') || txt.includes('llenguat') || txt.includes('language')) h1.textContent = t.lenguajesH1;
+      if (txt.includes('saber') || txt.includes('knowledge')) h1.textContent = t.saberesH1;
+      if (txt.includes('étic') || txt.includes('ètic') || txt.includes('ethic')) h1.textContent = t.eticaH1;
+      if (txt.includes('humano') || txt.includes('humà') || txt.includes('human')) h1.textContent = t.humanoH1;
     }
 
     if (t.nombresJuegos && Object.keys(t.nombresJuegos).length > 0) {
       document.querySelectorAll('.game-card .game-title').forEach(function(el) {
         var original = el.textContent.trim();
-        if (t.nombresJuegos[original]) {
-          el.textContent = t.nombresJuegos[original];
-        }
+        if (t.nombresJuegos[original]) el.textContent = t.nombresJuegos[original];
       });
     }
 
     if (t.descripcionesJuegos && Object.keys(t.descripcionesJuegos).length > 0) {
       document.querySelectorAll('.game-card .game-description').forEach(function(el) {
         var original = el.textContent.trim();
-        if (t.descripcionesJuegos[original]) {
-          el.textContent = t.descripcionesJuegos[original];
-        }
+        if (t.descripcionesJuegos[original]) el.textContent = t.descripcionesJuegos[original];
       });
     }
 
     document.querySelectorAll('.play-text').forEach(function(el) {
-      el.textContent = t.jugar;
+      el.textContent = t.jugarBtn;
     });
-
-    document.querySelectorAll('.game-meta .meta-item').forEach(function(item) {
-      var span = item.querySelector('span:last-child');
-      if (!span) return;
-      var txt = span.textContent.trim();
-
-      if (txt === 'Fácil' || txt === 'Fàcil' || txt === 'Easy') {
-        span.textContent = t.facil;
-        return;
-      }
-      if (txt === 'Medio' || txt === 'Mitjà' || txt === 'Medium') {
-        span.textContent = t.medio;
-        return;
-      }
-      if (txt === 'Difícil' || txt === 'Difícil' || txt === 'Hard') {
-        span.textContent = t.dificil;
-        return;
-      }
-     if (txt === '3 años' || txt === '3 anys' || txt === '3 years') { span.textContent = t.anos3; return; }
-      if (txt === '4 años' || txt === '4 anys' || txt === '4 years') { span.textContent = t.anos4; return; }
-      if (txt.includes('3-5')) { span.textContent = t.anos3_5; return; }
-      if (txt.includes('4-6')) { span.textContent = t.anos4_6; return; }
-      if (txt.includes('6-8')) { span.textContent = t.anos6_8; return; }
-      if (txt.includes('9-12')) { span.textContent = t.anos9_12; return; }
-      if (txt.includes('13-15')) { span.textContent = t.anos13_15; return; }
-
-      if (txt.includes('min')) {
-        var num = txt.replace(/[^0-9]/g, '');
-        if (num) span.textContent = num + ' ' + t.minTxt;
-        return;
-      }
-    });
-
-    document.querySelectorAll('.game-count').forEach(function(el) {
-      var num = el.textContent.replace(/[^0-9]/g, '');
-      if (num) {
-        el.textContent = num + ' ' + t.juegosStat.toLowerCase();
-      }
-    });
-
-    document.querySelectorAll('.count-text').forEach(function(el) {
-      el.textContent = t.juegosStat.toLowerCase();
-    });
-
 
     var noResults = document.querySelector('.no-results p');
     if (noResults) noResults.textContent = t.noResultados;
@@ -808,22 +1213,23 @@
     if (btnSig)  btnSig.textContent  = t.siguiente;
     if (btnAnt)  btnAnt.textContent  = t.anterior;
     if (btnRein) btnRein.textContent = t.reiniciar;
+
+    const gameTitle = document.getElementById('gameTitle');
+    if (gameTitle && gameTitle.textContent.trim().toLowerCase() === 'cargando...') {
+      gameTitle.textContent = t.cargando;
+    }
   }
 
-// === Configuracion.html ===
+  // === Configuracion.html ===
   function aplicarTextoConfig(t) {
-
-     if (!document.querySelector('.settings-container')) return;
+    if (!document.querySelector('.settings-container')) return;
+    
     var h1 = document.querySelector('.header-title h1');
     if (h1) h1.textContent = t.configuracion;
-
-    var btnBack = document.querySelector('.btn-back .btn-text');
-    if (btnBack) btnBack.textContent = t.confRestablecer ? t.volver : t.volver;
 
     var btnReset = document.querySelector('.btn-reset .btn-text');
     if (btnReset) btnReset.textContent = t.confRestablecer;
 
-    // Secciones
     var sections = document.querySelectorAll('.section-title');
     var sectionNames = [t.confGeneral, t.confSonido, t.confJuego, t.confBackup, t.confAvanzado];
     sections.forEach(function(el, i) {
@@ -834,7 +1240,6 @@
       }
     });
 
-    // Labels y descripciones por ID
     var labels = {
       'language': [t.confIdioma, t.confIdiomaDesc],
       'theme': [t.confTema, t.confTemaDesc],
@@ -862,11 +1267,9 @@
       if (descEl) descEl.textContent = labels[id][1];
     });
 
-    // Limpiar caché (no tiene input, es un button)
     var btnClean = document.querySelector('.btn-clean');
     if (btnClean) btnClean.textContent = t.confLimpiarBtn;
 
-    // Select tema
     var elTema = document.getElementById('theme');
     if (elTema) {
       elTema.options[0].text = t.confTemaOscuro;
@@ -874,7 +1277,6 @@
       elTema.options[2].text = t.confTemaAuto;
     }
 
-    // Select dificultad
     var elDif = document.getElementById('default-difficulty');
     if (elDif) {
       elDif.options[0].text = t.confTodas;
@@ -883,7 +1285,6 @@
       elDif.options[3].text = t.confDificil;
     }
 
-    // Select backup
     var elBackup = document.getElementById('backup-interval');
     if (elBackup) {
       elBackup.options[0].text = t.conf5min;
@@ -892,7 +1293,6 @@
       elBackup.options[3].text = t.conf1hora;
     }
 
-    // Footer
     var btnCancel = document.querySelector('.btn-cancel');
     if (btnCancel) btnCancel.textContent = t.confCancelar;
 
@@ -900,15 +1300,36 @@
     if (btnSave) btnSave.textContent = t.confGuardar;
   }
 
+  // === panel-docente.html ===
+  function aplicarTextoPanelDocente(t) {
+    if (!document.querySelector('.login-overlay') && !document.querySelector('.panel-container')) return;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const clave = el.getAttribute('data-i18n');
+      if (t[clave]) el.textContent = t[clave];
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const clave = el.getAttribute('data-i18n-placeholder');
+      if (t[clave]) el.setAttribute('placeholder', t[clave]);
+    });
+
+    if (typeof window.renderizarPanel === 'function') {
+      window.renderizarPanel();
+    }
+  }
 
   // ==========================================
   // CSS DE TEMAS
   // ==========================================
-  function inyectarCSSTemas() {
+    function inyectarCSSTemas() {
     if (document.getElementById('css-temas-global')) return;
     const style = document.createElement('style');
     style.id = 'css-temas-global';
     style.textContent = `
+      /* ==========================================
+         TEMAS (DARK / LIGHT / AUTO)
+         ========================================== */
       body.tema-light {
         background: linear-gradient(135deg, #e0e7ff, #c7d2fe) !important;
         color: #1a1a2e !important;
@@ -941,37 +1362,116 @@
       body.tema-light .setting-description {
         color: #555 !important;
       }
-       body.sin-animaciones *,
+
+       /* ==========================================
+         ANIMACIONES DESACTIVADAS (BACKEND)
+         ========================================== */
+      body.sin-animaciones *,
       body.sin-animaciones *::before,
       body.sin-animaciones *::after {
-        animation: none !important;
-        transition: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-        visibility: visible !important;
+        animation-duration: 0.001s !important;
+        animation-delay: 0s !important;
+        transition-duration: 0.001s !important;
+        transition-delay: 0s !important;
+        animation-iteration-count: 1 !important;
       }
+
+      body.sin-animaciones .bg-animation {
+        display: none !important;
+      }
+
+      body.sin-animaciones .decoration,
+      body.sin-animaciones .decoration span,
       body.sin-animaciones .category-card,
       body.sin-animaciones .game-card,
       body.sin-animaciones .stage-card,
       body.sin-animaciones .card,
       body.sin-animaciones .btn-enter,
-      body.sin-animaciones .decoration span,
-      body.sin-animaciones .bg-animation span,
       body.sin-animaciones .container,
       body.sin-animaciones .main-container,
-      body.sin-animaciones .settings-container {
+      body.sin-animaciones .settings-container,
+      body.sin-animaciones .logo,
+      body.sin-animaciones .logo-badge,
+      body.sin-animaciones .info-card {
         opacity: 1 !important;
         transform: none !important;
         visibility: visible !important;
+        animation: none !important;
+        transition: none !important;
       }
-      body.sin-animaciones .bg-animation span {
+
+      body.sin-animaciones .ceartee-fade-overlay {
+        transition: none !important;
+      }
+
+      body.sin-animaciones .btn-back:hover,
+      body.sin-animaciones .btn-backer:hover,
+      body.sin-animaciones .btn-enter:hover,
+      body.sin-animaciones .category-card:hover,
+      body.sin-animaciones .game-card:hover,
+      body.sin-animaciones .stage-card:hover {
+        transform: none !important;
+      }
+
+      body.sin-animaciones .loader-ring,
+      body.sin-animaciones .spinner,
+      body.sin-animaciones [class*="loader"] {
+        animation: none !important;
         display: none !important;
       }
 
+      /* ✅ Ocultar elementos decorativos animados */
+      body.sin-animaciones .bg-animation {
+        display: none !important;
+      }
+
+      body.sin-animaciones .decoration,
+      body.sin-animaciones .decoration span,
+      body.sin-animaciones .category-card,
+      body.sin-animaciones .game-card,
+      body.sin-animaciones .stage-card,
+      body.sin-animaciones .card,
+      body.sin-animaciones .btn-enter,
+      body.sin-animaciones .container,
+      body.sin-animaciones .main-container,
+      body.sin-animaciones .settings-container,
+      body.sin-animaciones .logo,
+      body.sin-animaciones .logo-badge,
+      body.sin-animaciones .info-card {
+        opacity: 1 !important;
+        transform: none !important;
+        visibility: visible !important;
+        animation: none !important;
+        transition: none !important;
+      }
+
+      /* ✅ Fade overlay instantáneo */
+      body.sin-animaciones .ceartee-fade-overlay {
+        transition: none !important;
+      }
+
+      /* ✅ Hover instantáneo */
+      body.sin-animaciones .btn-back:hover,
+      body.sin-animaciones .btn-backer:hover,
+      body.sin-animaciones .btn-enter:hover,
+      body.sin-animaciones .category-card:hover,
+      body.sin-animaciones .game-card:hover,
+      body.sin-animaciones .stage-card:hover {
+        transform: none !important;
+      }
+
+      /* ✅ Desactivar spinner de carga */
+      body.sin-animaciones .loader-ring,
+      body.sin-animaciones .spinner,
+      body.sin-animaciones [class*="loader"] {
+        animation: none !important;
+        display: none !important;
+      }
+
+      
     `;
     document.head.appendChild(style);
   }
-
   // ==========================================
   // VOLUMEN
   // ==========================================
@@ -997,21 +1497,59 @@
     document.querySelectorAll('audio, video').forEach(el => { el.volume = vol; });
   }
 
-  // ==========================================
-  // MODO DESARROLLADOR
-  // ==========================================
   function aplicarModoDesarrollador(activo) {
-    if (activo) {
-      document.body.classList.add('modo-dev');
-    } else {
-      document.body.classList.remove('modo-dev');
-    }
+    if (activo) document.body.classList.add('modo-dev');
+    else document.body.classList.remove('modo-dev');
   }
 
-// Exponer funciones para settings.js
+  // Exponer funciones
   window.aplicarIdiomaGlobal = aplicarIdioma;
   window.aplicarTemaGlobal = aplicarTema;
   window.aplicarAnimacionesGlobal = aplicarAnimaciones;
+
+  // ==========================================
+  // ✅ MUTATION OBSERVER - Detecta HTML dinámico
+  // ==========================================
+  let observadorI18n = null;
+  
+  function iniciarObservadorI18n(idioma) {
+    // Si ya existe, desconectar
+    if (observadorI18n) observadorI18n.disconnect();
+    
+    observadorI18n = new MutationObserver(function(mutations) {
+      let necesitaReaplicar = false;
+      
+      mutations.forEach(function(mutation) {
+        if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+          for (let i = 0; i < mutation.addedNodes.length; i++) {
+            const nodo = mutation.addedNodes[i];
+            if (nodo.nodeType === 1) {
+              if (nodo.hasAttribute && nodo.hasAttribute('data-i18n')) {
+                necesitaReaplicar = true;
+                break;
+              }
+              if (nodo.querySelectorAll && nodo.querySelectorAll('[data-i18n]').length > 0) {
+                necesitaReaplicar = true;
+                break;
+              }
+            }
+          }
+        }
+      });
+      
+      if (necesitaReaplicar) {
+        clearTimeout(window._timeoutReaplicarI18n);
+        window._timeoutReaplicarI18n = setTimeout(function() {
+          aplicarIdioma(idioma);
+        }, 10);
+      }
+    });
+    
+    observadorI18n.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
 
   // ==========================================
   // FUNCIÓN PRINCIPAL
@@ -1025,19 +1563,20 @@
     aplicarVolumen(config.volumen);
     aplicarModoDesarrollador(config.developerMode);
     window.appConfig = config;
-    // Aplicar filtro de dificultad si estamos en una página de juegos
+    
+    // ✅ Iniciar observador
+    iniciarObservadorI18n(config.idioma);
+    
     if (document.querySelector('.game-card')) {
       setTimeout(function() {
         if (window.aplicarFiltroDificultad) window.aplicarFiltroDificultad();
       }, 600);
     }
-    // Actualizar footer de estadísticas
     if (document.querySelector('.footer-stats')) {
       setTimeout(function() {
         if (window.actualizarFooterStats) window.actualizarFooterStats();
       }, 300);
     }
-
   }
 
   // Ejecutar tema inmediatamente
@@ -1055,16 +1594,35 @@
     aplicarConfiguracionGlobal();
   }
 
-  
+  // ✅ ESCUCHAR CAMBIOS DE IDIOMA EN TIEMPO REAL
+  document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'language') {
+      const nuevoIdioma = e.target.value;
+      const config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+      config.idioma = nuevoIdioma;
+      localStorage.setItem('appConfig', JSON.stringify(config));
+      aplicarIdioma(nuevoIdioma);
+    }
+  });
 
-// ==========================================
+  // ✅ ESCUCHAR CAMBIOS DE ANIMACIONES (SOLO BACKEND)
+  document.addEventListener('change', function(e) {
+    if (e.target && e.target.id === 'animations') {
+      const activas = e.target.checked;
+      const config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+      config.animaciones = activas;
+      localStorage.setItem('appConfig', JSON.stringify(config));
+      aplicarAnimaciones(activas);
+    }
+  });
+
+  // ==========================================
   // SISTEMA DE SONIDOS
   // ==========================================
-    window.sistemaSonido = {
+  window.sistemaSonido = {
     playNotificacion: function() {
       var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
       if (!config.sonidoNoti) return;
-      // ✅ FIX: Usar volumen principal (efectos de UI), no volumenJuego
       var vol = (config.volumen != null ? config.volumen : 70) / 100;
       try {
         var ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1080,18 +1638,14 @@
         osc.stop(ctx.currentTime + 0.2);
       } catch(e) {}
     },
-
     playVictoria: function() {
       var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
       if (!config.sonidoJuego) return;
-      // ✅ FIX: Respetar el valor 0 sin convertirlo en 70
       var vol = (config.volumen != null ? config.volumen : 70) / 100;
       try {
         var ctx = new (window.AudioContext || window.webkitAudioContext)();
-
         var notas = [523, 659, 784, 1047];
         var duracion = 0.15;
-
         notas.forEach(function(freq, i) {
           var osc = ctx.createOscillator();
           var gain = ctx.createGain();
@@ -1107,10 +1661,8 @@
         });
       } catch(e) {}
     },
-
     playClick: function() {
       var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
-      // ✅ FIX: Respetar el valor 0 sin convertirlo en 70
       var vol = (config.volumen != null ? config.volumen : 70) / 100;
       try {
         var ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1128,21 +1680,20 @@
     }
   };
 
-
-
-
-      window.aplicarFiltroDificultad = function() {
+  // ==========================================
+  // FILTRO DE DIFICULTAD
+  // ==========================================
+  window.aplicarFiltroDificultad = function() {
     try {
       var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
       var dificultad = config.dificultad || 'todas';
 
-      // Si es "todas", mostrar todo y asignar data-difficulty
       document.querySelectorAll('.game-card').forEach(function(card) {
         if (!card.getAttribute('data-difficulty')) {
           var metaItems = card.querySelectorAll('.meta-item span:last-child');
           var diff = 'Facil';
           metaItems.forEach(function(span) {
-            var txt = span.textContent.trim().toLowerCase().replace(/í/g, 'i').replace(/á/g, 'a').replace(/à/g, 'a');
+            var txt = span.textContent.trim().toLowerCase();
             if (txt === 'facil' || txt === 'easy') diff = 'Facil';
             if (txt === 'medio' || txt === 'medium' || txt === 'mitja') diff = 'Medio';
             if (txt === 'dificil' || txt === 'hard') diff = 'Dificil';
@@ -1155,16 +1706,10 @@
         document.querySelectorAll('.game-card').forEach(function(card) {
           card.style.display = '';
         });
-        console.log('🎯 Mostrando todos los juegos');
         return;
       }
 
-      var mapaDificultad = {
-        'easy': 'Facil',
-        'medium': 'Medio',
-        'hard': 'Dificil'
-      };
-
+      var mapaDificultad = { 'easy': 'Facil', 'medium': 'Medio', 'hard': 'Dificil' };
       var objetivo = mapaDificultad[dificultad] || 'Facil';
 
       var count = 0;
@@ -1183,37 +1728,25 @@
 
       var noResults = document.getElementById('noResults');
       if (noResults) noResults.style.display = count === 0 ? '' : 'none';
-
-      console.log('🎯 Filtro dificultad:', objetivo, '- Mostrando:', count, 'juegos');
     } catch(e) {
       console.warn('Error filtro dificultad:', e);
     }
   };
 
-
   // ==========================================
   // ACTUALIZAR FOOTER DE ESTADÍSTICAS
   // ==========================================
-    window.actualizarFooterStats = function() {
+  window.actualizarFooterStats = function() {
     try {
-      var completados = 0; // Por defecto 0
-
-      // ✅ Solo leer del perfil activo si existe PerfilesManager
+      var completados = 0;
       if (window.PerfilesManager) {
         var perfil = window.PerfilesManager.obtenerPerfilActivo();
         if (perfil) {
           var stats = window.PerfilesManager.obtenerDatos(perfil.id, 'stats', {});
           completados = stats.juegosCompletados || 0;
-          console.log('📊 Footer desde perfil:', perfil.nombre, '- Completados:', completados);
-        } else {
-          console.log('📊 Footer: Sin perfil activo, mostrando 0');
         }
-      } else {
-        // Si no existe PerfilesManager en esta página, mostrar 0
-        console.log('📊 Footer: PerfilesManager no disponible, mostrando 0');
       }
 
-      // Actualizar el DOM
       var footerItems = document.querySelectorAll('.footer-stats .stat-item');
       footerItems.forEach(function(item) {
         var label = item.querySelector('.stat-label');
@@ -1225,14 +1758,13 @@
           }
         }
       });
-
     } catch(e) {
       console.warn('Error actualizando footer:', e);
     }
   };
 
-    // ==========================================
-  // 🐛 PANEL DE DEPURACIÓN EN TIEMPO REAL
+  // ==========================================
+  // 🐛 PANEL DE DEPURACIÓN
   // ==========================================
   window.initDebugPanel = function() {
     if (document.getElementById('debug-panel')) return;
@@ -1259,7 +1791,6 @@
     `;
     document.body.appendChild(panel);
 
-    // Calcular FPS
     var fps = 0;
     var lastTime = performance.now();
     var frames = 0;
@@ -1275,7 +1806,6 @@
     }
     updateFPS();
 
-    // Actualizar panel cada 500ms
     setInterval(function() {
       try {
         var config = JSON.parse(localStorage.getItem('appConfig') || '{}');
@@ -1287,11 +1817,11 @@
 
         var pagina = window.location.pathname.split('/').pop() || 'index.html';
         var jclic = window.juegoListo ? '✅ Listo' : (document.getElementById('jclic-container') ? '⏳ Cargando' : '❌');
-        var titulo = document.getElementById('gameTitle')?.textContent || '-';
-        var aciertos = document.getElementById('aciertos')?.textContent || '-';
-        var intentos = document.getElementById('intentos')?.textContent || '-';
-        var tiempo = document.getElementById('tiempo')?.textContent || '-';
-        var firebase = window.FirebaseSync?.usuario ? '✅ ' + (window.FirebaseSync.usuario.email || '') : '❌';
+        var titulo = document.getElementById('gameTitle') ? document.getElementById('gameTitle').textContent : '-';
+        var aciertos = document.getElementById('aciertos') ? document.getElementById('aciertos').textContent : '-';
+        var intentos = document.getElementById('intentos') ? document.getElementById('intentos').textContent : '-';
+        var tiempo = document.getElementById('tiempo') ? document.getElementById('tiempo').textContent : '-';
+        var firebase = window.FirebaseSync && window.FirebaseSync.usuario ? '✅' : '❌';
         var lsCount = localStorage.length;
         var memoria = performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) + 'MB' : 'N/A';
         var gameVol = window.__gameVolume != null ? Math.round(window.__gameVolume * 100) + '%' : (config.volumenJuego || '-') + '%';
@@ -1308,7 +1838,6 @@
           '<div>🌐 Idioma: ' + (config.idioma || '-') + ' | 🎨 Tema: ' + (config.tema || '-') + '</div>' +
           '<div>🔊 Vol App: ' + (config.volumen || '-') + '% | Vol Juego: ' + gameVol + '</div>' +
           '<div>🎯 Dificultad: ' + (config.dificultad || '-') + '</div>' +
-          '<div>⏱️ Timer: ' + (config.autoTimer ? 'ON' : 'OFF') + ' | 📊 Stats: ' + (config.realtimeStats ? 'ON' : 'OFF') + '</div>' +
           '<div style="border-top:1px solid #333;margin:6px 0;"></div>' +
           '<div>☁️ Firebase: ' + firebase + '</div>' +
           '<div>💾 localStorage: ' + lsCount + ' items</div>' +
@@ -1317,7 +1846,6 @@
     }, 500);
   };
 
-  // Iniciar panel al cargar
   window.initDebugPanel();
 
 })();

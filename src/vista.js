@@ -1,5 +1,5 @@
 // ==========================================
-// CEARTEE - Vista de Juego (COMPLETO)
+// CEARTEE - Vista de Juego (COMPLETO CON I18N)
 // ==========================================
 
 let jclicPlayer    = null;
@@ -8,9 +8,23 @@ let juegoListo     = false;
 var saliendo       = false;
 
 // ==========================================
+// HELPER DE TRADUCCIÓN
+// ==========================================
+function tVista(clave) {
+  try {
+    const config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+    const idioma = config.idioma || 'es';
+    if (window.textosI18n && window.textosI18n[idioma] && window.textosI18n[idioma][clave]) {
+      return window.textosI18n[idioma][clave];
+    }
+  } catch(e) {}
+  return clave;
+}
+
+// ==========================================
 // CONFIGURACIÓN: Segundos de pantalla de carga
 // ==========================================
-const DURACION_CARGA_MS = 5000; // <-- 5000 = 5 segundos. Cambia a 7000 si quieres 7.
+const DURACION_CARGA_MS = 5000;
 
 // ==========================================
 // 🔓 DESBLOQUEO DE AUDIO PARA TAURI
@@ -80,9 +94,7 @@ function reproducirSonidoUI(tipo) {
       osc.start(now);
       osc.stop(now + 0.07);
     }
-  } catch(e) {
-    // Silencioso: si el audio falla, no rompe nada
-  }
+  } catch(e) {}
 }
 
 // ==========================================
@@ -154,41 +166,41 @@ async function validarZipJClic(url) {
   try {
     if (!window.JSZip) return { valido: true, error: null };
     var respuesta = await fetch(url);
-    if (!respuesta.ok) return { valido: false, error: 'No se pudo descargar el archivo' };
+    if (!respuesta.ok) return { valido: false, error: tVista('errorNoDescargar') };
     var blob = await respuesta.blob();
-    if (blob.size < 1024) return { valido: false, error: 'El archivo del juego está vacío o incompleto.' };
+    if (blob.size < 1024) return { valido: false, error: tVista('errorZipVacio') };
     var zip;
     try { zip = await window.JSZip.loadAsync(blob); }
-    catch(zipErr) { return { valido: false, error: 'El archivo del juego está dañado. No es un ZIP válido.' }; }
+    catch(zipErr) { return { valido: false, error: tVista('errorZipDanado') }; }
     var archivos = Object.keys(zip.files);
     var tieneProyecto = archivos.some(function(n){ return n.endsWith('.jclic') || n.endsWith('.xml'); });
-    if (!tieneProyecto) return { valido: false, error: 'El archivo no contiene un proyecto JClic válido.' };
+    if (!tieneProyecto) return { valido: false, error: tVista('errorNoProyecto') };
     var archivoJclic = archivos.find(function(n){ return n.endsWith('.jclic') || n.endsWith('.xml'); });
     if (archivoJclic) {
       try {
         var contenido = await zip.file(archivoJclic).async('string');
-        if (!contenido || contenido.length < 50) return { valido: false, error: 'El proyecto dentro del ZIP está vacío o incompleto.' };
-      } catch(readErr) { return { valido: false, error: 'El archivo ZIP está corrupto.' }; }
+        if (!contenido || contenido.length < 50) return { valido: false, error: tVista('errorProyectoVacio') };
+      } catch(readErr) { return { valido: false, error: tVista('errorZipCorrupto') }; }
     }
     return { valido: true, error: null };
   } catch(e) { return { valido: true, error: null }; }
 }
 
 // ==========================================
-// ✅ PANTALLA DE ERROR AMIGABLE
+// ✅ PANTALLA DE ERROR AMIGABLE (CON I18N)
 // ==========================================
 function mostrarPantallaError(mensaje, permiteReintentar) {
   const container = document.getElementById('jclic-container');
   if (!container) return;
   container.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:400px;padding:40px;text-align:center;font-family:'Poppins',sans-serif;">
-      <div style="font-size:72px;margin-bottom:16px;"></div>
-      <h2 style="color:#ff6b6b;font-size:26px;margin-bottom:12px;">¡Ups! No se pudo cargar</h2>
+      <div style="font-size:72px;margin-bottom:16px;">😔</div>
+      <h2 style="color:#ff6b6b;font-size:26px;margin-bottom:12px;">${tVista('errorTituloCarga')}</h2>
       <p style="color:#e0e0e0;font-size:17px;max-width:420px;margin-bottom:32px;line-height:1.6;">${mensaje}</p>
       <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
         ${permiteReintentar ? `
-        <button onclick="window.accionErrorCarga('reintentar')" style="padding:14px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#667eea,#764ba2);color:white;font-size:16px;cursor:pointer;font-weight:600;">🔄 Intentar de nuevo</button>` : ''}
-        <button onclick="window.accionErrorCarga('volver')" style="padding:14px 32px;border-radius:30px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;font-size:16px;cursor:pointer;font-weight:600;">← Volver al menú</button>
+        <button onclick="window.accionErrorCarga('reintentar')" style="padding:14px 32px;border-radius:30px;border:none;background:linear-gradient(135deg,#667eea,#764ba2);color:white;font-size:16px;cursor:pointer;font-weight:600;">🔄 ${tVista('btnReintentar')}</button>` : ''}
+        <button onclick="window.accionErrorCarga('volver')" style="padding:14px 32px;border-radius:30px;border:2px solid rgba(255,255,255,0.3);background:rgba(255,255,255,0.1);color:white;font-size:16px;cursor:pointer;font-weight:600;">← ${tVista('volverMenu')}</button>
       </div>
     </div>
   `;
@@ -203,10 +215,10 @@ window.accionErrorCarga = function(tipo) {
 };
 
 // ==========================================
-// CARGAR JUEGO JCLIC CON BARRA CONTROLADA
+// CARGAR JUEGO JCLIC CON BARRA CONTROLADA (CON I18N)
 // ==========================================
 function cargarJuegoJClic(rutaZip, nombreJuego) {
-  console.log(' Cargando:', rutaZip, '| Nombre:', nombreJuego);
+  console.log('🎮 Cargando:', rutaZip, '| Nombre:', nombreJuego);
   juegoListo = false;
   window.__ultimaRutaJuego = rutaZip;
   window.__ultimoNombreJuego = nombreJuego;
@@ -222,7 +234,7 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
         <div class="loader-ring"></div>
       </div>
       <h2 class="loader-title">CEARTEE</h2>
-      <p class="loader-subtitle" id="loader-subtitle">Preparando tu experiencia de aprendizaje<span class="loader-dots"></span></p>
+      <p class="loader-subtitle" id="loader-subtitle">${tVista('loaderPreparando')}<span class="loader-dots"></span></p>
       <div class="loader-bar">
         <div id="loader-bar-fill"></div>
       </div>
@@ -242,8 +254,18 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
   localStorage.setItem('ceartee_ultimo_origen', paginaOrigen);
   currentProjectUrl = rutaZip;
 
+  // ✅ TRADUCIR EL NOMBRE DEL JUEGO AL IDIOMA ACTUAL
   const titleEl = document.getElementById('gameTitle');
-  if (titleEl) titleEl.textContent = nombreJuego;
+  if (titleEl) {
+    const config = JSON.parse(localStorage.getItem('appConfig') || '{}');
+    const idioma = config.idioma || 'es';
+    if (window.textosI18n && window.textosI18n[idioma] && window.textosI18n[idioma].nombresJuegos) {
+      const nombreTraducido = window.textosI18n[idioma].nombresJuegos[nombreJuego] || nombreJuego;
+      titleEl.textContent = nombreTraducido;
+    } else {
+      titleEl.textContent = nombreJuego;
+    }
+  }
 
   let progresoActual = 0;
   let cargaMinimaCompleta = false;
@@ -262,7 +284,7 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
       if (barraFill) barraFill.style.width = '100%';
       cargaMinimaCompleta = true;
       clearInterval(intervaloBarra);
-      if (subtitleEl) subtitleEl.innerHTML = 'Finalizando<span class="loader-dots"></span>';
+      if (subtitleEl) subtitleEl.innerHTML = tVista('loaderFinalizando') + '<span class="loader-dots"></span>';
       verificarFinalizacion();
     } else {
       if (barraFill) barraFill.style.width = progresoActual + '%';
@@ -273,7 +295,7 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
     if (!jclicListo && !errorCarga) {
       errorCarga = true;
       clearInterval(intervaloBarra);
-      mostrarPantallaError('El juego tardó demasiado en cargar. ¿Quieres intentarlo de nuevo?', true);
+      mostrarPantallaError(tVista('errorTimeout'), true);
     }
   }, 12000);
 
@@ -294,7 +316,7 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
     if (cargaMinimaCompleta && jclicListo) {
       finalizarCargaVisual();
     } else if (cargaMinimaCompleta && !jclicListo) {
-      if (subtitleEl) subtitleEl.innerHTML = 'Esperando al juego<span class="loader-dots"></span>';
+      if (subtitleEl) subtitleEl.innerHTML = tVista('loaderEsperando') + '<span class="loader-dots"></span>';
     }
   }
 
@@ -364,7 +386,7 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
           clearInterval(intervaloBarra);
           clearTimeout(timeoutError);
           detenerVerificacion();
-          mostrarPantallaError('El motor de juegos tuvo un problema al iniciar esta actividad.', true);
+          mostrarPantallaError(tVista('errorMotor'), true);
         }
       });
     } else if (intentosJClic < maxIntentos) {
@@ -375,22 +397,22 @@ function cargarJuegoJClic(rutaZip, nombreJuego) {
       clearInterval(intervaloBarra);
       clearTimeout(timeoutError);
       detenerVerificacion();
-      mostrarPantallaError('El motor de juegos no se pudo iniciar.', false);
+      mostrarPantallaError(tVista('errorNoMotor'), false);
     }
   }
   intentarCargar();
 }
 
 // ==========================================
-// NAVEGACIÓN CON SONIDO
+// NAVEGACIÓN CON SONIDO (CON I18N)
 // ==========================================
 function irActividadSiguiente() {
   reproducirSonidoUI('navegar');
-  console.log(' Siguiente');
+  console.log('➡️ Siguiente');
   if (clickBotonNativo('next')) {
     setTimeout(limpiarInterfazJClic, 50);
   } else {
-    mostrarMensaje('No se puede avanzar');
+    mostrarMensaje(tVista('noPuedeAvanzar'));
   }
 }
 
@@ -400,7 +422,7 @@ function irActividadAnterior() {
   if (clickBotonNativo('prev')) {
     setTimeout(limpiarInterfazJClic, 50);
   } else {
-    mostrarMensaje('No se puede retroceder');
+    mostrarMensaje(tVista('noPuedeRetroceder'));
   }
 }
 
@@ -409,7 +431,7 @@ function irActividadAnterior() {
 // ==========================================
 function reiniciarActividad() {
   reproducirSonidoUI('accion');
-  console.log(' Reiniciando');
+  console.log('🔄 Reiniciando');
   detenerTodosLosAudios();
   window.location.reload();
 }
@@ -432,6 +454,7 @@ function exitGame() {
   
   cearteeNavigate(origen);
 }
+
 function mostrarMensaje(texto) {
   var msg = document.getElementById('msg-temporal');
   if (!msg) {
@@ -485,7 +508,7 @@ function reproducirSonidoInicio() {
 }
 
 // ==========================================
-// INICIALIZAR
+// INICIALIZAR (CON I18N)
 // ==========================================
 window.addEventListener('DOMContentLoaded', () => {
   saliendo = false;
@@ -506,9 +529,9 @@ window.addEventListener('DOMContentLoaded', () => {
   } else {
     document.getElementById('jclic-container').innerHTML = `
       <div style="text-align:center; padding:40px;">
-        <h2>❌ No se especificó ningún juego</h2>
-        <button onclick="window.location.href='Etapas.html'" style="margin-top:20px; padding:10px 30px; border-radius:10px; cursor:pointer;">
-          
+        <h2>❌ ${tVista('errorNoJuego')}</h2>
+        <button onclick="cearteeNavigate('Etapas.html')" style="margin-top:20px; padding:10px 30px; border-radius:10px; cursor:pointer;">
+          ← ${tVista('volverMenu')}
         </button>
       </div>`;
   }
@@ -574,7 +597,7 @@ window.Audio = function(src) {
 };
 
 // ==========================================
-// 🛡️ MODO KIOSCO
+// 🛡️ MODO KIOSCO (CON I18N)
 // ==========================================
 (function iniciarModoKiosco() {
   var teclasBloqueadas = [116, 123];
@@ -599,9 +622,14 @@ window.Audio = function(src) {
   window.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       escCount++;
-      if (escCount === 1) { mostrarMensaje('Presiona ESC 2 veces para salir'); escTimer = setTimeout(function(){ escCount = 0; }, 2000); }
+      if (escCount === 1) { mostrarMensaje(tVista('kioscoPresionaEsc')); escTimer = setTimeout(function(){ escCount = 0; }, 2000); }
       if (escCount >= 2) { clearTimeout(escTimer); escCount = 0; exitGame(); }
     }
   });
+  // Cuando termine el juego, actualizar estrellas
+if (window.EstrellasManager) {
+  window.EstrellasManager.actualizarDOM();
+  console.log('⭐ Estrellas actualizadas tras terminar juego');
+}
   console.log('🛡️ Modo Kiosco activado');
 })();

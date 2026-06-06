@@ -110,6 +110,7 @@ function restaurarConfigGuardada() {
     set('cloud-sync',         c.cloudSync,      'checked');
     set('developer-mode',     c.developerMode,  'checked');
 
+    // ✅ ACTUALIZAR DISPLAYS DE VOLUMEN
     var elVol1 = document.getElementById('volume-value');
     if (elVol1) elVol1.textContent = (c.volumen != null ? c.volumen : 70) + '%';
 
@@ -118,7 +119,6 @@ function restaurarConfigGuardada() {
 
     if (window.aplicarIdiomaGlobal) window.aplicarIdiomaGlobal(c.idioma);
     if (window.aplicarTemaGlobal) window.aplicarTemaGlobal(c.tema);
-    if (window.aplicarAnimacionesGlobal) window.aplicarAnimacionesGlobal(c.animaciones);
 
     console.log('🔄 Config restaurada');
   } catch(e) {
@@ -212,14 +212,27 @@ function clearCache() {
   if (btn) { btn.textContent = '⏳ Limpiando...'; btn.disabled = true; }
   
   setTimeout(function() {
-    // 1. Borrar TODAS las claves específicas de CEARTEE una por una
-    var clavesABorrar = [
-      'appConfig',
-      'appIdioma',
-      'appTema',
+    // ✅ GUARDAR CONFIGURACIÓN ACTUAL (NO BORRAR)
+    var configActual = localStorage.getItem('appConfig');
+    var idiomaActual = localStorage.getItem('appIdioma');
+    var temaActual = localStorage.getItem('appTema');
+    
+    // ✅ GUARDAR PERFILES (NO BORRAR)
+    var perfilesActuales = localStorage.getItem('ceartee_perfiles');
+    var perfilActivo = localStorage.getItem('ceartee_perfil_activo');
+    
+    // ✅ BORRAR SOLO PROGRESO DE JUEGOS (stats)
+    for (var i = localStorage.length - 1; i >= 0; i--) {
+      var key = localStorage.key(i);
+      if (key && key.includes('ceartee_perfil_') && key.includes('_stats')) {
+        console.log('🗑️ Borrando progreso:', key);
+        localStorage.removeItem(key);
+      }
+    }
+    
+    // ✅ BORRAR DATOS TEMPORALES Y CACHÉ
+    var clavesTemporales = [
       'notificacionesDatos',
-      'ceartee_perfiles',
-      'ceartee_perfil_activo',
       'ceartee_ultimo_origen',
       'ceartee_autosave',
       'ceartee_sesion_activa',
@@ -231,46 +244,75 @@ function clearCache() {
       'ultimaSincronizacion'
     ];
     
-    clavesABorrar.forEach(function(clave) {
+    clavesTemporales.forEach(function(clave) {
       localStorage.removeItem(clave);
     });
     
-    // 2. Borrar TODAS las claves que empiecen con ceartee_ (por si acaso)
-    for (var i = localStorage.length - 1; i >= 0; i--) {
-      var key = localStorage.key(i);
-      if (key && key.startsWith('ceartee_')) {
-        localStorage.removeItem(key);
+    // ✅ LIMPIAR SESSION STORAGE
+    sessionStorage.clear();
+    
+    // ✅ RESTAURAR CONFIGURACIÓN (idioma, tema, etc.)
+    if (configActual) localStorage.setItem('appConfig', configActual);
+    if (idiomaActual) localStorage.setItem('appIdioma', idiomaActual);
+    if (temaActual) localStorage.setItem('appTema', temaActual);
+    
+    // ✅ RESTAURAR PERFILES
+    if (perfilesActuales) localStorage.setItem('ceartee_perfiles', perfilesActuales);
+    if (perfilActivo) localStorage.setItem('ceartee_perfil_activo', perfilActivo);
+    
+    // ✅ REINICIALIZAR STATS DE CADA PERFIL A 0
+    if (window.PerfilesManager && perfilesActuales) {
+      try {
+        var perfiles = JSON.parse(perfilesActuales);
+        perfiles.forEach(function(perfil) {
+          window.PerfilesManager.guardarDatos(perfil.id, 'stats', {
+            juegosCompletados: 0,
+            totalAciertos: 0,
+            totalErrores: 0,
+            mejorPuntuacion: 0,
+            mejorRacha: 0,
+            tiempoTotal: 0,
+            ultimaActividad: null,
+            juegos: {}
+          });
+          console.log('✅ Stats reiniciadas para:', perfil.nombre);
+        });
+      } catch(e) {
+        console.error('Error reiniciando stats:', e);
       }
     }
     
-    // 3. Session storage también
-    sessionStorage.clear();
+    console.log('🧹 Caché limpiado (progreso borrado, perfiles y config conservados)');
     
-    // 4. Reiniciar variables globales en memoria ANTES de recargar
-    if (window.Notificaciones) {
-      window.Notificaciones.datos = {
-        juegosCompletados: 0,
-        puntuacionesPerfectas: 0,
-        mejorPuntuacion: 0,
-        mejorTiempo: null,
-        rachaAciertos: 0,
-        mejorRacha: 0,
-        logrosDesbloqueados: [],
-        juegosPorNombre: {}
-      };
+    // Mostrar notificación de éxito
+    var notif = document.createElement('div');
+    notif.textContent = '✅ Progreso borrado. Perfiles y configuración conservados.';
+    notif.style.cssText = `
+      position:fixed; bottom:100px; left:50%;
+      transform:translateX(-50%);
+      background:#6bcb77; color:white;
+      padding:14px 28px; border-radius:25px;
+      font-size:15px; font-weight:700;
+      z-index:99999; font-family:'Poppins',sans-serif;
+      max-width: 80%;
+      text-align: center;
+    `;
+    document.body.appendChild(notif);
+    
+    if (btn) { 
+      btn.textContent = '✅ Limpiado'; 
+      btn.disabled = false;
     }
     
-    if (window.PerfilesManager) {
-      window.PerfilesManager.guardarPerfiles([]);
-    }
-    
-    console.log('🧹 Caché limpiado completamente. Recargando...');
-    
-    // 5. Forzar recarga limpia (no usar reload, usar href para evitar caché)
-    window.location.href = window.location.href;
+    setTimeout(function() { 
+      notif.remove();
+      // Recargar para actualizar estrellas
+      window.location.reload();
+    }, 2000);
     
   }, 800);
 }
+
 
 // ==========================================
 // DETECTAR CAMBIOS Y APLICAR VISUALMENTE
@@ -298,8 +340,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (id === 'theme' && window.aplicarTemaGlobal) {
           window.aplicarTemaGlobal(el.value);
         }
-        if (id === 'animations' && window.aplicarAnimacionesGlobal) {
-          window.aplicarAnimacionesGlobal(el.checked);
+        if (id === 'animations') {
+          if (window.aplicarAnimacionesGlobal) {
+            window.aplicarAnimacionesGlobal(el.checked);
+          }
         }
         if (id === 'developer-mode') {
           if (el.checked) {
@@ -317,14 +361,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
 
+      // ✅ SLIDERS DE VOLUMEN - CORREGIDO
       if (el.type === 'range') {
         el.addEventListener('input', function() {
           hayaCambiosSinGuardar = true;
-          var valSpan = document.getElementById(el.id + '-value');
-          if (valSpan) valSpan.textContent = el.value + '%';
-
-          if (el.id === 'volume') {
+          
+          // ✅ Actualizar display del volumen principal
+          if (id === 'volume') {
+            var valSpan1 = document.getElementById('volume-value');
+            if (valSpan1) {
+              valSpan1.textContent = el.value + '%';
+              console.log('🔊 Volumen principal:', el.value + '%');
+            }
             window.__volumenGlobal = parseInt(el.value) / 100;
+          }
+          
+          // ✅ Actualizar display del volumen del juego
+          if (id === 'game-volume') {
+            var valSpan2 = document.getElementById('game-volume-value');
+            if (valSpan2) {
+              valSpan2.textContent = el.value + '%';
+              console.log('🎮 Volumen del juego:', el.value + '%');
+            }
+            window.__gameVolume = parseInt(el.value) / 100;
           }
         });
 
@@ -362,6 +421,7 @@ document.addEventListener('DOMContentLoaded', function() {
       set('cloud-sync',         c.cloudSync,      'checked');
       set('developer-mode',     c.developerMode,  'checked');
 
+      // ✅ ACTUALIZAR DISPLAYS AL CARGAR
       var elVol1 = document.getElementById('volume-value');
       if (elVol1) elVol1.textContent = (c.volumen != null ? c.volumen : 70) + '%';
 
@@ -379,8 +439,8 @@ document.addEventListener('DOMContentLoaded', function() {
 // FIREBASE AUTH + FIRESTORE - API REST
 // ==========================================
 
-const FIREBASE_API_KEY = 'AIzaSyDkQgcjq-3OfgkhHk5RALoX4gXIJbnxsTM';        // ← Tu API Key
-const FIREBASE_PROJECT_ID = 'ceartee-fa0f8';  // ← Tu Project ID (ej: ceartee-app)
+const FIREBASE_API_KEY = 'AIzaSyDkQgcjq-3OfgkhHk5RALoX4gXIJbnxsTM';
+const FIREBASE_PROJECT_ID = 'ceartee-fa0f8';
 
 window.FirebaseAuthREST = {
   registrar: function(email, password, callback) {
@@ -464,9 +524,6 @@ window.FirebaseAuthREST = {
     return localStorage.getItem('ceartee_firebase_idToken');
   },
 
-  // ==========================================
-  // FIRESTORE: Perfil básico
-  // ==========================================
   crearUsuarioEnFirestore: function(uid, idToken, datos, callback) {
     var url = 'https://firestore.googleapis.com/v1/projects/' + FIREBASE_PROJECT_ID + '/databases/(default)/documents/usuarios/' + uid;
     var fields = {};
@@ -493,9 +550,6 @@ window.FirebaseAuthREST = {
     this.crearUsuarioEnFirestore(uid, idToken, datos, function(){});
   },
 
-  // ==========================================
-  // FIRESTORE: Subir datos locales (config + stats)
-  // ==========================================
   subirDatosLocales: function(callback) {
     var user = this.getUsuario();
     if (!user) { callback(false, 'No hay sesión activa'); return; }
@@ -529,9 +583,6 @@ window.FirebaseAuthREST = {
     .catch(function(err) { callback(false, 'Error de conexión: ' + err.message); });
   },
 
-  // ==========================================
-  // FIRESTORE: Bajar datos a locales
-  // ==========================================
   bajarDatosLocales: function(callback) {
     var user = this.getUsuario();
     if (!user) { callback(false, 'No hay sesión activa'); return; }
@@ -577,7 +628,7 @@ function traducirErrorFirebase(codigo) {
 }
 
 // ==========================================
-// UI SINCRONIZACIÓN (usa FirebaseAuthREST)
+// UI SINCRONIZACIÓN
 // ==========================================
 function syncRegistrar() {
   var email = document.getElementById('sync-email').value.trim();
@@ -659,13 +710,12 @@ function syncActualizarUI() {
   if (lastEl) lastEl.textContent = lastTime ? '🕐 Última sincronización: ' + lastTime : '';
 }
 
-// Verificar sesión al cargar
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() { syncActualizarUI(); }, 500);
 });
 
 // ==========================================
-// CEARTEE - AUTO-UPDATER CON UI Y PROGRESO
+// CEARTEE - AUTO-UPDATER
 // ==========================================
 async function iniciarUpdater() {
   if (!window.__TAURI__) return;
@@ -673,10 +723,8 @@ async function iniciarUpdater() {
 
   try {
     const update = await invoke('plugin:updater|check');
-    // Si no hay actualización o ya tenemos la última versión, no hacemos nada
     if (!update) return;
 
-    // 1. Crear la ventana Modal con diseño CEARTEE
     const modal = document.createElement('div');
     modal.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:999999; display:flex; align-items:center; justify-content:center; font-family:"Poppins",sans-serif;';
     
@@ -686,7 +734,6 @@ async function iniciarUpdater() {
         <h2 style="margin-top:0; color:#ffffff;">Nueva versión disponible</h2>
         <p style="color:#9589b0; margin-bottom:25px;">La versión ${update.version} de Murcia está lista para descargar.</p>
         
-        <!-- Barra de progreso oculta al inicio -->
         <div id="update-progress-container" style="display:none; margin:20px 0;">
           <p id="update-status" style="margin-bottom:10px; font-size:14px; color:#ffffff;">Descargando... <strong id="update-percent">0%</strong></p>
           <div style="width:100%; background:#333; border-radius:10px; height:15px; overflow:hidden;">
@@ -694,7 +741,6 @@ async function iniciarUpdater() {
           </div>
         </div>
 
-        <!-- Botones -->
         <div id="update-buttons" style="display:flex; justify-content:center; gap:15px;">
           <button id="btn-update-no" style="padding:10px 20px; border-radius:25px; border:2px solid #5b4fcf; background:transparent; color:#5b4fcf; cursor:pointer; font-weight:bold;">Más tarde</button>
           <button id="btn-update-yes" style="padding:10px 25px; border-radius:25px; border:none; background:linear-gradient(135deg, #5b4fcf, #4d9e5a); color:white; cursor:pointer; font-weight:bold;">Actualizar ahora</button>
@@ -703,12 +749,9 @@ async function iniciarUpdater() {
     `;
     document.body.appendChild(modal);
 
-    // Botón de cancelar
     document.getElementById('btn-update-no').onclick = () => modal.remove();
     
-    // Botón de aceptar
     document.getElementById('btn-update-yes').onclick = async () => {
-      // Ocultar botones y mostrar progreso
       document.getElementById('update-buttons').style.display = 'none';
       document.getElementById('update-progress-container').style.display = 'block';
       
@@ -716,7 +759,6 @@ async function iniciarUpdater() {
       let downloaded = 0;
       let total = 0;
 
-      // Escuchar el progreso de la descarga
       onEvent.onmessage = (msg) => {
         if (msg.event === 'Started') {
           total = msg.data.contentLength || 0;
@@ -735,18 +777,11 @@ async function iniciarUpdater() {
       };
 
       try {
-        // Descargar e instalar
-        await invoke('plugin:updater|download_and_install', { 
-          onEvent: onEvent 
-        });
-        
+        await invoke('plugin:updater|download_and_install', { onEvent: onEvent });
         document.getElementById('update-status').innerText = '¡Actualización completada! Reiniciando...';
-        
-        // Reiniciar la app automáticamente
         setTimeout(async () => {
           await invoke('plugin:process|restart');
         }, 1500);
-
       } catch (err) {
         alert('Error al actualizar: ' + err);
         modal.remove();
@@ -758,8 +793,5 @@ async function iniciarUpdater() {
   }
 }
 
-// Para que se pueda llamar desde botones de configuración si hace falta
 window.checkForUpdates = iniciarUpdater;
-
-// Verificar automáticamente a los 5 segundos de abrir la app
 setTimeout(iniciarUpdater, 5000);
